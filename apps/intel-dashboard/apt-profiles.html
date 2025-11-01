@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APT Profiles - WatchLockAI</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-primary, #0a0e27);
+      color: var(--text-primary, #e4e4e7);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin: 0 0 10px 0;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      color: var(--text-secondary, #a1a1aa);
+      font-size: 1.1em;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: 10px 20px;
+      background: var(--bg-secondary, #1e293b);
+      color: var(--text-primary, #e4e4e7);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-tertiary, #334155);
+    }
+
+    .nav-link.active {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .info-message {
+      background: var(--bg-secondary, #1e293b);
+      border: 1px solid var(--border-color, #334155);
+      border-radius: 8px;
+      padding: 30px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .info-message h2 {
+      color: var(--text-primary, #e4e4e7);
+      margin-top: 0;
+    }
+
+    .info-message p {
+      color: var(--text-secondary, #a1a1aa);
+      line-height: 1.6;
+      margin: 15px 0;
+    }
+
+    .info-message a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+
+    .info-message a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎯 APT Profiles</h1>
+      <p>Advanced Persistent Threat Intelligence</p>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="/" class="nav-link">Dashboard</a>
+      <a href="/apt-profiles.html" class="nav-link active">APT Profiles</a>
+      <a href="/dark-web.html" class="nav-link">Dark Web Intel</a>
+    </nav>
+
+    <div class="info-message">
+      <h2>📊 APT Profiles Coming Soon</h2>
+      <p>This section will provide comprehensive profiles of Advanced Persistent Threat (APT) groups, including:</p>
+      <ul style="text-align: left; max-width: 600px; margin: 20px auto; color: var(--text-secondary, #a1a1aa);">
+        <li>Detailed threat actor profiles with aliases and attribution</li>
+        <li>MITRE ATT&CK technique mappings</li>
+        <li>Known malware families and tools</li>
+        <li>Targeted sectors and countries</li>
+        <li>Campaign timelines and activity patterns</li>
+        <li>Correlation with current threat intelligence</li>
+      </ul>
+      <p>In the meantime, check out the <a href="/dark-web.html">Dark Web Intelligence</a> section for ransomware victim tracking and paste site monitoring.</p>
+    </div>
+  </div>
+</body>
+</html>

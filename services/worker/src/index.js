@@ -11,6 +11,7 @@ import { calculateEnhancedRiskScore, bubbleUpSort, getTopThreats } from './scori
 import { createHealthCheck, logStructured } from './utils.js';
 import { loadAPTProfiles, addAPTCorrelation } from './apt-correlation.js';
 import { loadDetections, addDetectionRecommendations } from './detection-correlation.js';
+import { loadDarkWebIntel, addDarkWebCorrelation } from './dark-web-correlation.js';
 
 const VERSION = '2.0.0';
 const CACHE_TTL = 900; // 15 minutes
@@ -129,6 +130,15 @@ async function fetchAndProcessThreats(env) {
   const detections = await loadDetections(env);
   if (detections.length > 0) {
     items = addDetectionRecommendations(items, detections);
+  }
+
+  // Phase 7: Dark Web Intelligence Correlation
+  const darkWebData = await loadDarkWebIntel(env);
+  if (
+    darkWebData &&
+    (darkWebData.ransomwareVictims?.length > 0 || darkWebData.pasteFindings?.length > 0)
+  ) {
+    items = addDarkWebCorrelation(items, darkWebData);
   }
 
   // Phase 1: Base risk scores
