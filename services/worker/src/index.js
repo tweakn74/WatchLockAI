@@ -148,6 +148,12 @@ async function fetchAndProcessThreats(env) {
     items = addActorAttribution(items, actorData);
   }
 
+  // Phase 6: Geopolitical Risk Context
+  const riskData = await loadGeopoliticalRisks(env);
+  if (riskData && riskData.countries?.length > 0) {
+    items = addGeopoliticalContext(items, riskData);
+  }
+
   // Phase 1: Base risk scores
   items = addRiskScores(items);
 
