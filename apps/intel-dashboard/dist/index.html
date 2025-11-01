@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WatchLockAI - Threat Intelligence Dashboard</title>
+  <script type="module" crossorigin src="/WatchLockAI/assets/index-Qqi5GSXC.js"></script>
+  <link rel="stylesheet" crossorigin href="/WatchLockAI/assets/index-C3zzrnnj.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1 class="logo">
+          <span class="logo-icon">🔒</span>
+          WatchLockAI
+        </h1>
+        <p class="tagline">Know the Threat • Detect the Threat • Hunt the Threat</p>
+      </div>
+      <div class="header-controls">
+        <button id="viewToggle" class="view-toggle">
+          <span class="toggle-label">View:</span>
+          <span id="currentView" class="toggle-value">Executive</span>
+        </button>
+        <div class="status-indicator">
+          <span id="statusDot" class="status-dot"></span>
+          <span id="statusText">Loading...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Left: Threats Panel -->
+      <div class="threats-panel">
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+          <div class="stat">
+            <span class="stat-label">Total Threats</span>
+            <span id="totalCount" class="stat-value">-</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Critical</span>
+            <span id="criticalCount" class="stat-value critical">-</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">High</span>
+            <span id="highCount" class="stat-value high">-</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Multi-Source</span>
+            <span id="multiSourceCount" class="stat-value">-</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Last Updated</span>
+            <span id="lastUpdated" class="stat-value">-</span>
+          </div>
+        </div>
+
+        <!-- Top Threats Section -->
+        <div id="topThreatsSection" class="section">
+          <h2 class="section-title">
+            🔴 Top Threats
+            <span class="auto-refresh-indicator">Auto-refresh: <span id="countdown">60</span>s</span>
+          </h2>
+          <div id="topThreatsContainer" class="threats-grid">
+            <!-- Threat cards will be inserted here -->
+          </div>
+        </div>
+
+        <!-- All Threats Table (Analyst View) -->
+        <div id="allThreatsSection" class="section" style="display: none;">
+          <h2 class="section-title">All Threats</h2>
+          <div class="table-container">
+            <table id="threatsTable" class="threats-table">
+              <thead>
+                <tr>
+                  <th>Score</th>
+                  <th>Severity</th>
+                  <th>Title</th>
+                  <th>Sources</th>
+                  <th>Badges</th>
+                  <th>Published</th>
+                </tr>
+              </thead>
+              <tbody id="threatsTableBody">
+                <!-- Rows will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Community Intel Sidebar -->
+      <aside class="sidebar">
+        <h3 class="sidebar-title">Community Intel</h3>
+        <div class="sidebar-content">
+          <p class="sidebar-placeholder">
+            📡 Community intelligence feed coming in Phase 8
+          </p>
+          <div class="sidebar-info">
+            <h4>Planned Features:</h4>
+            <ul>
+              <li>Curated security researcher insights</li>
+              <li>Trending discussions</li>
+              <li>Early warning signals</li>
+              <li>Community threat reports</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+</body>
+</html>
