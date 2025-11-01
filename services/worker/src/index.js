@@ -9,6 +9,7 @@ import { addCorrelationData, getCorrelationStats } from './correlation.js';
 import { addRiskScores } from './scoring.js';
 import { calculateEnhancedRiskScore, bubbleUpSort, getTopThreats } from './scoring-phase2.js';
 import { createHealthCheck, logStructured } from './utils.js';
+import { loadAPTProfiles, addAPTCorrelation } from './apt-correlation.js';
 
 const VERSION = '2.0.0';
 const CACHE_TTL = 900; // 15 minutes
@@ -116,6 +117,12 @@ async function fetchAndProcessThreats(env) {
 
   // Phase 1: Correlation
   items = addCorrelationData(items);
+
+  // Phase 4: APT Attribution
+  const aptProfiles = await loadAPTProfiles(env);
+  if (aptProfiles.length > 0) {
+    items = addAPTCorrelation(items, aptProfiles);
+  }
 
   // Phase 1: Base risk scores
   items = addRiskScores(items);

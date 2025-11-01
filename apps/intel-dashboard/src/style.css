@@ -436,3 +436,69 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/* Navigation Menu */
+.nav-menu {
+  display: flex;
+  gap: 10px;
+  margin-right: 20px;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+
+/* APT Attribution Styles */
+.apt-attribution {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.apt-label {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.apt-match {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: rgba(255, 107, 107, 0.1);
+  border-left: 3px solid var(--critical);
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.apt-name {
+  font-weight: 600;
+  color: var(--critical);
+  font-size: 0.9em;
+}
+
+.apt-confidence {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+

@@ -173,6 +173,27 @@ function createThreatCard(threat) {
       `
           : ''
       }
+
+      ${
+        threat.aptAttribution && threat.aptAttribution.length > 0
+          ? `
+        <div class="apt-attribution">
+          <div class="apt-label">🎯 APT Attribution:</div>
+          ${threat.aptAttribution
+            .slice(0, 2)
+            .map(
+              apt => `
+            <div class="apt-match">
+              <span class="apt-name">${apt.aptName}</span>
+              <span class="apt-confidence">${apt.confidence}% match</span>
+            </div>
+          `
+            )
+            .join('')}
+        </div>
+      `
+          : ''
+      }
     </div>
   `;
 }
