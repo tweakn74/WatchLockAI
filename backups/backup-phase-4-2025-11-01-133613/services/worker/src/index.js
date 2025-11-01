@@ -10,7 +10,6 @@ import { addRiskScores } from './scoring.js';
 import { calculateEnhancedRiskScore, bubbleUpSort, getTopThreats } from './scoring-phase2.js';
 import { createHealthCheck, logStructured } from './utils.js';
 import { loadAPTProfiles, addAPTCorrelation } from './apt-correlation.js';
-import { loadDetections, addDetectionRecommendations } from './detection-correlation.js';
 
 const VERSION = '2.0.0';
 const CACHE_TTL = 900; // 15 minutes
@@ -123,12 +122,6 @@ async function fetchAndProcessThreats(env) {
   const aptProfiles = await loadAPTProfiles(env);
   if (aptProfiles.length > 0) {
     items = addAPTCorrelation(items, aptProfiles);
-  }
-
-  // Phase 5: Detection Engineering Recommendations
-  const detections = await loadDetections(env);
-  if (detections.length > 0) {
-    items = addDetectionRecommendations(items, detections);
   }
 
   // Phase 1: Base risk scores

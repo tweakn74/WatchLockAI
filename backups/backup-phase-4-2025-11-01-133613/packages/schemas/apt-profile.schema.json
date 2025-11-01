@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "APT Profile Schema",
+  "description": "Schema for Advanced Persistent Threat (APT) group profiles with MITRE ATT&CK mapping",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the APT group"
+    },
+    "name": {
+      "type": "string",
+      "description": "Primary name of the APT group"
+    },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Alternative names and aliases for the group"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the APT group and their activities"
+    },
+    "country": {
+      "type": "string",
+      "description": "Suspected country of origin"
+    },
+    "motivation": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["espionage", "financial", "destructive", "hacktivism"]
+      },
+      "description": "Primary motivations of the group"
+    },
+    "firstSeen": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the group was first observed"
+    },
+    "lastActivity": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of most recent known activity"
+    },
+    "targetedSectors": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Industries and sectors targeted by the group"
+    },
+    "targetedCountries": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Countries targeted by the group"
+    },
+    "techniques": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$" },
+          "name": { "type": "string" },
+          "tactic": { "type": "string" }
+        },
+        "required": ["id", "name", "tactic"]
+      },
+      "description": "MITRE ATT&CK techniques used by the group"
+    },
+    "malware": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": ["name"]
+      },
+      "description": "Malware families associated with the group"
+    },
+    "tools": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tools and frameworks used by the group"
+    },
+    "campaigns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "date": { "type": "string", "format": "date" },
+          "description": { "type": "string" },
+          "targets": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["name"]
+      },
+      "description": "Notable campaigns attributed to the group"
+    },
+    "sophistication": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "advanced"],
+      "description": "Technical sophistication level"
+    },
+    "mitreAttackId": {
+      "type": "string",
+      "description": "MITRE ATT&CK group ID (e.g., G0016)"
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "date": { "type": "string", "format": "date" }
+        },
+        "required": ["title", "url"]
+      },
+      "description": "External references and reports"
+    }
+  },
+  "required": ["id", "name", "description", "techniques"]
+}
