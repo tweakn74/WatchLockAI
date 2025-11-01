@@ -1,0 +1,46 @@
+{
+  "name": "watchlockai",
+  "version": "2.0.0",
+  "description": "WatchLockAI - Enterprise-Grade Threat Intelligence Platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/intel-dashboard",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "eslint . --ext .js,.mjs",
+    "lint:fix": "eslint . --ext .js,.mjs --fix",
+    "format": "prettier --write \"**/*.{js,mjs,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,mjs,json,md}\"",
+    "test": "node --test tests/**/*.test.js",
+    "validate:schema": "node scripts/validate-schema.mjs",
+    "worker:dev": "wrangler dev --config services/worker/wrangler.toml",
+    "worker:deploy": "wrangler deploy --config services/worker/wrangler.toml",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "ajv": "^8.12.0",
+    "eslint": "^9.17.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.4.2",
+    "wrangler": "^3.94.0"
+  },
+  "lint-staged": {
+    "*.{js,mjs}": ["eslint --fix", "prettier --write"],
+    "*.{json,md}": ["prettier --write"]
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tweakn74/WatchLockAI.git"
+  },
+  "author": "CG <craig.glatt@gmail.com>",
+  "license": "MIT"
+}

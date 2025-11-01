@@ -1,0 +1,190 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://watchlockai.com/schemas/unified-threat.schema.json",
+  "title": "Unified Threat Intelligence Schema",
+  "description": "Schema for WatchLockAI unified threat intelligence objects",
+  "type": "object",
+  "required": ["threat_id", "title", "severity_score", "severity", "sources", "first_seen", "last_seen"],
+  "properties": {
+    "threat_id": {
+      "type": "string",
+      "description": "Unique identifier for the threat"
+    },
+    "title": {
+      "type": "string",
+      "description": "Threat title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Threat description"
+    },
+    "link": {
+      "type": "string",
+      "format": "uri",
+      "description": "Primary URL for the threat"
+    },
+    "alternateLinks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "description": "Alternate URLs for the same threat"
+    },
+    "severity_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Risk score from 0-100"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"],
+      "description": "Severity classification"
+    },
+    "badges": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["MULTI-SOURCE", "GOV-CONFIRMED", "CRITICAL-COMBO", "RANSOMWARE-CRITICAL", "TRENDING", "APT-TARGETED", "KEV", "ZERO-DAY", "POC"]
+      },
+      "description": "Visual badges for the threat"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "List of sources that reported this threat"
+    },
+    "sourceCount": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of sources reporting this threat"
+    },
+    "govSourcesCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of government sources reporting this threat"
+    },
+    "first_seen": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Earliest publication date across all sources"
+    },
+    "last_seen": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Latest publication date across all sources"
+    },
+    "pubDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Publication date (primary source)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags extracted from the threat (CVE, MITRE ATT&CK, etc.)"
+    },
+    "cve": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CVE-\\d{4}-\\d{4,}$"
+      },
+      "description": "CVE identifiers associated with this threat"
+    },
+    "iocs": {
+      "type": "object",
+      "properties": {
+        "ips": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hashes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Indicators of Compromise"
+    },
+    "trending": {
+      "type": "boolean",
+      "description": "Whether this threat is trending (has 3+ related threats)"
+    },
+    "ransomware": {
+      "type": "boolean",
+      "description": "Whether this is a ransomware threat"
+    },
+    "zeroDay": {
+      "type": "boolean",
+      "description": "Whether this is a zero-day vulnerability"
+    },
+    "exploitedInTheWild": {
+      "type": "boolean",
+      "description": "Whether this is actively exploited in the wild"
+    },
+    "pocAvailable": {
+      "type": "boolean",
+      "description": "Whether a proof-of-concept exploit is available"
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "Correlation ID for grouping related threats"
+    },
+    "relatedThreats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "link": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "relationScore": {
+            "type": "integer"
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "Related threats identified by correlation engine"
+    },
+    "relatedCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of related threats"
+    },
+    "riskEvidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Evidence supporting the risk score"
+    }
+  }
+}
