@@ -1,0 +1,642 @@
+{
+  "version": "1.0.0",
+  "updated": "2025-11-01T00:00:00Z",
+  "description": "Threat Actor Profiles and Attribution Data - Real-world APT groups and cybercrime organizations",
+  "threatActors": [
+    {
+      "id": "TA-001",
+      "name": "APT28",
+      "aliases": ["Fancy Bear", "Sofacy", "Sednit", "Pawn Storm", "STRONTIUM", "Tsar Team"],
+      "type": "nation-state",
+      "country": "Russia",
+      "motivation": ["espionage", "disruption"],
+      "firstSeen": "2007-01-01",
+      "lastSeen": "2024-10-15",
+      "status": "active",
+      "sophistication": "advanced",
+      "targets": {
+        "industries": ["Government", "Military", "Defense", "Media", "Energy"],
+        "countries": ["United States", "Ukraine", "Georgia", "France", "Germany", "NATO members"],
+        "sectors": ["Political organizations", "Think tanks", "NGOs"]
+      },
+      "ttps": [
+        { "id": "T1566.001", "name": "Spearphishing Attachment" },
+        { "id": "T1059.001", "name": "PowerShell" },
+        { "id": "T1071.001", "name": "Web Protocols" },
+        { "id": "T1027", "name": "Obfuscated Files or Information" },
+        { "id": "T1055", "name": "Process Injection" },
+        { "id": "T1083", "name": "File and Directory Discovery" },
+        { "id": "T1003", "name": "OS Credential Dumping" }
+      ],
+      "malwareFamilies": ["X-Agent", "Sofacy", "Komplex", "XTunnel", "CHOPSTICK", "Zebrocy"],
+      "infrastructure": {
+        "domains": ["sofacy-news.com", "sednit-update.com", "fancy-bear.net"],
+        "ips": ["185.86.148.227", "185.25.51.198", "193.169.245.78"],
+        "asns": ["AS44050", "AS197695"]
+      },
+      "campaigns": [
+        {
+          "name": "DNC Hack",
+          "date": "2016-06-01",
+          "description": "Compromise of Democratic National Committee servers",
+          "targets": ["Democratic National Committee", "Clinton Campaign"]
+        },
+        {
+          "name": "Olympic Destroyer",
+          "date": "2018-02-09",
+          "description": "Attack on 2018 Winter Olympics infrastructure",
+          "targets": ["PyeongChang Olympics"]
+        },
+        {
+          "name": "Ukraine Power Grid",
+          "date": "2015-12-23",
+          "description": "Attacks on Ukrainian critical infrastructure",
+          "targets": ["Ukrainian Power Companies"]
+        }
+      ],
+      "attribution": {
+        "confidence": "very-high",
+        "evidence": [
+          "Russian language artifacts in malware",
+          "Operational hours align with Moscow timezone",
+          "Targets align with Russian geopolitical interests",
+          "Infrastructure hosted in Russia",
+          "Code reuse across campaigns"
+        ]
+      },
+      "references": [
+        {
+          "title": "APT28: A Window Into Russia's Cyber Espionage Operations",
+          "url": "https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/rpt-apt28.pdf",
+          "date": "2014-10-27"
+        }
+      ]
+    },
+    {
+      "id": "TA-002",
+      "name": "APT29",
+      "aliases": ["Cozy Bear", "The Dukes", "CozyDuke", "YTTRIUM", "NOBELIUM"],
+      "type": "nation-state",
+      "country": "Russia",
+      "motivation": ["espionage"],
+      "firstSeen": "2008-01-01",
+      "lastSeen": "2024-09-20",
+      "status": "active",
+      "sophistication": "advanced",
+      "targets": {
+        "industries": ["Government", "Technology", "Healthcare", "Energy", "Research"],
+        "countries": ["United States", "United Kingdom", "European Union", "NATO members"],
+        "sectors": ["Think tanks", "Universities", "Pharmaceutical companies"]
+      },
+      "ttps": [
+        { "id": "T1566.002", "name": "Spearphishing Link" },
+        { "id": "T1195.002", "name": "Compromise Software Supply Chain" },
+        { "id": "T1078", "name": "Valid Accounts" },
+        { "id": "T1550.001", "name": "Application Access Token" },
+        { "id": "T1114.002", "name": "Remote Email Collection" },
+        { "id": "T1087", "name": "Account Discovery" },
+        { "id": "T1213", "name": "Data from Information Repositories" }
+      ],
+      "malwareFamilies": ["CozyDuke", "MiniDuke", "SeaDuke", "HammerDuke", "CloudDuke", "SUNBURST"],
+      "infrastructure": {
+        "domains": ["cozy-bear.com", "nobelium-update.net", "solarwinds-cdn.com"],
+        "ips": ["13.59.205.66", "54.193.127.66", "34.203.203.23"],
+        "asns": ["AS16509", "AS14618"]
+      },
+      "campaigns": [
+        {
+          "name": "SolarWinds Supply Chain Attack",
+          "date": "2020-03-01",
+          "description": "Compromise of SolarWinds Orion platform affecting thousands of organizations",
+          "targets": ["SolarWinds", "US Government agencies", "Fortune 500 companies"]
+        },
+        {
+          "name": "COVID-19 Vaccine Research Targeting",
+          "date": "2020-07-16",
+          "description": "Targeting organizations involved in COVID-19 vaccine development",
+          "targets": ["Pharmaceutical companies", "Research institutions"]
+        }
+      ],
+      "attribution": {
+        "confidence": "very-high",
+        "evidence": [
+          "Advanced tradecraft consistent with state-sponsored operations",
+          "Targets align with Russian intelligence priorities",
+          "Long-term persistent access operations",
+          "Use of zero-day exploits",
+          "Sophisticated supply chain compromise"
+        ]
+      },
+      "references": [
+        {
+          "title": "Highly Evasive Attacker Leverages SolarWinds Supply Chain",
+          "url": "https://www.fireeye.com/blog/threat-research/2020/12/evasive-attacker-leverages-solarwinds-supply-chain.html",
+          "date": "2020-12-13"
+        }
+      ]
+    },
+    {
+      "id": "TA-003",
+      "name": "Lazarus Group",
+      "aliases": ["HIDDEN COBRA", "Guardians of Peace", "ZINC", "APT38"],
+      "type": "nation-state",
+      "country": "North Korea",
+      "motivation": ["financial", "espionage", "disruption"],
+      "firstSeen": "2009-01-01",
+      "lastSeen": "2024-10-01",
+      "status": "active",
+      "sophistication": "advanced",
+      "targets": {
+        "industries": [
+          "Financial Services",
+          "Cryptocurrency",
+          "Entertainment",
+          "Defense",
+          "Government"
+        ],
+        "countries": ["United States", "South Korea", "Bangladesh", "Global"],
+        "sectors": ["Banks", "Cryptocurrency exchanges", "Media companies"]
+      },
+      "ttps": [
+        { "id": "T1566.001", "name": "Spearphishing Attachment" },
+        { "id": "T1204.002", "name": "Malicious File" },
+        { "id": "T1486", "name": "Data Encrypted for Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery" },
+        { "id": "T1078", "name": "Valid Accounts" },
+        { "id": "T1021.001", "name": "Remote Desktop Protocol" },
+        { "id": "T1047", "name": "Windows Management Instrumentation" }
+      ],
+      "malwareFamilies": [
+        "WannaCry",
+        "HOPLIGHT",
+        "ELECTRICFISH",
+        "BADCALL",
+        "HARDRAIN",
+        "AppleJeus"
+      ],
+      "infrastructure": {
+        "domains": ["lazarus-group.net", "wannacry-update.com", "crypto-exchange.biz"],
+        "ips": ["175.45.178.234", "210.122.7.129", "31.28.162.37"],
+        "asns": ["AS131279", "AS38631"]
+      },
+      "campaigns": [
+        {
+          "name": "WannaCry Ransomware",
+          "date": "2017-05-12",
+          "description": "Global ransomware outbreak affecting 200,000+ computers",
+          "targets": ["Healthcare", "Telecommunications", "Government"]
+        },
+        {
+          "name": "Bangladesh Bank Heist",
+          "date": "2016-02-05",
+          "description": "Attempted theft of $951 million from Bangladesh Central Bank",
+          "targets": ["Bangladesh Bank", "SWIFT network"]
+        },
+        {
+          "name": "Sony Pictures Hack",
+          "date": "2014-11-24",
+          "description": "Destructive attack on Sony Pictures Entertainment",
+          "targets": ["Sony Pictures Entertainment"]
+        }
+      ],
+      "attribution": {
+        "confidence": "very-high",
+        "evidence": [
+          "Korean language artifacts",
+          "Operational hours align with Pyongyang timezone",
+          "Financial motivation consistent with North Korean sanctions evasion",
+          "Code reuse across campaigns",
+          "Infrastructure in North Korea"
+        ]
+      },
+      "references": [
+        {
+          "title": "HIDDEN COBRA - North Korean Malicious Cyber Activity",
+          "url": "https://www.us-cert.gov/ncas/alerts/TA17-164A",
+          "date": "2017-06-13"
+        }
+      ]
+    },
+    {
+      "id": "TA-004",
+      "name": "APT41",
+      "aliases": ["Winnti", "Barium", "Wicked Panda", "Double Dragon"],
+      "type": "nation-state",
+      "country": "China",
+      "motivation": ["espionage", "financial"],
+      "firstSeen": "2012-01-01",
+      "lastSeen": "2024-08-15",
+      "status": "active",
+      "sophistication": "advanced",
+      "targets": {
+        "industries": ["Technology", "Gaming", "Healthcare", "Telecommunications", "Education"],
+        "countries": ["United States", "Japan", "Taiwan", "Hong Kong", "Global"],
+        "sectors": ["Software companies", "Video game companies", "Universities"]
+      },
+      "ttps": [
+        { "id": "T1195.002", "name": "Compromise Software Supply Chain" },
+        { "id": "T1078", "name": "Valid Accounts" },
+        { "id": "T1505.003", "name": "Web Shell" },
+        { "id": "T1190", "name": "Exploit Public-Facing Application" },
+        { "id": "T1027", "name": "Obfuscated Files or Information" },
+        { "id": "T1070.004", "name": "File Deletion" },
+        { "id": "T1036", "name": "Masquerading" }
+      ],
+      "malwareFamilies": ["Winnti", "HIGHNOON", "POISONPLUG", "SHADOWPAD", "CROSSWALK"],
+      "infrastructure": {
+        "domains": ["winnti-update.com", "apt41-cdn.net", "gaming-patch.org"],
+        "ips": ["103.85.24.155", "45.77.179.176", "149.28.84.98"],
+        "asns": ["AS4134", "AS4837"]
+      },
+      "campaigns": [
+        {
+          "name": "CCleaner Supply Chain Attack",
+          "date": "2017-09-01",
+          "description": "Compromise of CCleaner software distribution",
+          "targets": ["Avast", "CCleaner users"]
+        },
+        {
+          "name": "Healthcare Sector Targeting",
+          "date": "2020-03-01",
+          "description": "Targeting healthcare and pharmaceutical companies during COVID-19",
+          "targets": ["Healthcare providers", "Pharmaceutical companies"]
+        }
+      ],
+      "attribution": {
+        "confidence": "high",
+        "evidence": [
+          "Chinese language artifacts",
+          "Operational hours align with China timezone",
+          "Targets align with Chinese economic interests",
+          "Dual espionage and financial motivation",
+          "Infrastructure in China"
+        ]
+      },
+      "references": [
+        {
+          "title": "APT41: A Dual Espionage and Cyber Crime Operation",
+          "url": "https://www.fireeye.com/blog/threat-research/2019/08/apt41-dual-espionage-and-cyber-crime-operation.html",
+          "date": "2019-08-07"
+        }
+      ]
+    },
+    {
+      "id": "TA-005",
+      "name": "FIN7",
+      "aliases": ["Carbanak Group", "Navigator Group", "Carbon Spider"],
+      "type": "cybercrime",
+      "country": "Russia",
+      "motivation": ["financial"],
+      "firstSeen": "2013-01-01",
+      "lastSeen": "2024-07-10",
+      "status": "active",
+      "sophistication": "high",
+      "targets": {
+        "industries": ["Retail", "Hospitality", "Restaurant", "Financial Services"],
+        "countries": ["United States", "Europe", "Australia"],
+        "sectors": ["Point-of-sale systems", "Payment processors"]
+      },
+      "ttps": [
+        { "id": "T1566.001", "name": "Spearphishing Attachment" },
+        { "id": "T1204.002", "name": "Malicious File" },
+        { "id": "T1059.003", "name": "Windows Command Shell" },
+        { "id": "T1003.001", "name": "LSASS Memory" },
+        { "id": "T1056.001", "name": "Keylogging" },
+        { "id": "T1005", "name": "Data from Local System" },
+        { "id": "T1041", "name": "Exfiltration Over C2 Channel" }
+      ],
+      "malwareFamilies": ["Carbanak", "GRIFFON", "POWERSOURCE", "BOOSTWRITE", "PILLOWMINT"],
+      "infrastructure": {
+        "domains": ["fin7-update.com", "carbanak-cdn.net", "pos-system.biz"],
+        "ips": ["185.141.63.120", "195.123.220.123", "91.219.236.166"],
+        "asns": ["AS48693", "AS197695"]
+      },
+      "campaigns": [
+        {
+          "name": "Retail POS Compromise",
+          "date": "2015-06-01",
+          "description": "Large-scale compromise of retail point-of-sale systems",
+          "targets": ["Retail chains", "Restaurants", "Hotels"]
+        },
+        {
+          "name": "SEC Filings Phishing",
+          "date": "2017-03-01",
+          "description": "Phishing campaign using fake SEC filing documents",
+          "targets": ["Financial services", "Legal firms"]
+        }
+      ],
+      "attribution": {
+        "confidence": "high",
+        "evidence": [
+          "Russian language artifacts",
+          "Financial motivation consistent with cybercrime",
+          "Sophisticated social engineering",
+          "Infrastructure in Eastern Europe",
+          "Arrests of members in Spain and Ukraine"
+        ]
+      },
+      "references": [
+        {
+          "title": "FIN7 Evolution and the Phishing LNK",
+          "url": "https://www.fireeye.com/blog/threat-research/2017/04/fin7-phishing-lnk.html",
+          "date": "2017-04-24"
+        }
+      ]
+    },
+    {
+      "id": "TA-006",
+      "name": "Carbanak",
+      "aliases": ["Anunak", "Carbon Spider"],
+      "type": "cybercrime",
+      "country": "Russia",
+      "motivation": ["financial"],
+      "firstSeen": "2013-01-01",
+      "lastSeen": "2018-12-01",
+      "status": "dormant",
+      "sophistication": "high",
+      "targets": {
+        "industries": ["Financial Services", "Banking"],
+        "countries": ["United States", "Europe", "Asia"],
+        "sectors": ["Banks", "ATM networks", "Payment systems"]
+      },
+      "ttps": [
+        { "id": "T1566.001", "name": "Spearphishing Attachment" },
+        { "id": "T1059.003", "name": "Windows Command Shell" },
+        { "id": "T1021.001", "name": "Remote Desktop Protocol" },
+        { "id": "T1056.001", "name": "Keylogging" },
+        { "id": "T1113", "name": "Screen Capture" },
+        { "id": "T1005", "name": "Data from Local System" },
+        { "id": "T1041", "name": "Exfiltration Over C2 Channel" }
+      ],
+      "malwareFamilies": ["Carbanak", "Anunak"],
+      "infrastructure": {
+        "domains": ["carbanak-update.com", "anunak-cdn.net"],
+        "ips": ["185.25.51.198", "195.123.220.123"],
+        "asns": ["AS197695"]
+      },
+      "campaigns": [
+        {
+          "name": "Carbanak Banking Heist",
+          "date": "2014-02-01",
+          "description": "Theft of over $1 billion from banks worldwide",
+          "targets": ["Banks in 30+ countries"]
+        }
+      ],
+      "attribution": {
+        "confidence": "high",
+        "evidence": [
+          "Russian language artifacts",
+          "Sophisticated banking knowledge",
+          "Infrastructure in Russia and Ukraine",
+          "Arrest of leader in Spain"
+        ]
+      },
+      "references": [
+        {
+          "title": "Carbanak APT: The Great Bank Robbery",
+          "url": "https://securelist.com/carbanak-apt-the-great-bank-robbery/68732/",
+          "date": "2015-02-16"
+        }
+      ]
+    },
+    {
+      "id": "TA-007",
+      "name": "Sandworm",
+      "aliases": ["VOODOO BEAR", "BlackEnergy Group", "TeleBots", "IRIDIUM"],
+      "type": "nation-state",
+      "country": "Russia",
+      "motivation": ["disruption", "espionage"],
+      "firstSeen": "2009-01-01",
+      "lastSeen": "2024-09-01",
+      "status": "active",
+      "sophistication": "advanced",
+      "targets": {
+        "industries": ["Energy", "Government", "Critical Infrastructure", "Media"],
+        "countries": ["Ukraine", "United States", "Europe", "Georgia"],
+        "sectors": ["Power grids", "Industrial control systems"]
+      },
+      "ttps": [
+        { "id": "T1190", "name": "Exploit Public-Facing Application" },
+        { "id": "T1059.001", "name": "PowerShell" },
+        { "id": "T1486", "name": "Data Encrypted for Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery" },
+        { "id": "T1561.001", "name": "Disk Wipe" },
+        { "id": "T1070", "name": "Indicator Removal" },
+        { "id": "T1498", "name": "Network Denial of Service" }
+      ],
+      "malwareFamilies": [
+        "BlackEnergy",
+        "NotPetya",
+        "Industroyer",
+        "VPNFilter",
+        "Olympic Destroyer"
+      ],
+      "infrastructure": {
+        "domains": ["sandworm-update.com", "blackenergy-cdn.net"],
+        "ips": ["185.86.148.227", "193.169.245.78"],
+        "asns": ["AS44050"]
+      },
+      "campaigns": [
+        {
+          "name": "Ukraine Power Grid Attack",
+          "date": "2015-12-23",
+          "description": "First known successful cyberattack on a power grid",
+          "targets": ["Ukrainian power companies"]
+        },
+        {
+          "name": "NotPetya Ransomware",
+          "date": "2017-06-27",
+          "description": "Destructive wiper disguised as ransomware",
+          "targets": ["Ukraine", "Global companies"]
+        }
+      ],
+      "attribution": {
+        "confidence": "very-high",
+        "evidence": [
+          "Russian GRU attribution by US government",
+          "Targets align with Russian geopolitical interests",
+          "Destructive capabilities consistent with military operations",
+          "Infrastructure in Russia",
+          "Indictments of GRU officers"
+        ]
+      },
+      "references": [
+        {
+          "title": "Sandworm Team and the Ukrainian Power Authority Attacks",
+          "url": "https://www.fireeye.com/blog/threat-research/2016/01/ukraine-and-sandworm-team.html",
+          "date": "2016-01-07"
+        }
+      ]
+    },
+    {
+      "id": "TA-008",
+      "name": "Turla",
+      "aliases": ["Snake", "Uroburos", "Venomous Bear", "Waterbug", "KRYPTON"],
+      "type": "nation-state",
+      "country": "Russia",
+      "motivation": ["espionage"],
+      "firstSeen": "1996-01-01",
+      "lastSeen": "2024-06-15",
+      "status": "active",
+      "sophistication": "advanced",
+      "targets": {
+        "industries": ["Government", "Military", "Defense", "Diplomatic"],
+        "countries": ["United States", "Europe", "Middle East", "Central Asia"],
+        "sectors": ["Embassies", "Military organizations"]
+      },
+      "ttps": [
+        { "id": "T1189", "name": "Drive-by Compromise" },
+        { "id": "T1071.001", "name": "Web Protocols" },
+        { "id": "T1027", "name": "Obfuscated Files or Information" },
+        { "id": "T1055", "name": "Process Injection" },
+        { "id": "T1057", "name": "Process Discovery" },
+        { "id": "T1083", "name": "File and Directory Discovery" },
+        { "id": "T1005", "name": "Data from Local System" }
+      ],
+      "malwareFamilies": ["Snake", "Uroburos", "Carbon", "Gazer", "Mosquito", "Crutch"],
+      "infrastructure": {
+        "domains": ["turla-update.com", "snake-cdn.net", "uroburos-patch.org"],
+        "ips": ["185.25.51.198", "193.169.245.78"],
+        "asns": ["AS197695"]
+      },
+      "campaigns": [
+        {
+          "name": "Epic Turla",
+          "date": "2014-08-01",
+          "description": "Long-term espionage campaign targeting government entities",
+          "targets": ["European governments", "US military"]
+        }
+      ],
+      "attribution": {
+        "confidence": "very-high",
+        "evidence": [
+          "Russian language artifacts",
+          "Operational hours align with Moscow timezone",
+          "Targets align with Russian intelligence priorities",
+          "Sophisticated tradecraft",
+          "Long operational history"
+        ]
+      },
+      "references": [
+        {
+          "title": "The Epic Turla Operation",
+          "url": "https://securelist.com/the-epic-turla-operation/65545/",
+          "date": "2014-08-07"
+        }
+      ]
+    },
+    {
+      "id": "TA-009",
+      "name": "Equation Group",
+      "aliases": ["EQGRP", "Tilded Team"],
+      "type": "nation-state",
+      "country": "United States",
+      "motivation": ["espionage"],
+      "firstSeen": "2001-01-01",
+      "lastSeen": "2016-08-01",
+      "status": "dormant",
+      "sophistication": "advanced",
+      "targets": {
+        "industries": ["Government", "Military", "Telecommunications", "Energy", "Financial"],
+        "countries": ["Iran", "Russia", "China", "Pakistan", "Afghanistan"],
+        "sectors": ["Critical infrastructure", "Nuclear facilities"]
+      },
+      "ttps": [
+        { "id": "T1542.003", "name": "Bootkit" },
+        { "id": "T1027", "name": "Obfuscated Files or Information" },
+        { "id": "T1055", "name": "Process Injection" },
+        { "id": "T1140", "name": "Deobfuscate/Decode Files or Information" },
+        { "id": "T1005", "name": "Data from Local System" },
+        { "id": "T1041", "name": "Exfiltration Over C2 Channel" }
+      ],
+      "malwareFamilies": ["Fanny", "EquationDrug", "GrayFish", "DoubleFantasy", "TripleFantasy"],
+      "infrastructure": {
+        "domains": ["equation-update.com"],
+        "ips": ["unknown"],
+        "asns": ["unknown"]
+      },
+      "campaigns": [
+        {
+          "name": "Stuxnet",
+          "date": "2010-06-01",
+          "description": "Sophisticated attack on Iranian nuclear facilities",
+          "targets": ["Iranian nuclear program"]
+        }
+      ],
+      "attribution": {
+        "confidence": "high",
+        "evidence": [
+          "Extremely sophisticated capabilities",
+          "Targets align with US intelligence priorities",
+          "Use of zero-day exploits",
+          "Firmware-level persistence",
+          "Links to NSA operations revealed by Shadow Brokers"
+        ]
+      },
+      "references": [
+        {
+          "title": "Equation Group: The Crown Creator of Cyber-Espionage",
+          "url": "https://securelist.com/equation-the-death-star-of-malware-galaxy/68750/",
+          "date": "2015-02-16"
+        }
+      ]
+    },
+    {
+      "id": "TA-010",
+      "name": "DarkSide",
+      "aliases": ["Carbon Spider"],
+      "type": "cybercrime",
+      "country": "Russia",
+      "motivation": ["financial"],
+      "firstSeen": "2020-08-01",
+      "lastSeen": "2021-05-14",
+      "status": "disbanded",
+      "sophistication": "high",
+      "targets": {
+        "industries": ["Energy", "Manufacturing", "Legal", "Technology", "Healthcare"],
+        "countries": ["United States", "Europe", "Australia"],
+        "sectors": ["Critical infrastructure", "Large enterprises"]
+      },
+      "ttps": [
+        { "id": "T1486", "name": "Data Encrypted for Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery" },
+        { "id": "T1489", "name": "Service Stop" },
+        { "id": "T1567.002", "name": "Exfiltration to Cloud Storage" },
+        { "id": "T1078", "name": "Valid Accounts" },
+        { "id": "T1021.001", "name": "Remote Desktop Protocol" },
+        { "id": "T1047", "name": "Windows Management Instrumentation" }
+      ],
+      "malwareFamilies": ["DarkSide Ransomware"],
+      "infrastructure": {
+        "domains": ["darkside-leak.com", "darkside-support.net"],
+        "ips": ["185.220.101.34", "91.219.236.166"],
+        "asns": ["AS48693"]
+      },
+      "campaigns": [
+        {
+          "name": "Colonial Pipeline Attack",
+          "date": "2021-05-07",
+          "description": "Ransomware attack on major US fuel pipeline",
+          "targets": ["Colonial Pipeline"]
+        }
+      ],
+      "attribution": {
+        "confidence": "high",
+        "evidence": [
+          "Russian language artifacts",
+          "Avoidance of CIS countries",
+          "Ransomware-as-a-Service model",
+          "Infrastructure in Russia",
+          "Disbanded after Colonial Pipeline attack"
+        ]
+      },
+      "references": [
+        {
+          "title": "DarkSide Ransomware Gang",
+          "url": "https://www.fireeye.com/blog/threat-research/2021/05/shining-a-light-on-darkside-ransomware-operations.html",
+          "date": "2021-05-13"
+        }
+      ]
+    }
+  ]
+}

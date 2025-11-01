@@ -591,3 +591,499 @@ body {
   text-transform: uppercase;
 }
 
+
+
+/* Threat Actor Styles */
+.actor-attribution {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.actor-label {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.actor-match {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 10px;
+  background: rgba(147, 51, 234, 0.1);
+  border-radius: 4px;
+  margin-bottom: 6px;
+  font-size: 0.85em;
+}
+
+.actor-name {
+  color: var(--text-primary);
+  font-weight: 600;
+  flex: 1;
+}
+
+.actor-type {
+  color: #9333ea;
+  font-size: 0.8em;
+  padding: 2px 6px;
+  background: rgba(147, 51, 234, 0.2);
+  border-radius: 3px;
+  text-transform: capitalize;
+}
+
+.actor-confidence {
+  color: #9333ea;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Actor Card Styles */
+.actor-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actor-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.actor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.actor-name {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.actor-type-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actor-type-badge.nationstate {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.actor-type-badge.cybercrime {
+  background: rgba(249, 115, 22, 0.1);
+  color: #f97316;
+}
+
+.actor-type-badge.hacktivist {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.actor-type-badge.insider {
+  background: rgba(168, 85, 247, 0.1);
+  color: #a855f7;
+}
+
+.actor-aliases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.alias-tag {
+  padding: 3px 8px;
+  background: rgba(100, 116, 139, 0.1);
+  border-radius: 4px;
+  font-size: 0.8em;
+  color: var(--text-secondary);
+}
+
+.actor-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meta-label {
+  font-size: 0.75em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.meta-value {
+  font-size: 0.9em;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.sophistication-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.sophistication-badge.advanced {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.sophistication-badge.high {
+  background: rgba(249, 115, 22, 0.1);
+  color: #f97316;
+}
+
+.sophistication-badge.medium {
+  background: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+}
+
+.sophistication-badge.low {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.status-badge.active {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.status-badge.dormant {
+  background: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+}
+
+.status-badge.disbanded {
+  background: rgba(100, 116, 139, 0.1);
+  color: #64748b;
+}
+
+.actor-motivation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.motivation-tag {
+  padding: 3px 8px;
+  background: rgba(147, 51, 234, 0.1);
+  border-radius: 4px;
+  font-size: 0.8em;
+  color: #9333ea;
+  text-transform: capitalize;
+}
+
+.actor-footer {
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.8em;
+  color: var(--text-secondary);
+}
+
+/* Modal Styles for Actor Details */
+.modal-section {
+  margin-bottom: 24px;
+}
+
+.modal-section h3 {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.modal-section h4 {
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.alias-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.profile-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-label {
+  font-size: 0.8em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-value {
+  font-size: 0.95em;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.targets-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.target-category h4 {
+  margin-bottom: 8px;
+}
+
+.target-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.target-tag {
+  padding: 4px 10px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: #3b82f6;
+}
+
+.ttp-list {
+  display: grid;
+  gap: 8px;
+}
+
+.ttp-item {
+  display: flex;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(100, 116, 139, 0.05);
+  border-radius: 4px;
+}
+
+.ttp-id {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: var(--primary-color);
+  min-width: 80px;
+}
+
+.ttp-name {
+  color: var(--text-primary);
+  font-size: 0.9em;
+}
+
+.malware-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.malware-tag {
+  padding: 4px 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: #ef4444;
+  font-family: 'Courier New', monospace;
+}
+
+.infrastructure-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.infra-category h4 {
+  margin-bottom: 8px;
+}
+
+.infra-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.infra-list code {
+  padding: 4px 8px;
+  background: rgba(100, 116, 139, 0.1);
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
+}
+
+.campaigns-list {
+  display: grid;
+  gap: 16px;
+}
+
+.campaign-item {
+  padding: 16px;
+  background: rgba(100, 116, 139, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.campaign-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.campaign-header h4 {
+  margin: 0;
+  font-size: 1em;
+  color: var(--text-primary);
+}
+
+.campaign-date {
+  font-size: 0.8em;
+  color: var(--text-secondary);
+}
+
+.campaign-description {
+  margin: 8px 0;
+  font-size: 0.9em;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.campaign-targets {
+  font-size: 0.85em;
+  color: var(--text-secondary);
+}
+
+.attribution-info {
+  padding: 16px;
+  background: rgba(147, 51, 234, 0.05);
+  border-radius: 8px;
+}
+
+.attribution-confidence {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.confidence-label {
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.confidence-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.confidence-badge.very-high {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.confidence-badge.high {
+  background: rgba(249, 115, 22, 0.1);
+  color: #f97316;
+}
+
+.confidence-badge.medium {
+  background: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+}
+
+.confidence-badge.low {
+  background: rgba(100, 116, 139, 0.1);
+  color: #64748b;
+}
+
+.attribution-evidence h4 {
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+.attribution-evidence ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.attribution-evidence li {
+  margin-bottom: 6px;
+  font-size: 0.9em;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.references-list {
+  display: grid;
+  gap: 8px;
+}
+
+.reference-item {
+  padding: 8px 12px;
+  background: rgba(100, 116, 139, 0.05);
+  border-radius: 4px;
+}
+
+.reference-item a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.reference-item a:hover {
+  text-decoration: underline;
+}
+
+.reference-date {
+  margin-left: 8px;
+  font-size: 0.8em;
+  color: var(--text-secondary);
+}

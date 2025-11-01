@@ -12,6 +12,7 @@ import { createHealthCheck, logStructured } from './utils.js';
 import { loadAPTProfiles, addAPTCorrelation } from './apt-correlation.js';
 import { loadDetections, addDetectionRecommendations } from './detection-correlation.js';
 import { loadDarkWebIntel, addDarkWebCorrelation } from './dark-web-correlation.js';
+import { loadThreatActors, addActorAttribution } from './actor-attribution.js';
 
 const VERSION = '2.0.0';
 const CACHE_TTL = 900; // 15 minutes
@@ -139,6 +140,12 @@ async function fetchAndProcessThreats(env) {
     (darkWebData.ransomwareVictims?.length > 0 || darkWebData.pasteFindings?.length > 0)
   ) {
     items = addDarkWebCorrelation(items, darkWebData);
+  }
+
+  // Phase 3: Threat Actor Attribution
+  const actorData = await loadThreatActors(env);
+  if (actorData && actorData.threatActors?.length > 0) {
+    items = addActorAttribution(items, actorData);
   }
 
   // Phase 1: Base risk scores
