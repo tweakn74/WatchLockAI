@@ -4,7 +4,15 @@
   "title": "Unified Threat Intelligence Schema",
   "description": "Schema for WatchLockAI unified threat intelligence objects",
   "type": "object",
-  "required": ["threat_id", "title", "severity_score", "severity", "sources", "first_seen", "last_seen"],
+  "required": [
+    "threat_id",
+    "title",
+    "severity_score",
+    "severity",
+    "sources",
+    "first_seen",
+    "last_seen"
+  ],
   "properties": {
     "threat_id": {
       "type": "string",
@@ -46,7 +54,17 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": ["MULTI-SOURCE", "GOV-CONFIRMED", "CRITICAL-COMBO", "RANSOMWARE-CRITICAL", "TRENDING", "APT-TARGETED", "KEV", "ZERO-DAY", "POC"]
+        "enum": [
+          "MULTI-SOURCE",
+          "GOV-CONFIRMED",
+          "CRITICAL-COMBO",
+          "RANSOMWARE-CRITICAL",
+          "TRENDING",
+          "APT-TARGETED",
+          "KEV",
+          "ZERO-DAY",
+          "POC"
+        ]
       },
       "description": "Visual badges for the threat"
     },

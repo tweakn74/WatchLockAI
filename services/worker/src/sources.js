@@ -81,7 +81,7 @@ export async function addCandidateSource(url, title, env) {
  */
 export async function blockDomain(domain, env) {
   try {
-    let blocked = (await env.NEWS_KV.get('settings:blocked_domains', 'json')) || [];
+    const blocked = (await env.NEWS_KV.get('settings:blocked_domains', 'json')) || [];
 
     if (!blocked.includes(domain)) {
       blocked.push(domain);
