@@ -2,12 +2,13 @@ name = "watchlockai-intel-api"
 main = "src/index.js"
 compatibility_date = "2024-11-01"
 workers_dev = true
+node_compat = true
 
 # KV Namespace bindings
 [[kv_namespaces]]
 binding = "WATCHLOCK_KV"
-id = "PLACEHOLDER_KV_ID"
-preview_id = "PLACEHOLDER_KV_PREVIEW_ID"
+id = "7105c18371114cc49492b3c0f797460b"
+preview_id = "024f83daa2c648bdad1b6a0dbf7ed11e"
 
 # Environment variables
 [vars]
@@ -16,10 +17,3 @@ DEFAULT_FEEDS = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_
 # Cron trigger - every 15 minutes
 [triggers]
 crons = ["*/15 * * * *"]
-
-# Build configuration
-[build]
-command = ""
-
-[build.upload]
-format = "service-worker"

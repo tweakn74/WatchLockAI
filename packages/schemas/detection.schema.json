@@ -1,0 +1,147 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Detection Rule Schema",
+  "description": "Schema for SOC detection rules with MITRE ATT&CK mapping",
+  "type": "object",
+  "required": ["id", "name", "severity", "status", "platform", "description", "techniques"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique detection identifier",
+      "pattern": "^DET-[0-9]{4}$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Detection rule name",
+      "minLength": 5,
+      "maxLength": 200
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"],
+      "description": "Detection severity level"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["stable", "preview", "experimental", "deprecated"],
+      "description": "Detection maturity status"
+    },
+    "platform": {
+      "type": "string",
+      "description": "Target platform (Splunk, Elastic, Sentinel, etc.)",
+      "examples": ["Splunk", "Elastic", "Microsoft Sentinel", "Chronicle", "QRadar"]
+    },
+    "queryLanguage": {
+      "type": "string",
+      "description": "Query language used",
+      "examples": ["SPL", "KQL", "Lucene", "YARA-L", "AQL"]
+    },
+    "query": {
+      "type": "string",
+      "description": "Detection query/rule content"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what the detection identifies"
+    },
+    "useCase": {
+      "type": "string",
+      "description": "Primary use case for this detection"
+    },
+    "techniques": {
+      "type": "array",
+      "description": "MITRE ATT&CK techniques detected",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "tactic"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$",
+            "description": "MITRE ATT&CK technique ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Technique name"
+          },
+          "tactic": {
+            "type": "string",
+            "description": "MITRE ATT&CK tactic"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "dataSource": {
+      "type": "array",
+      "description": "Required data sources",
+      "items": {
+        "type": "string"
+      },
+      "examples": [["Windows Event Logs", "Office 365 Audit Logs"], ["Network Traffic", "DNS Logs"]]
+    },
+    "enrichment": {
+      "type": "string",
+      "description": "Enrichment strategy for reducing false positives"
+    },
+    "tuning": {
+      "type": "string",
+      "description": "Tuning notes and recommendations"
+    },
+    "falsePositiveRate": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "Expected false positive rate"
+    },
+    "responseActions": {
+      "type": "array",
+      "description": "Recommended response actions",
+      "items": {
+        "type": "string"
+      }
+    },
+    "references": {
+      "type": "array",
+      "description": "External references and documentation",
+      "items": {
+        "type": "object",
+        "required": ["title", "url"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "author": {
+      "type": "string",
+      "description": "Detection author/team"
+    },
+    "created": {
+      "type": "string",
+      "format": "date",
+      "description": "Creation date"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date",
+      "description": "Last update date"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Additional tags for categorization",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
+

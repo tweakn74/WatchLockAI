@@ -1,0 +1,500 @@
+{
+  "version": "1.0.0",
+  "updated": "2025-11-01",
+  "description": "WatchLockAI Detection Engineering Catalog - SOC-ready detection rules mapped to MITRE ATT&CK",
+  "detections": [
+    {
+      "id": "DET-0001",
+      "name": "Mailbox Forwarding Rule Exfiltration Detector",
+      "severity": "CRITICAL",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=o365 sourcetype=\"o365:management:activity\" Operation=\"New-InboxRule\" | search Parameters{}.Name=\"ForwardTo\" OR Parameters{}.Name=\"RedirectTo\" | eval rule_name=mvindex('Parameters{}.Value', mvfind('Parameters{}.Name', \"Name\")) | eval forward_to=mvindex('Parameters{}.Value', mvfind('Parameters{}.Name', \"ForwardTo\")) | table _time, UserId, ClientIPAddress, rule_name, forward_to | where NOT match(forward_to, \"@(company\\.com|trusted-partner\\.com)$\")",
+      "description": "Detects creation of mailbox forwarding rules that redirect emails to external domains. This is a common data exfiltration technique used by attackers after compromising an account.",
+      "useCase": "Data Exfiltration Detection",
+      "techniques": [
+        {"id": "T1114.003", "name": "Email Forwarding Rule", "tactic": "Collection"},
+        {"id": "T1048.003", "name": "Exfiltration Over Unencrypted/Obfuscated Non-C2 Protocol", "tactic": "Exfiltration"}
+      ],
+      "dataSource": ["Office 365 Audit Logs", "Exchange Online Logs"],
+      "enrichment": "Correlate with recent password changes, MFA changes, or impossible travel alerts for the same user. Check if the forwarding address belongs to a known threat actor domain.",
+      "tuning": "Whitelist legitimate business partners and automated systems. Consider alerting only on rules created outside business hours or from unusual geolocations.",
+      "falsePositiveRate": "low",
+      "responseActions": [
+        "Immediately disable the forwarding rule",
+        "Reset user credentials and enforce MFA",
+        "Review mailbox audit logs for unauthorized access",
+        "Check for other persistence mechanisms (delegates, app permissions)",
+        "Notify user and security team"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-01-15",
+      "lastUpdated": "2025-11-01",
+      "tags": ["exfiltration", "email", "o365", "persistence"],
+      "references": [
+        {"title": "MITRE ATT&CK T1114.003", "url": "https://attack.mitre.org/techniques/T1114/003/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0002",
+      "name": "Impossible Travel Alert Risk Fusion",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=authentication sourcetype=okta:log eventType=user.session.start | iplocation client.ipAddress | eval location=city.\", \".country | streamstats current=f last(location) as prev_location, last(_time) as prev_time by user | eval time_diff=(_time - prev_time)/3600 | eval distance=case(location=prev_location, 0, 1=1, 500) | eval min_speed=distance/time_diff | where min_speed > 500 | table _time, user, location, prev_location, time_diff, min_speed, client.ipAddress",
+      "description": "Detects impossible travel scenarios where a user authenticates from two geographically distant locations in a timeframe that would require physically impossible travel speeds (>500 mph).",
+      "useCase": "Account Compromise Detection",
+      "techniques": [
+        {"id": "T1078", "name": "Valid Accounts", "tactic": "Initial Access"},
+        {"id": "T1078.004", "name": "Cloud Accounts", "tactic": "Persistence"}
+      ],
+      "dataSource": ["Authentication Logs", "Okta Logs", "Azure AD Logs"],
+      "enrichment": "Enrich with user's known travel patterns, VPN usage, and device fingerprints. Cross-reference with HR travel requests and calendar events.",
+      "tuning": "Adjust speed threshold based on your environment. Consider whitelisting known VPN exit nodes and cloud service IPs. Account for timezone differences.",
+      "falsePositiveRate": "medium",
+      "responseActions": [
+        "Trigger MFA challenge for next login",
+        "Temporarily suspend account pending investigation",
+        "Review recent account activity for anomalies",
+        "Contact user via out-of-band communication",
+        "Check for credential stuffing or brute force attempts"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-02-10",
+      "lastUpdated": "2025-11-01",
+      "tags": ["authentication", "impossible-travel", "account-compromise"],
+      "references": [
+        {"title": "MITRE ATT&CK T1078", "url": "https://attack.mitre.org/techniques/T1078/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0003",
+      "name": "PowerShell Empire C2 Beacon Detection",
+      "severity": "CRITICAL",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:Microsoft-Windows-PowerShell/Operational\" EventCode=4104 | rex field=ScriptBlockText \"(?<empire_pattern>System\\.Net\\.WebClient.*DownloadString|IEX.*New-Object.*Net\\.WebClient|Invoke-Expression.*FromBase64String)\" | where isnotnull(empire_pattern) | stats count by ComputerName, User, empire_pattern | where count > 3",
+      "description": "Detects PowerShell Empire command and control beaconing activity by identifying suspicious PowerShell script block patterns commonly used by Empire agents.",
+      "useCase": "Command and Control Detection",
+      "techniques": [
+        {"id": "T1059.001", "name": "PowerShell", "tactic": "Execution"},
+        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"},
+        {"id": "T1027", "name": "Obfuscated Files or Information", "tactic": "Defense Evasion"}
+      ],
+      "dataSource": ["PowerShell Operational Logs", "Windows Event Logs"],
+      "enrichment": "Correlate with network traffic to identify C2 server IPs. Check process tree for parent processes. Analyze script content for IOCs.",
+      "tuning": "Whitelist legitimate automation scripts. Adjust count threshold based on environment. Consider adding time window constraints.",
+      "falsePositiveRate": "low",
+      "responseActions": [
+        "Isolate affected endpoint immediately",
+        "Capture memory dump for forensic analysis",
+        "Block C2 IP addresses at firewall",
+        "Hunt for lateral movement from compromised host",
+        "Initiate incident response procedures"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-03-05",
+      "lastUpdated": "2025-11-01",
+      "tags": ["powershell", "c2", "empire", "malware"],
+      "references": [
+        {"title": "PowerShell Empire Documentation", "url": "https://github.com/EmpireProject/Empire", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0004",
+      "name": "Mimikatz Credential Dumping Detection",
+      "severity": "CRITICAL",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows (sourcetype=\"WinEventLog:Security\" EventCode=4656 ObjectName=\"*\\lsass.exe\" AccessMask=0x1010) OR (sourcetype=\"WinEventLog:Sysmon\" EventCode=10 TargetImage=\"*\\lsass.exe\" GrantedAccess IN (\"0x1010\", \"0x1410\", \"0x147a\")) | stats count by ComputerName, SubjectUserName, ProcessName | where count > 0",
+      "description": "Detects attempts to access LSASS process memory, a strong indicator of credential dumping tools like Mimikatz being used to extract passwords and hashes.",
+      "useCase": "Credential Access Detection",
+      "techniques": [
+        {"id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access"},
+        {"id": "T1003", "name": "OS Credential Dumping", "tactic": "Credential Access"}
+      ],
+      "dataSource": ["Windows Security Logs", "Sysmon Logs"],
+      "enrichment": "Check if the accessing process is signed and from a trusted vendor. Correlate with recent privilege escalation events. Look for suspicious parent processes.",
+      "tuning": "Whitelist legitimate security tools and EDR agents. Consider process reputation scoring. Alert on unsigned or unusual processes only.",
+      "falsePositiveRate": "low",
+      "responseActions": [
+        "Immediately isolate the affected system",
+        "Force password reset for all privileged accounts",
+        "Review Kerberos ticket activity for Golden/Silver tickets",
+        "Hunt for lateral movement using dumped credentials",
+        "Escalate to incident response team"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-01-20",
+      "lastUpdated": "2025-11-01",
+      "tags": ["mimikatz", "credential-dumping", "lsass"],
+      "references": [
+        {"title": "MITRE ATT&CK T1003.001", "url": "https://attack.mitre.org/techniques/T1003/001/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0005",
+      "name": "Suspicious Scheduled Task Creation",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:Security\" EventCode=4698 | rex field=TaskContent \"<Command>(?<command>[^<]+)</Command>\" | rex field=TaskContent \"<Arguments>(?<arguments>[^<]+)</Arguments>\" | where match(command, \"(?i)(powershell|cmd|wscript|cscript|mshta|rundll32|regsvr32)\") | table _time, ComputerName, SubjectUserName, TaskName, command, arguments",
+      "description": "Detects creation of scheduled tasks that execute suspicious binaries commonly abused for persistence and execution, such as PowerShell, cmd.exe, or script interpreters.",
+      "useCase": "Persistence Detection",
+      "techniques": [
+        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence"},
+        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Execution"}
+      ],
+      "dataSource": ["Windows Security Logs"],
+      "enrichment": "Check task trigger conditions and run frequency. Verify if the creating user has legitimate admin rights. Analyze command line for obfuscation or encoded content.",
+      "tuning": "Whitelist known administrative tasks and software deployment tools. Filter out tasks created by SYSTEM for Windows updates.",
+      "falsePositiveRate": "medium",
+      "responseActions": [
+        "Disable the suspicious scheduled task",
+        "Analyze the task's command for malicious intent",
+        "Check for other persistence mechanisms on the host",
+        "Review user account for compromise indicators",
+        "Document and preserve evidence"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-02-15",
+      "lastUpdated": "2025-11-01",
+      "tags": ["persistence", "scheduled-task", "execution"],
+      "references": [
+        {"title": "MITRE ATT&CK T1053.005", "url": "https://attack.mitre.org/techniques/T1053/005/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0006",
+      "name": "Ransomware File Encryption Activity",
+      "severity": "CRITICAL",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:Sysmon\" EventCode=11 | rex field=TargetFilename \"\\.(?<extension>[^\\.]+)$\" | where extension IN (\"encrypted\", \"locked\", \"crypto\", \"crypt\", \"enc\") OR match(TargetFilename, \"(?i)readme|decrypt|ransom|how_to_decrypt\") | stats dc(TargetFilename) as file_count by ComputerName, Image, User | where file_count > 50",
+      "description": "Detects mass file encryption activity characteristic of ransomware by monitoring for rapid creation of files with suspicious extensions or ransom note filenames.",
+      "useCase": "Ransomware Detection",
+      "techniques": [
+        {"id": "T1486", "name": "Data Encrypted for Impact", "tactic": "Impact"},
+        {"id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact"}
+      ],
+      "dataSource": ["Sysmon Logs", "File System Monitoring"],
+      "enrichment": "Correlate with shadow copy deletion events. Check for network share access. Look for process injection or unusual parent-child relationships.",
+      "tuning": "Adjust file_count threshold based on environment. Whitelist backup and archiving software. Consider time window for file creation rate.",
+      "falsePositiveRate": "low",
+      "responseActions": [
+        "Immediately isolate affected systems from network",
+        "Disable user account to prevent spread",
+        "Preserve forensic evidence and memory dumps",
+        "Identify ransomware variant for decryption options",
+        "Activate incident response and recovery procedures"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-03-10",
+      "lastUpdated": "2025-11-01",
+      "tags": ["ransomware", "encryption", "impact"],
+      "references": [
+        {"title": "MITRE ATT&CK T1486", "url": "https://attack.mitre.org/techniques/T1486/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0007",
+      "name": "Suspicious DNS Tunneling Activity",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=network sourcetype=dns | eval query_length=len(query) | where query_length > 50 | stats count, avg(query_length) as avg_len, max(query_length) as max_len by src_ip, query | where count > 100 AND avg_len > 40",
+      "description": "Detects DNS tunneling used for command and control or data exfiltration by identifying abnormally long DNS queries with high frequency from the same source.",
+      "useCase": "Command and Control Detection",
+      "techniques": [
+        {"id": "T1071.004", "name": "DNS", "tactic": "Command and Control"},
+        {"id": "T1048.003", "name": "Exfiltration Over Unencrypted/Obfuscated Non-C2 Protocol", "tactic": "Exfiltration"}
+      ],
+      "dataSource": ["DNS Logs", "Network Traffic"],
+      "enrichment": "Check domain reputation and WHOIS data. Analyze query patterns for encoding (base64, hex). Correlate with endpoint process creating DNS requests.",
+      "tuning": "Whitelist legitimate services using long DNS queries (CDNs, cloud services). Adjust thresholds based on baseline traffic patterns.",
+      "falsePositiveRate": "medium",
+      "responseActions": [
+        "Block suspicious domain at DNS level",
+        "Identify and isolate source system",
+        "Analyze DNS query content for exfiltrated data",
+        "Hunt for malware on source endpoint",
+        "Review firewall logs for other C2 channels"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-04-01",
+      "lastUpdated": "2025-11-01",
+      "tags": ["dns-tunneling", "c2", "exfiltration"],
+      "references": [
+        {"title": "MITRE ATT&CK T1071.004", "url": "https://attack.mitre.org/techniques/T1071/004/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0008",
+      "name": "Kerberoasting Attack Detection",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:Security\" EventCode=4769 TicketEncryptionType=0x17 ServiceName!=\"*$\" | stats count by TargetUserName, ServiceName, IpAddress | where count > 5",
+      "description": "Detects Kerberoasting attacks where adversaries request service tickets for accounts with SPNs to crack offline and obtain plaintext passwords.",
+      "useCase": "Credential Access Detection",
+      "techniques": [
+        {"id": "T1558.003", "name": "Kerberoasting", "tactic": "Credential Access"}
+      ],
+      "dataSource": ["Windows Security Logs", "Domain Controller Logs"],
+      "enrichment": "Check if requesting account has history of SPN ticket requests. Verify if service accounts have strong passwords. Look for bulk requests in short time window.",
+      "tuning": "Whitelist service accounts that legitimately request many tickets. Filter out computer accounts (ending with $). Adjust count threshold.",
+      "falsePositiveRate": "low",
+      "responseActions": [
+        "Reset passwords for targeted service accounts",
+        "Implement strong password policy for SPN accounts",
+        "Enable AES encryption for Kerberos",
+        "Investigate requesting user account for compromise",
+        "Review service account permissions and reduce privileges"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-04-15",
+      "lastUpdated": "2025-11-01",
+      "tags": ["kerberoasting", "credential-access", "active-directory"],
+      "references": [
+        {"title": "MITRE ATT&CK T1558.003", "url": "https://attack.mitre.org/techniques/T1558/003/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0009",
+      "name": "Suspicious Process Injection via CreateRemoteThread",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:Sysmon\" EventCode=8 | where NOT match(SourceImage, \"(?i)(windows\\\\system32|program files)\") | stats count by SourceImage, TargetImage, ComputerName | where count > 0",
+      "description": "Detects process injection techniques using CreateRemoteThread API, commonly used by malware to inject code into legitimate processes for evasion.",
+      "useCase": "Defense Evasion Detection",
+      "techniques": [
+        {"id": "T1055.001", "name": "Dynamic-link Library Injection", "tactic": "Defense Evasion"},
+        {"id": "T1055", "name": "Process Injection", "tactic": "Privilege Escalation"}
+      ],
+      "dataSource": ["Sysmon Logs"],
+      "enrichment": "Check digital signature of source process. Analyze target process for suspicious modules. Review process tree for anomalies.",
+      "tuning": "Whitelist legitimate software that uses process injection (debuggers, security tools). Filter system processes.",
+      "falsePositiveRate": "medium",
+      "responseActions": [
+        "Terminate suspicious source process",
+        "Capture memory dump of target process",
+        "Analyze injected code for malicious behavior",
+        "Hunt for other injection attempts from same source",
+        "Escalate to malware analysis team"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-05-01",
+      "lastUpdated": "2025-11-01",
+      "tags": ["process-injection", "defense-evasion", "malware"],
+      "references": [
+        {"title": "MITRE ATT&CK T1055", "url": "https://attack.mitre.org/techniques/T1055/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0010",
+      "name": "Suspicious WMI Event Subscription Persistence",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:Microsoft-Windows-WMI-Activity/Operational\" EventCode=5861 | rex field=Message \"(?<consumer_name>ActiveScriptEventConsumer|CommandLineEventConsumer)\" | where isnotnull(consumer_name) | table _time, ComputerName, User, consumer_name, Message",
+      "description": "Detects creation of WMI event subscriptions used for persistence, a technique that allows malware to execute code when specific system events occur.",
+      "useCase": "Persistence Detection",
+      "techniques": [
+        {"id": "T1546.003", "name": "Windows Management Instrumentation Event Subscription", "tactic": "Persistence"},
+        {"id": "T1047", "name": "Windows Management Instrumentation", "tactic": "Execution"}
+      ],
+      "dataSource": ["WMI Activity Logs"],
+      "enrichment": "Review the consumer's script or command line for malicious content. Check filter and binding details. Correlate with other persistence mechanisms.",
+      "tuning": "Whitelist known administrative WMI subscriptions. Filter out legitimate monitoring tools.",
+      "falsePositiveRate": "low",
+      "responseActions": [
+        "Remove malicious WMI subscription",
+        "Analyze consumer script/command for IOCs",
+        "Hunt for other WMI-based persistence",
+        "Review user account for compromise",
+        "Document persistence mechanism for threat intel"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-05-15",
+      "lastUpdated": "2025-11-01",
+      "tags": ["wmi", "persistence", "event-subscription"],
+      "references": [
+        {"title": "MITRE ATT&CK T1546.003", "url": "https://attack.mitre.org/techniques/T1546/003/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0011",
+      "name": "Suspicious RDP Lateral Movement",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:Security\" EventCode=4624 LogonType=10 | stats count, dc(ComputerName) as target_count by TargetUserName, IpAddress | where target_count > 5 AND count > 10",
+      "description": "Detects lateral movement via RDP by identifying accounts authenticating to multiple systems in a short time period, indicative of adversary reconnaissance or spread.",
+      "useCase": "Lateral Movement Detection",
+      "techniques": [
+        {"id": "T1021.001", "name": "Remote Desktop Protocol", "tactic": "Lateral Movement"}
+      ],
+      "dataSource": ["Windows Security Logs"],
+      "enrichment": "Check if source IP is a known jump box or admin workstation. Review user's typical RDP patterns. Correlate with privilege escalation events.",
+      "tuning": "Whitelist IT admin accounts and jump servers. Adjust thresholds based on environment size. Consider time window constraints.",
+      "falsePositiveRate": "medium",
+      "responseActions": [
+        "Investigate user account for compromise",
+        "Review RDP session activity on target systems",
+        "Check for malware deployment or data access",
+        "Temporarily disable account if suspicious",
+        "Enable NLA and MFA for RDP"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-06-01",
+      "lastUpdated": "2025-11-01",
+      "tags": ["rdp", "lateral-movement", "authentication"],
+      "references": [
+        {"title": "MITRE ATT&CK T1021.001", "url": "https://attack.mitre.org/techniques/T1021/001/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0012",
+      "name": "Shadow Copy Deletion - Ransomware Indicator",
+      "severity": "CRITICAL",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows (sourcetype=\"WinEventLog:System\" EventCode=7036 Message=\"*Volume Shadow Copy*stopped*\") OR (sourcetype=\"WinEventLog:Sysmon\" EventCode=1 CommandLine=\"*vssadmin*delete*shadows*\" OR CommandLine=\"*wmic*shadowcopy*delete*\" OR CommandLine=\"*wbadmin*delete*catalog*\") | stats count by ComputerName, CommandLine, User",
+      "description": "Detects deletion of Volume Shadow Copies, a common ransomware technique to prevent file recovery and maximize impact.",
+      "useCase": "Ransomware Detection",
+      "techniques": [
+        {"id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact"}
+      ],
+      "dataSource": ["Windows System Logs", "Sysmon Logs"],
+      "enrichment": "Correlate with file encryption activity. Check for other anti-recovery actions (backup deletion, safe mode changes). Review process tree.",
+      "tuning": "Whitelist legitimate backup and maintenance scripts. Alert on manual executions or unusual parent processes.",
+      "falsePositiveRate": "low",
+      "responseActions": [
+        "Immediately isolate system from network",
+        "Preserve any remaining shadow copies",
+        "Identify ransomware variant",
+        "Check for backups on separate systems",
+        "Initiate ransomware incident response"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-06-15",
+      "lastUpdated": "2025-11-01",
+      "tags": ["ransomware", "shadow-copy", "impact"],
+      "references": [
+        {"title": "MITRE ATT&CK T1490", "url": "https://attack.mitre.org/techniques/T1490/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0013",
+      "name": "Suspicious OAuth Application Consent",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=o365 sourcetype=\"o365:management:activity\" Operation=\"Consent to application\" | eval permissions=mvjoin('ModifiedProperties{}.NewValue', \", \") | where match(permissions, \"(?i)(mail\\.read|files\\.read|user\\.read\\.all|directory\\.read\\.all)\") | table _time, UserId, ClientIPAddress, ApplicationDisplayName, permissions",
+      "description": "Detects users granting OAuth consent to applications with high-risk permissions, which could be used for data exfiltration or persistence.",
+      "useCase": "Initial Access Detection",
+      "techniques": [
+        {"id": "T1528", "name": "Steal Application Access Token", "tactic": "Credential Access"},
+        {"id": "T1078.004", "name": "Cloud Accounts", "tactic": "Persistence"}
+      ],
+      "dataSource": ["Office 365 Audit Logs", "Azure AD Logs"],
+      "enrichment": "Check application publisher and reputation. Review application's requested permissions scope. Correlate with phishing campaigns.",
+      "tuning": "Whitelist known enterprise applications. Alert on first-time consents or consents from unusual locations.",
+      "falsePositiveRate": "medium",
+      "responseActions": [
+        "Revoke application consent immediately",
+        "Review application's access to user data",
+        "Check for data exfiltration activity",
+        "Educate user on OAuth phishing risks",
+        "Implement application consent policies"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-07-01",
+      "lastUpdated": "2025-11-01",
+      "tags": ["oauth", "consent", "cloud", "phishing"],
+      "references": [
+        {"title": "MITRE ATT&CK T1528", "url": "https://attack.mitre.org/techniques/T1528/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0014",
+      "name": "Suspicious Service Installation",
+      "severity": "HIGH",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:System\" EventCode=7045 | rex field=ServiceFileName \"(?<service_path>.+)\" | where match(service_path, \"(?i)(temp|appdata|programdata|users)\") OR match(ServiceName, \"(?i)(update|svc|service)[0-9]+\") | table _time, ComputerName, ServiceName, ServiceFileName, AccountName",
+      "description": "Detects installation of Windows services from suspicious locations or with generic names, often used by malware for persistence.",
+      "useCase": "Persistence Detection",
+      "techniques": [
+        {"id": "T1543.003", "name": "Windows Service", "tactic": "Persistence"},
+        {"id": "T1543.003", "name": "Windows Service", "tactic": "Privilege Escalation"}
+      ],
+      "dataSource": ["Windows System Logs"],
+      "enrichment": "Check service binary signature and reputation. Review service configuration (start type, dependencies). Analyze binary for malicious behavior.",
+      "tuning": "Whitelist legitimate software installers. Filter services created by trusted processes (msiexec, setup.exe).",
+      "falsePositiveRate": "medium",
+      "responseActions": [
+        "Stop and disable suspicious service",
+        "Quarantine service binary for analysis",
+        "Check for other persistence mechanisms",
+        "Review service account permissions",
+        "Hunt for similar services across environment"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-07-15",
+      "lastUpdated": "2025-11-01",
+      "tags": ["service", "persistence", "malware"],
+      "references": [
+        {"title": "MITRE ATT&CK T1543.003", "url": "https://attack.mitre.org/techniques/T1543/003/", "date": "2024-01-01"}
+      ]
+    },
+    {
+      "id": "DET-0015",
+      "name": "Suspicious Registry Run Key Modification",
+      "severity": "MEDIUM",
+      "status": "stable",
+      "platform": "Splunk",
+      "queryLanguage": "SPL",
+      "query": "index=windows sourcetype=\"WinEventLog:Sysmon\" EventCode=13 (TargetObject=\"*\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run*\" OR TargetObject=\"*\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce*\") | rex field=Details \"(?<executable>.+)\" | where match(executable, \"(?i)(powershell|cmd|wscript|cscript|mshta|rundll32)\") | table _time, ComputerName, User, TargetObject, Details",
+      "description": "Detects modifications to Windows Run/RunOnce registry keys that execute suspicious binaries, a common persistence technique.",
+      "useCase": "Persistence Detection",
+      "techniques": [
+        {"id": "T1547.001", "name": "Registry Run Keys / Startup Folder", "tactic": "Persistence"}
+      ],
+      "dataSource": ["Sysmon Logs"],
+      "enrichment": "Check if executable is signed and from trusted vendor. Review process that made the registry change. Analyze command line for obfuscation.",
+      "tuning": "Whitelist legitimate software auto-start entries. Filter changes made by installer processes.",
+      "falsePositiveRate": "medium",
+      "responseActions": [
+        "Remove malicious registry entry",
+        "Analyze referenced executable",
+        "Check for other autostart locations",
+        "Review user account for compromise",
+        "Document persistence mechanism"
+      ],
+      "author": "WatchLockAI Detection Engineering Team",
+      "created": "2024-08-01",
+      "lastUpdated": "2025-11-01",
+      "tags": ["registry", "persistence", "autostart"],
+      "references": [
+        {"title": "MITRE ATT&CK T1547.001", "url": "https://attack.mitre.org/techniques/T1547/001/", "date": "2024-01-01"}
+      ]
+    }
+  ]
+}
+

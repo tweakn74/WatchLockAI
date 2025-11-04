@@ -1,0 +1,22 @@
+name = "apt-tracker-mitre-aiq-intel"
+main = "worker/index.js"
+compatibility_date = "2024-10-31"
+node_compat = true
+
+[env.production]
+name = "apt-tracker-mitre-aiq-intel"
+route = { pattern = "api.yourdomain.com/*", zone_name = "yourdomain.com" }
+
+[[kv_namespaces]]
+binding = "NEWS_KV"
+id = "cef5c15199694c06a2b492f711228f98"
+
+[vars]
+ALLOWED_ORIGIN = "https://tweakn74.github.io"
+DEFAULT_FEEDS = "https://www.cisa.gov/news.xml,https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json,https://msrc.microsoft.com/blog/feed,https://googleprojectzero.blogspot.com/atom.xml,https://therecord.media/feed,https://www.bleepingcomputer.com/feed/,https://krebsonsecurity.com/feed/,https://www.cisa.gov/uscert/ncas/current-activity.xml,https://www.ncsc.gov.uk/api/1/services/v1/report-rss.xml,https://www.microsoft.com/en-us/security/blog/feed/,https://blog.talosintelligence.com/rss/,https://www.mandiant.com/resources/blog/rss.xml"
+BLOCKLIST = "example.com,spam.com"
+
+# Optional: Uncomment and set these if you have X/Twitter API access
+# TW_BEARER = "YOUR_TWITTER_BEARER_TOKEN"
+# TW_LIST_ID = "YOUR_TWITTER_LIST_ID"
+

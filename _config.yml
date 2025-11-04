@@ -1,0 +1,5 @@
+# GitHub Pages configuration
+theme: null
+title: APT Tracker - MITRE ATT&CK Intelligence
+description: Real-time threat intelligence dashboard tracking CVEs, MITRE ATT&CK techniques, and security threats
+
