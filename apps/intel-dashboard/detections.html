@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detection Engineering - WatchLockAI</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    /* Versedetect Dark Theme Colors */
+    :root {
+      /* Background Colors */
+      --bg: #0f1114;
+      --panel: #151821;
+      --panel-soft: #1b1f2a;
+      --panel-elevated: #1c202d;
+      --bg-translucent: #0f1114;
+
+      /* Legacy variable names for compatibility */
+      --bg-primary: #0f1114;
+      --bg-secondary: #151821;
+      --bg-tertiary: #1b1f2a;
+
+      /* Text Colors */
+      --text-primary: #e8ecf1;
+      --text-muted: #a7b0bf;
+      --text-subtle: #7b8496;
+      --text-secondary: #a7b0bf; /* Legacy compatibility */
+
+      /* Border Colors */
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --border: rgba(255, 255, 255, 0.08); /* Legacy compatibility */
+
+      /* Brand/Accent Colors */
+      --brand: #5aa9ff;
+      --brand-strong: #7bbcff;
+      --brand-alt: #7ee787;
+      --danger: #ff6b7a;
+      --warn: #ffb86b;
+      --accent: #5aa9ff; /* Legacy compatibility */
+      --accent-hover: #7bbcff; /* Legacy compatibility */
+
+      /* Border Radius */
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+
+      /* Shadows */
+      --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 22px 45px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-primary);
+    }
+
+    /* Skip to content link for accessibility */
+    .skip-to-content {
+      position: absolute;
+      left: -9999px;
+      z-index: 999;
+      padding: 1rem;
+      background: var(--brand);
+      color: #000;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    .skip-to-content:focus {
+      left: 1rem;
+      top: 1rem;
+    }
+
+    /* Header Navigation */
+    .site-header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .site-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .site-logo:hover {
+      color: var(--brand);
+    }
+
+    .site-logo-icon {
+      font-size: 1.5rem;
+    }
+
+    /* Mobile menu toggle */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 1.25rem;
+      transition: all 0.2s;
+    }
+
+    .mobile-menu-toggle:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      list-style: none;
+    }
+
+    .nav-menu-spaced {
+      gap: 1rem;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--brand);
+      background: rgba(90, 169, 255, 0.1);
+    }
+
+    .nav-link:focus {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+    }
+
+    .detection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .detection-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+    }
+
+    .detection-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .detection-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 15px;
+    }
+
+    .detection-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--text-primary);
+      margin-bottom: 5px;
+    }
+
+    .detection-id {
+      font-size: 0.85em;
+      color: var(--text-secondary);
+      font-family: monospace;
+    }
+
+    .severity-badge {
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .severity-critical { background: var(--danger); color: white; }
+    .severity-high { background: var(--brand); color: white; }
+    .severity-medium { background: var(--warn); color: white; }
+    .severity-low { background: var(--brand-alt); color: white; }
+    .severity-info { background: var(--text-subtle); color: white; }
+
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8em;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .status-stable { background: #27ae60; color: white; }
+    .status-preview { background: #f39c12; color: white; }
+    .status-experimental { background: #9b59b6; color: white; }
+
+    .detection-description {
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: 15px;
+      font-size: 0.95em;
+    }
+
+    .detection-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9em;
+      color: var(--text-secondary);
+    }
+
+    .techniques-section {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .technique-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .technique-tag {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      color: var(--text-primary);
+      font-family: monospace;
+    }
+
+    .filter-bar {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .filter-label {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .filter-select {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 15px 20px;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .stat-value {
+      font-size: 2em;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      margin-top: 5px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      color: var(--accent-hover);
+    }
+
+    .platform-badge {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: var(--text-primary);
+    }
+
+    .fp-rate {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+
+    .fp-low { background: #27ae60; color: white; }
+    .fp-medium { background: #f39c12; color: white; }
+    .fp-high { background: #e74c3c; color: white; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      overflow: auto;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      margin: 50px auto;
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      width: 90%;
+      max-width: 900px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .close {
+      color: var(--text-secondary);
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: var(--text-primary);
+    }
+
+    .query-block {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 15px;
+      margin: 15px 0;
+      font-family: monospace;
+      font-size: 0.9em;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: var(--text-primary);
+    }
+
+    .response-actions {
+      list-style: none;
+      padding: 0;
+    }
+
+    .response-actions li {
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .response-actions li:before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .tab-container {
+      margin-bottom: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--text-primary);
+    }
+
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .nav-menu-spaced {
+      margin-bottom: 20px;
+    }
+
+    .coverage-description {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    /* Quick Stats Widget */
+    .quick-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+      margin-top: 20px;
+    }
+
+    /* Analytics Dashboard Section */
+    .analytics-section {
+      margin: 30px 0;
+      padding: 25px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: var(--radius-md);
+    }
+
+    .analytics-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .analytics-title {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .analytics-title-icon {
+      font-size: 1.3em;
+    }
+
+    .time-range-selector {
+      display: flex;
+      gap: 8px;
+      background: rgba(26, 31, 58, 0.8);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .time-range-btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.9em;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .time-range-btn:hover {
+      background: rgba(59, 130, 246, 0.2);
+      color: var(--text-primary);
+    }
+
+    .time-range-btn.active {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+    }
+
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .chart-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .chart-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .chart-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chart-subtitle {
+      font-size: 0.85em;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow-y: auto;
+    }
+
+    /* Line Chart Styles */
+    .line-chart {
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-grid-line {
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 1;
+    }
+
+    .chart-axis-label {
+      fill: var(--text-secondary);
+      font-size: 11px;
+    }
+
+    .chart-line {
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .chart-line-critical {
+      stroke: var(--danger);
+      filter: drop-shadow(0 0 4px rgba(255, 107, 122, 0.5));
+    }
+
+    .chart-line-high {
+      stroke: var(--brand);
+      filter: drop-shadow(0 0 4px rgba(90, 169, 255, 0.5));
+    }
+
+    .chart-line-medium {
+      stroke: var(--warn);
+      filter: drop-shadow(0 0 4px rgba(255, 184, 107, 0.5));
+    }
+
+    .chart-dot {
+      cursor: pointer;
+      transition: r 0.2s ease;
+    }
+
+    .chart-dot:hover {
+      r: 6;
+    }
+
+    /* Donut Chart Styles */
+    .donut-chart-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      height: 100%;
+    }
+
+    .donut-chart {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .donut-segment {
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .donut-segment:hover {
+      opacity: 0.8;
+    }
+
+    .donut-center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .donut-center-number {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .donut-center-label {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .donut-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .legend-item:hover {
+      transform: translateX(5px);
+    }
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+    }
+
+    .legend-label {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .legend-value {
+      font-size: 0.95em;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Bar Chart Styles */
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 10px 0;
+    }
+
+    .bar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bar-label {
+      min-width: 100px;
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      text-align: right;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 32px;
+      background: rgba(45, 55, 72, 0.5);
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      border-radius: 6px;
+      transition: width 0.8s ease;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+    }
+
+    .bar-value {
+      font-size: 0.85em;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Data Table Styles */
+    .analytics-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .analytics-table thead {
+      background: rgba(45, 55, 72, 0.5);
+    }
+
+    .analytics-table th {
+      padding: 12px;
+      text-align: left;
+      font-size: 0.85em;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .analytics-table td {
+      padding: 12px;
+      font-size: 0.9em;
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .analytics-table tbody tr {
+      transition: background 0.2s ease;
+    }
+
+    .analytics-table tbody tr:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .table-detection-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .table-triggers {
+      font-weight: 700;
+      color: #3b82f6;
+    }
+
+    .table-last-triggered {
+      font-size: 0.85em;
+      color: var(--text-secondary);
+    }
+
+    /* Tooltip */
+    .chart-tooltip {
+      position: absolute;
+      background: rgba(10, 14, 39, 0.95);
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      border-radius: 6px;
+      padding: 10px 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .chart-tooltip.visible {
+      opacity: 1;
+    }
+
+    .tooltip-date {
+      font-size: 0.85em;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .tooltip-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0;
+    }
+
+    .tooltip-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    .tooltip-label {
+      font-size: 0.85em;
+      color: var(--text-secondary);
+    }
+
+    .tooltip-value {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-left: auto;
+    }
+
+    /* Export Buttons */
+    .btn-export-csv,
+    .btn-export-json {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+      font-size: 0.9rem;
+    }
+
+    .btn-export-csv {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .btn-export-csv:hover {
+      background: #4a96e8;
+      transform: translateY(-1px);
+    }
+
+    .btn-export-json {
+      background: var(--brand-alt);
+      color: #000;
+    }
+
+    .btn-export-json:hover {
+      background: #6edb7a;
+      transform: translateY(-1px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .analytics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .donut-chart-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .analytics-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .time-range-selector {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .time-range-btn {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 0.85em;
+      }
+
+      .chart-container {
+        height: 240px;
+      }
+
+      .bar-label {
+        min-width: 80px;
+        font-size: 0.85em;
+      }
+
+      .analytics-table {
+        font-size: 0.85em;
+      }
+
+      .analytics-table th,
+      .analytics-table td {
+        padding: 8px;
+      }
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .stat-number {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: var(--text-primary);
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Color variants */
+    .stat-blue { border-left: 4px solid #3b82f6; }
+    .stat-green { border-left: 4px solid #10b981; }
+    .stat-purple { border-left: 4px solid #8b5cf6; }
+    .stat-red { border-left: 4px solid #ef4444; }
+    .stat-orange { border-left: 4px solid #f59e0b; }
+    .stat-cyan { border-left: 4px solid #06b6d4; }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--panel);
+        border-bottom: 1px solid var(--border-subtle);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.5rem;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-link {
+        width: 100%;
+        text-align: left;
+      }
+
+      .detection-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Footer Styles */
+    .site-footer {
+      background: var(--panel);
+      border-top: 1px solid var(--border-subtle);
+      padding: 2rem 0;
+      margin-top: 4rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-description {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      max-width: 32rem;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--brand);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-to-content">Skip to content</a>
+
+  <!-- Header Navigation -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="site-logo">
+        <span class="site-logo-icon">🔒</span>
+        <span>WatchLockAI</span>
+      </a>
+
+      <button type="button" class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
+        ☰
+      </button>
+
+      <nav class="nav-menu nav-menu-spaced" id="navMenu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="apt-profiles.html" class="nav-link">APT Profiles</a>
+        <a href="geopolitical-map.html" class="nav-link">Geo Map</a>
+        <a href="analytics.html" class="nav-link">Analytics</a>
+        <a href="dark-web-intel.html" class="nav-link">Dark Web Intel</a>
+        <a href="apt-overview.html" class="nav-link">APT Overview</a>
+        <a href="metrics.html" class="nav-link">Metrics</a>
+        <a href="detections.html" class="nav-link">Detections</a>
+        <a href="breach-attack-simulation.html" class="nav-link">BAS Matching</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main" class="main-content">
+    <div class="container">
+      <!-- Page Header -->
+      <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">Detection Engineering</h1>
+      <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.125rem;">Detection Rules & MITRE ATT&CK Coverage</p>
+
+      <!-- Quick Stats Widget -->
+      <div class="quick-stats-grid">
+        <div class="stat-card stat-blue">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-number" id="quickAptGroupsCount">8</div>
+          <div class="stat-label">APT Groups</div>
+        </div>
+        <div class="stat-card stat-green">
+          <div class="stat-icon">🌍</div>
+          <div class="stat-number" id="quickCountriesCount">6</div>
+          <div class="stat-label">Countries</div>
+        </div>
+        <div class="stat-card stat-purple">
+          <div class="stat-icon">🛡️</div>
+          <div class="stat-number" id="quickDetectionsCount">15</div>
+          <div class="stat-label">Detections</div>
+        </div>
+        <div class="stat-card stat-red">
+          <div class="stat-icon">🔴</div>
+          <div class="stat-number" id="quickCriticalCount">5</div>
+          <div class="stat-label">Critical</div>
+        </div>
+        <div class="stat-card stat-orange">
+          <div class="stat-icon">🟠</div>
+          <div class="stat-number" id="quickHighCount">9</div>
+          <div class="stat-label">High</div>
+        </div>
+        <div class="stat-card stat-cyan">
+          <div class="stat-icon">📊</div>
+          <div class="stat-number" id="quickTechniquesCount">22</div>
+          <div class="stat-label">Techniques</div>
+        </div>
+      </div>
+
+      <!-- Analytics Dashboard Section -->
+      <div class="analytics-section">
+        <div class="analytics-header">
+          <div class="analytics-title">
+            <span class="analytics-title-icon">📊</span>
+            Analytics Dashboard
+          </div>
+          <div class="time-range-selector">
+            <button type="button" class="time-range-btn" data-range="7">7 Days</button>
+            <button type="button" class="time-range-btn active" data-range="30">30 Days</button>
+            <button type="button" class="time-range-btn" data-range="90">90 Days</button>
+          </div>
+        </div>
+
+        <div class="analytics-grid">
+          <!-- Detection Trends Line Chart -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <div class="chart-title">📈 Detection Trends</div>
+                <div class="chart-subtitle">Detections triggered over time</div>
+              </div>
+            </div>
+            <div class="chart-container">
+              <svg class="line-chart" id="trendChart"></svg>
+              <div class="chart-tooltip" id="trendTooltip"></div>
+            </div>
+          </div>
+
+          <!-- Severity Distribution Donut Chart -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <div class="chart-title">🎯 Severity Distribution</div>
+                <div class="chart-subtitle">Detections by severity level</div>
+              </div>
+            </div>
+            <div class="chart-container">
+              <div class="donut-chart-container">
+                <div class="donut-chart">
+                  <svg width="200" height="200" id="donutChart"></svg>
+                  <div class="donut-center-text">
+                    <div class="donut-center-number" id="donutTotal">15</div>
+                    <div class="donut-center-label">Total</div>
+                  </div>
+                </div>
+                <div class="donut-legend" id="donutLegend"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Platform Coverage Bar Chart -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <div class="chart-title">💻 Platform Coverage</div>
+                <div class="chart-subtitle">Detections by platform</div>
+              </div>
+            </div>
+            <div class="chart-container">
+              <div class="bar-chart" id="platformChart"></div>
+            </div>
+          </div>
+
+          <!-- Top Triggered Detections Table -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <div class="chart-title">🔥 Top Triggered Detections</div>
+                <div class="chart-subtitle">Most active rules (last 30 days)</div>
+              </div>
+            </div>
+            <div class="chart-container">
+              <table class="analytics-table">
+                <thead>
+                  <tr>
+                    <th>Detection</th>
+                    <th>Triggers</th>
+                    <th>Severity</th>
+                    <th>Last Triggered</th>
+                  </tr>
+                </thead>
+                <tbody id="topDetectionsTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-container">
+        <div class="tabs">
+          <button type="button" class="tab active" data-tab="catalog">Detection Catalog</button>
+          <button type="button" class="tab" data-tab="coverage">MITRE Coverage</button>
+        </div>
+
+        <div id="catalogTab" class="tab-content active">
+          <div class="stats-bar">
+            <div class="stat-card">
+              <div class="stat-value" id="totalDetections">-</div>
+              <div class="stat-label">Total Detections</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="criticalCount">-</div>
+              <div class="stat-label">Critical</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="highCount">-</div>
+              <div class="stat-label">High</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="techniquesCovered">-</div>
+              <div class="stat-label">Techniques Covered</div>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <div class="filter-group search-box">
+              <label class="filter-label">Search</label>
+              <input type="text" id="searchInput" class="search-input" placeholder="Search detections...">
+            </div>
+            <div class="filter-group">
+              <label for="severityFilter" class="filter-label">Severity</label>
+              <select id="severityFilter" class="filter-select">
+                <option value="">All Severities</option>
+                <option value="CRITICAL">Critical</option>
+                <option value="HIGH">High</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="LOW">Low</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="statusFilter" class="filter-label">Status</label>
+              <select id="statusFilter" class="filter-select">
+                <option value="">All Status</option>
+                <option value="stable">Stable</option>
+                <option value="preview">Preview</option>
+                <option value="experimental">Experimental</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="platformFilter" class="filter-label">Platform</label>
+              <select id="platformFilter" class="filter-select">
+                <option value="">All Platforms</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="detectionGrid" class="detection-grid">
+            <!-- Detection cards will be inserted here -->
+          </div>
+        </div>
+
+        <div id="coverageTab" class="tab-content">
+          <h2>MITRE ATT&CK Coverage Matrix</h2>
+          <p class="coverage-description">
+            Visualization of detection coverage across MITRE ATT&CK tactics and techniques
+          </p>
+
+          <!-- Coverage Filters and Export -->
+          <div style="background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+              <div style="display: flex; gap: 15px; flex-wrap: wrap; flex: 1;">
+                <div class="filter-group">
+                  <label for="coverageSeverityFilter">Severity</label>
+                  <select id="coverageSeverityFilter" class="filter-select">
+                    <option value="">All Severities</option>
+                    <option value="CRITICAL">Critical</option>
+                    <option value="HIGH">High</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="LOW">Low</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label for="coveragePlatformFilter">Platform</label>
+                  <select id="coveragePlatformFilter" class="filter-select">
+                    <option value="">All Platforms</option>
+                    <option value="Splunk">Splunk</option>
+                    <option value="Elastic">Elastic</option>
+                    <option value="Sigma">Sigma</option>
+                    <option value="KQL">KQL</option>
+                    <option value="Chronicle">Chronicle</option>
+                  </select>
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button type="button" id="exportCsvBtn" class="btn-export-csv">
+                  📊 Export CSV
+                </button>
+                <button type="button" id="exportJsonBtn" class="btn-export-json">
+                  📄 Export JSON
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="coverageMatrix"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div>
+        <p class="footer-brand">WatchLockAI</p>
+        <p class="footer-description">Enterprise Threat Intelligence Platform - Built on the MITRE ATT&CK Framework. Open-source threat intelligence for security operations centers, threat intelligence teams, and incident response professionals.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/tweakn74/APT-Tracker-MITRE-AIQ-Intel" class="footer-link">GitHub</a>
+        <a href="apt-profiles.html" class="footer-link">APT Profiles</a>
+        <a href="detections.html" class="footer-link">Detections</a>
+        <a href="dark-web-intel.html" class="footer-link">Dark Web Intel</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Detection Detail Modal -->
+  <div id="detectionModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/detections.js"></script>
+  <script>
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
+

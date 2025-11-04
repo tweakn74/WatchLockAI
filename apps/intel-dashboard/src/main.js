@@ -4,15 +4,13 @@
 
 const API_ENDPOINTS = {
   primary: 'https://watchlockai-intel-api.craig-glatt.workers.dev',
-  fallback: '/data/demo/unified-threats.sample.json',
+  fallback: '/data/demo/unified-threats.sample.json'
 };
 
 const REFRESH_INTERVAL = 60000; // 60 seconds
 let currentView = 'executive'; // 'executive' or 'analyst'
-// eslint-disable-next-line no-unused-vars
-let _refreshTimer = null;
-// eslint-disable-next-line no-unused-vars
-let _countdownTimer = null;
+let refreshTimer = null;
+let countdownTimer = null;
 let countdown = 60;
 let threatsData = null;
 
@@ -38,12 +36,12 @@ function setupEventListeners() {
  */
 function toggleView() {
   currentView = currentView === 'executive' ? 'analyst' : 'executive';
-  document.getElementById('currentView').textContent =
+  document.getElementById('currentView').textContent = 
     currentView === 'executive' ? 'Executive' : 'Analyst';
-
+  
   const topSection = document.getElementById('topThreatsSection');
   const allSection = document.getElementById('allThreatsSection');
-
+  
   if (currentView === 'executive') {
     topSection.style.display = 'block';
     allSection.style.display = 'none';
@@ -51,7 +49,7 @@ function toggleView() {
     topSection.style.display = 'none';
     allSection.style.display = 'block';
   }
-
+  
   renderThreats();
 }
 
@@ -60,23 +58,24 @@ function toggleView() {
  */
 async function fetchThreats() {
   updateStatus('loading', 'Fetching threats...');
-
+  
   try {
     // Try primary API first
     const response = await fetch(`${API_ENDPOINTS.primary}/api/top?limit=20`);
-
+    
     if (!response.ok) {
       throw new Error(`API returned ${response.status}`);
     }
-
+    
     const data = await response.json();
     threatsData = data;
     updateStatus('success', 'Connected');
     renderThreats();
     updateStats();
+    
   } catch (error) {
     console.warn('Primary API failed, trying fallback:', error.message);
-
+    
     try {
       // Try fallback dataset
       const response = await fetch(API_ENDPOINTS.fallback);
@@ -85,6 +84,7 @@ async function fetchThreats() {
       updateStatus('fallback', 'Using demo data');
       renderThreats();
       updateStats();
+      
     } catch (fallbackError) {
       console.error('Fallback also failed:', fallbackError);
       updateStatus('error', 'Failed to load data');
@@ -99,12 +99,12 @@ async function fetchThreats() {
 function updateStatus(status, text) {
   const statusDot = document.getElementById('statusDot');
   const statusText = document.getElementById('statusText');
-
+  
   statusDot.className = 'status-dot';
   if (status === 'error') {
     statusDot.classList.add('error');
   }
-
+  
   statusText.textContent = text;
 }
 
@@ -113,7 +113,7 @@ function updateStatus(status, text) {
  */
 function renderThreats() {
   if (!threatsData || !threatsData.items) return;
-
+  
   if (currentView === 'executive') {
     renderTopThreats();
   } else {
@@ -127,7 +127,7 @@ function renderThreats() {
 function renderTopThreats() {
   const container = document.getElementById('topThreatsContainer');
   const threats = threatsData.items.slice(0, 10);
-
+  
   container.innerHTML = threats.map(threat => createThreatCard(threat)).join('');
 }
 
@@ -139,7 +139,7 @@ function createThreatCard(threat) {
   const badges = threat.badges || [];
   const sources = threat.sources || [threat.source];
   const sourceCount = threat.sourceCount || sources.length;
-
+  
   return `
     <div class="threat-card ${severityClass}" onclick="window.open('${threat.link}', '_blank')">
       <div class="threat-header">
@@ -158,42 +158,13 @@ function createThreatCard(threat) {
         </div>
       </div>
       
-      ${
-        badges.length > 0
-          ? `
+      ${badges.length > 0 ? `
         <div class="badges">
-          ${badges
-            .map(
-              badge => `
+          ${badges.map(badge => `
             <span class="badge ${badge.toLowerCase().replace(/_/g, '-')}">${badge}</span>
-          `
-            )
-            .join('')}
+          `).join('')}
         </div>
-      `
-          : ''
-      }
-
-      ${
-        threat.aptAttribution && threat.aptAttribution.length > 0
-          ? `
-        <div class="apt-attribution">
-          <div class="apt-label">🎯 APT Attribution:</div>
-          ${threat.aptAttribution
-            .slice(0, 2)
-            .map(
-              apt => `
-            <div class="apt-match">
-              <span class="apt-name">${apt.aptName}</span>
-              <span class="apt-confidence">${apt.confidence}% match</span>
-            </div>
-          `
-            )
-            .join('')}
-        </div>
-      `
-          : ''
-      }
+      ` : ''}
     </div>
   `;
 }
@@ -204,34 +175,28 @@ function createThreatCard(threat) {
 function renderAllThreats() {
   const tbody = document.getElementById('threatsTableBody');
   const threats = threatsData.items;
-
-  tbody.innerHTML = threats
-    .map(threat => {
-      const severityClass = threat.severity.toLowerCase();
-      const badges = threat.badges || [];
-      const sources = threat.sources || [threat.source];
-      const sourceCount = threat.sourceCount || sources.length;
-
-      return `
+  
+  tbody.innerHTML = threats.map(threat => {
+    const severityClass = threat.severity.toLowerCase();
+    const badges = threat.badges || [];
+    const sources = threat.sources || [threat.source];
+    const sourceCount = threat.sourceCount || sources.length;
+    
+    return `
       <tr onclick="window.open('${threat.link}', '_blank')" style="cursor: pointer;">
         <td><strong class="threat-score ${severityClass}">${threat.riskScore || 0}</strong></td>
         <td><span class="threat-severity ${severityClass}">${threat.severity}</span></td>
         <td>${escapeHtml(threat.title)}</td>
         <td>${sourceCount}</td>
         <td>
-          ${badges
-            .map(
-              badge => `
+          ${badges.map(badge => `
             <span class="badge ${badge.toLowerCase().replace(/_/g, '-')}">${badge}</span>
-          `
-            )
-            .join(' ')}
+          `).join(' ')}
         </td>
         <td>${formatDate(threat.pubDate || threat.first_seen)}</td>
       </tr>
     `;
-    })
-    .join('');
+  }).join('');
 }
 
 /**
@@ -239,19 +204,17 @@ function renderAllThreats() {
  */
 function updateStats() {
   if (!threatsData || !threatsData.items) return;
-
+  
   const threats = threatsData.items;
   const criticalCount = threats.filter(t => t.severity === 'CRITICAL').length;
   const highCount = threats.filter(t => t.severity === 'HIGH').length;
   const multiSourceCount = threats.filter(t => (t.sourceCount || 1) > 1).length;
-
+  
   document.getElementById('totalCount').textContent = threats.length;
   document.getElementById('criticalCount').textContent = criticalCount;
   document.getElementById('highCount').textContent = highCount;
   document.getElementById('multiSourceCount').textContent = multiSourceCount;
-  document.getElementById('lastUpdated').textContent = formatTime(
-    threatsData.updated || new Date().toISOString()
-  );
+  document.getElementById('lastUpdated').textContent = formatTime(threatsData.updated || new Date().toISOString());
 }
 
 /**
@@ -272,13 +235,13 @@ function renderError() {
  */
 function startAutoRefresh() {
   // Refresh data every 60 seconds
-  _refreshTimer = setInterval(async () => {
+  refreshTimer = setInterval(async () => {
     await fetchThreats();
     countdown = 60;
   }, REFRESH_INTERVAL);
-
+  
   // Update countdown every second
-  _countdownTimer = setInterval(() => {
+  countdownTimer = setInterval(() => {
     countdown--;
     if (countdown < 0) countdown = 60;
     document.getElementById('countdown').textContent = countdown;
@@ -303,11 +266,11 @@ function formatDate(dateString) {
   const diffMs = now - date;
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffHours / 24);
-
+  
   if (diffHours < 1) return 'Just now';
   if (diffHours < 24) return `${diffHours}h ago`;
   if (diffDays < 7) return `${diffDays}d ago`;
-
+  
   return date.toLocaleDateString();
 }
 

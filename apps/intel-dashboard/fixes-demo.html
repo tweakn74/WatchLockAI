@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WatchLockAI - Fixes Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+      color: #e8ecf1;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .demo-header {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .demo-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .demo-header p {
+      color: #a0aec0;
+      font-size: 1.1rem;
+    }
+
+    .fix-section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+
+    .fix-section h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fix-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .fix-badge.critical {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .fix-badge.high {
+      background: rgba(251, 146, 60, 0.2);
+      color: #fb923c;
+      border: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    .fix-badge.medium {
+      background: rgba(234, 179, 8, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(234, 179, 8, 0.3);
+    }
+
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .code-block {
+      background: #1a1f3a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .code-block h3 {
+      color: #ef4444;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .code-block.after h3 {
+      color: #10b981;
+    }
+
+    .code-block pre {
+      background: #0a0e27;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .code-block code {
+      color: #e8ecf1;
+      font-family: 'Courier New', monospace;
+    }
+
+    .visual-demo {
+      background: #1a1f3a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .visual-demo h3 {
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+
+    /* Navigation Demo */
+    .nav-menu-spaced {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    .nav-link {
+      color: #e8ecf1;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(102, 126, 234, 0.2);
+      color: #667eea;
+    }
+
+    /* Footer Demo */
+    .footer-demo {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-demo p {
+      margin: 5px 0;
+      color: #a0aec0;
+    }
+
+    /* Badge Demo */
+    .badge-new {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-left: 10px;
+    }
+
+    .victim-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #667eea;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      background: rgba(102, 126, 234, 0.1);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(102, 126, 234, 0.2);
+    }
+
+    .fix-list {
+      list-style: none;
+      margin-top: 15px;
+    }
+
+    .fix-list li {
+      padding: 10px;
+      margin: 8px 0;
+      background: rgba(16, 185, 129, 0.1);
+      border-left: 3px solid #10b981;
+      border-radius: 4px;
+    }
+
+    .impact-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .stat-card {
+      background: rgba(102, 126, 234, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .stat-card .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #667eea;
+    }
+
+    .stat-card .label {
+      color: #a0aec0;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .before-after {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="demo-header">
+      <h1>🔧 WatchLockAI Fixes Demo</h1>
+      <p>Visual demonstration of all recommended fixes to resolve 29 failing tests</p>
+    </div>
+
+    <!-- Impact Summary -->
+    <div class="fix-section">
+      <h2>📊 Fix Impact Summary</h2>
+      <div class="impact-stats">
+        <div class="stat-card">
+          <div class="number">29</div>
+          <div class="label">Tests Currently Failing</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">156</div>
+          <div class="label">Tests Currently Passing</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">84.3%</div>
+          <div class="label">Current Pass Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">100%</div>
+          <div class="label">Target Pass Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fix 1: H1 Tags -->
+    <div class="fix-section">
+      <h2>
+        <span class="fix-badge critical">Critical</span>
+        Fix #1: Add H1 Tags to All Pages
+      </h2>
+      <p><strong>Impact:</strong> Fixes 7 failing tests + improves accessibility (WCAG 2.1 AA compliance)</p>
+      
+      <div class="before-after">
+        <div class="code-block">
+          <h3>❌ Before (Missing H1)</h3>
+          <pre><code>&lt;div class="page-header"&gt;
+  &lt;div class="tagline"&gt;APT Profiles&lt;/div&gt;
+  &lt;p&gt;Advanced Persistent Threats&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        
+        <div class="code-block after">
+          <h3>✅ After (With H1)</h3>
+          <pre><code>&lt;div class="page-header"&gt;
+  &lt;h1&gt;APT Profiles&lt;/h1&gt;
+  &lt;p class="tagline"&gt;Advanced Persistent Threats&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+
+      <div class="visual-demo">
+        <h3>Visual Example:</h3>
+        <h1 style="margin-bottom: 10px;">APT Profiles</h1>
+        <p style="color: #a0aec0;">Advanced Persistent Threat Intelligence</p>
+      </div>
+
+      <ul class="fix-list">
+        <li>✅ Add <code>&lt;h1&gt;APT Profiles&lt;/h1&gt;</code> to apt-profiles.html</li>
+        <li>✅ Add <code>&lt;h1&gt;Dark Web Intelligence&lt;/h1&gt;</code> to dark-web-intel.html</li>
+        <li>✅ Add <code>&lt;h1&gt;Detection Engineering&lt;/h1&gt;</code> to detections.html</li>
+      </ul>
+    </div>
+
+    <!-- Fix 2: Navigation -->
+    <div class="fix-section">
+      <h2>
+        <span class="fix-badge high">High</span>
+        Fix #2: Update Navigation Structure
+      </h2>
+      <p><strong>Impact:</strong> Fixes 3 failing tests</p>
+      
+      <div class="before-after">
+        <div class="code-block">
+          <h3>❌ Before (4 links, missing class)</h3>
+          <pre><code>&lt;nav class="nav-menu"&gt;
+  &lt;a href="/" class="nav-link"&gt;Home&lt;/a&gt;
+  &lt;a href="/apt-profiles.html" class="nav-link"&gt;APT Profiles&lt;/a&gt;
+  &lt;a href="/detections.html" class="nav-link"&gt;Detections&lt;/a&gt;
+  &lt;a href="/dark-web-intel.html" class="nav-link"&gt;Dark Web&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+        
+        <div class="code-block after">
+          <h3>✅ After (7 links, with nav-menu-spaced)</h3>
+          <pre><code>&lt;nav class="nav-menu nav-menu-spaced"&gt;
+  &lt;a href="/" class="nav-link"&gt;Home&lt;/a&gt;
+  &lt;a href="/apt-profiles.html" class="nav-link"&gt;APT Profiles&lt;/a&gt;
+  &lt;a href="/detections.html" class="nav-link"&gt;Detections&lt;/a&gt;
+  &lt;a href="/dark-web-intel.html" class="nav-link"&gt;Dark Web&lt;/a&gt;
+  &lt;a href="/threat-actors.html" class="nav-link"&gt;Threat Actors&lt;/a&gt;
+  &lt;a href="/geopolitical.html" class="nav-link"&gt;Geopolitical&lt;/a&gt;
+  &lt;a href="/analytics.html" class="nav-link"&gt;Analytics&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+      </div>
+
+      <div class="visual-demo">
+        <h3>Visual Example:</h3>
+        <nav class="nav-menu-spaced">
+          <a href="#" class="nav-link">Home</a>
+          <a href="#" class="nav-link">APT Profiles</a>
+          <a href="#" class="nav-link">Detections</a>
+          <a href="#" class="nav-link">Dark Web</a>
+          <a href="#" class="nav-link">Threat Actors</a>
+          <a href="#" class="nav-link">Geopolitical</a>
+          <a href="#" class="nav-link">Analytics</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Fix 3: Footer -->
+    <div class="fix-section">
+      <h2>
+        <span class="fix-badge medium">Medium</span>
+        Fix #3: Update Footer Content
+      </h2>
+      <p><strong>Impact:</strong> Fixes 1 failing test</p>
+      
+      <div class="before-after">
+        <div class="code-block">
+          <h3>❌ Before</h3>
+          <pre><code>&lt;footer class="site-footer"&gt;
+  &lt;p&gt;WatchLockAI&lt;/p&gt;
+  &lt;p&gt;Enterprise-grade, open-source threat intelligence platform&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </div>
+        
+        <div class="code-block after">
+          <h3>✅ After</h3>
+          <pre><code>&lt;footer class="site-footer"&gt;
+  &lt;p&gt;WatchLockAI - Enterprise Threat Intelligence Platform&lt;/p&gt;
+  &lt;p&gt;Built on the MITRE ATT&amp;CK Framework&lt;/p&gt;
+  &lt;p&gt;100% Free &amp; Open Source&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </div>
+      </div>
+
+      <div class="visual-demo">
+        <h3>Visual Example:</h3>
+        <div class="footer-demo">
+          <p><strong>WatchLockAI - Enterprise Threat Intelligence Platform</strong></p>
+          <p>Built on the MITRE ATT&CK Framework</p>
+          <p>100% Free & Open Source</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fix 4: Dark Web Intel -->
+    <div class="fix-section">
+      <h2>
+        <span class="fix-badge medium">Medium</span>
+        Fix #4: Dark Web Intelligence Page Improvements
+      </h2>
+      <p><strong>Impact:</strong> Fixes 4 failing tests</p>
+      
+      <ul class="fix-list">
+        <li>✅ Add back link to dashboard</li>
+        <li>✅ Add second NEW badge (currently only 1, tests expect 2)</li>
+        <li>✅ Add H1 tag (covered in Fix #1)</li>
+      </ul>
+
+      <div class="visual-demo">
+        <h3>Visual Example - Back Link:</h3>
+        <a href="#" class="back-link">
+          <span>←</span>
+          <span>Back to Dashboard</span>
+        </a>
+      </div>
+
+      <div class="visual-demo" style="margin-top: 20px;">
+        <h3>Visual Example - NEW Badges:</h3>
+        <div class="victim-card">
+          <strong>Acme Corporation</strong>
+          <span class="badge-new">NEW</span>
+          <p style="color: #a0aec0; margin-top: 5px;">Breached by LockBit 3.0 - Critical Severity</p>
+        </div>
+        <div class="victim-card">
+          <strong>TechStart Solutions</strong>
+          <span class="badge-new">NEW</span>
+          <p style="color: #a0aec0; margin-top: 5px;">Breached by BlackCat - High Severity</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Implementation Guide -->
+    <div class="fix-section">
+      <h2>🚀 Implementation Priority</h2>
+      <p>Recommended order to maximize test pass rate improvement:</p>
+      
+      <div style="margin-top: 20px;">
+        <div style="background: rgba(239, 68, 68, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #ef4444;">
+          <strong style="color: #ef4444;">Priority 1 (Critical):</strong> Add H1 tags to all pages
+          <br><span style="color: #a0aec0;">→ Fixes 7 tests + improves accessibility</span>
+        </div>
+        
+        <div style="background: rgba(251, 146, 60, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #fb923c;">
+          <strong style="color: #fb923c;">Priority 2 (High):</strong> Update navigation structure
+          <br><span style="color: #a0aec0;">→ Fixes 3 tests + improves UX</span>
+        </div>
+        
+        <div style="background: rgba(234, 179, 8, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #eab308;">
+          <strong style="color: #fbbf24;">Priority 3 (Medium):</strong> Fix Dark Web Intel page issues
+          <br><span style="color: #a0aec0;">→ Fixes 4 tests</span>
+        </div>
+        
+        <div style="background: rgba(234, 179, 8, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #eab308;">
+          <strong style="color: #fbbf24;">Priority 4 (Medium):</strong> Update footer content
+          <br><span style="color: #a0aec0;">→ Fixes 1 test</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expected Results -->
+    <div class="fix-section">
+      <h2>📈 Expected Results After Fixes</h2>
+      <div class="impact-stats">
+        <div class="stat-card" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3);">
+          <div class="number" style="color: #ef4444;">15</div>
+          <div class="label">Tests Still Failing<br>(Executive Metrics tests need separate fix)</div>
+        </div>
+        <div class="stat-card" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+          <div class="number" style="color: #10b981;">170</div>
+          <div class="label">Tests Passing<br>(up from 156)</div>
+        </div>
+        <div class="stat-card" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+          <div class="number" style="color: #10b981;">91.9%</div>
+          <div class="label">Pass Rate<br>(up from 84.3%)</div>
+        </div>
+        <div class="stat-card" style="background: rgba(102, 126, 234, 0.1); border-color: rgba(102, 126, 234, 0.3);">
+          <div class="number" style="color: #667eea;">+14</div>
+          <div class="label">Tests Fixed<br>(48% of failures)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
+

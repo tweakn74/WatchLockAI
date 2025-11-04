@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geopolitical Threat Map - WatchLockAI</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+    crossorigin=""/>
+  
+  <style>
+    :root {
+      --bg: #0f1114;
+      --panel: #151821;
+      --border: #2a2d3a;
+      --text-primary: #e8ecf1;
+      --text-secondary: #9ca3af;
+      --brand: #5aa9ff;
+      --brand-alt: #7ee787;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2em;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1em;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: var(--brand);
+      text-decoration: none;
+      margin-bottom: 15px;
+      font-size: 0.95em;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--brand-alt);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-value {
+      font-size: 2em;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+    }
+
+    .map-container {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-md);
+    }
+
+    #map {
+      height: 600px;
+      border-radius: var(--radius-sm);
+      background: #1a1d2e;
+    }
+
+    .filters {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .filter-group label {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+      font-weight: 500;
+    }
+
+    select, input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      font-size: 0.95em;
+      min-width: 150px;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      border-color: var(--brand);
+    }
+
+    .legend {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .legend-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--brand);
+    }
+
+    .legend-items {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+    }
+
+    .threat-list {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .threat-list h2 {
+      color: var(--brand);
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .threat-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      margin-bottom: 15px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .threat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--brand);
+    }
+
+    .threat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .threat-name {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .country-badge {
+      background: var(--brand);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85em;
+      font-weight: 500;
+    }
+
+    .threat-meta {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: var(--text-secondary);
+    }
+
+    .risk-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+
+    .risk-critical { background: #dc2626; color: white; }
+    .risk-high { background: #ea580c; color: white; }
+    .risk-medium { background: #ca8a04; color: white; }
+    .risk-low { background: #16a34a; color: white; }
+
+    @media (max-width: 768px) {
+      #map {
+        height: 400px;
+      }
+
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+
+      select, input {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html" class="back-link">← Back to Dashboard</a>
+      <h1>🗺️ Geopolitical Threat Map</h1>
+      <p class="subtitle">Interactive visualization of APT actor locations and threat density</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="totalThreats">0</div>
+        <div class="stat-label">Total APT Groups</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="totalCountries">0</div>
+        <div class="stat-label">Countries Affected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="activeThreats">0</div>
+        <div class="stat-label">Active Threats</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="criticalThreats">0</div>
+        <div class="stat-label">Critical Risk</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="filter-group">
+        <label for="regionFilter">Region</label>
+        <select id="regionFilter">
+          <option value="all">All Regions</option>
+          <option value="asia">Asia</option>
+          <option value="europe">Europe</option>
+          <option value="americas">Americas</option>
+          <option value="middle-east">Middle East</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="threatTypeFilter">Threat Type</label>
+        <select id="threatTypeFilter">
+          <option value="all">All Types</option>
+          <option value="espionage">Espionage</option>
+          <option value="financial">Financial</option>
+          <option value="destructive">Destructive</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="riskFilter">Risk Level</label>
+        <select id="riskFilter">
+          <option value="all">All Levels</option>
+          <option value="critical">Critical</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-title">Threat Density</div>
+      <div class="legend-items">
+        <div class="legend-item">
+          <div class="legend-color" style="background: #dc2626;"></div>
+          <span>Critical (5+ groups)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ea580c;"></div>
+          <span>High (3-4 groups)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ca8a04;"></div>
+          <span>Medium (2 groups)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #16a34a;"></div>
+          <span>Low (1 group)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="map-container">
+      <div id="map"></div>
+    </div>
+
+    <!-- Threat List -->
+    <div class="threat-list">
+      <h2>APT Groups by Country</h2>
+      <div id="threatCards"></div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+    crossorigin=""></script>
+  
+  <script type="module" src="/src/geopolitical-map.js"></script>
+</body>
+</html>
+
