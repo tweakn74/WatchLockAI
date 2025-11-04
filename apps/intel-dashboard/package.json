@@ -1,0 +1,15 @@
+{
+  "name": "intel-dashboard",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@esbuild/win32-x64": "^0.25.11",
+    "esbuild": "^0.21.5",
+    "vite": "^5.4.21"
+  }
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geopolitical Risk Assessment - WatchLockAI</title>
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">🔒 WatchLockAI</div>
+    <div class="nav-links">
+      <a href="index.html">Dashboard</a>
+      <a href="apt-profiles.html">APT Profiles</a>
+      <a href="dark-web.html">Dark Web Intel</a>
+      <a href="threat-actors.html">Threat Actors</a>
+      <a href="geopolitical-risk.html" class="active">Geopolitical Risk</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header class="page-header">
+      <h1>🌍 Geopolitical Risk Assessment</h1>
+      <p>Country-level cyber risk profiles and global threat landscape analysis</p>
+    </header>
+
+    <!-- Statistics Dashboard -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-label">Total Countries</div>
+        <div class="stat-value" id="total-countries">0</div>
+      </div>
+      <div class="stat-item critical">
+        <div class="stat-label">Critical Risk</div>
+        <div class="stat-value" id="critical-risk">0</div>
+      </div>
+      <div class="stat-item high">
+        <div class="stat-label">High Risk</div>
+        <div class="stat-value" id="high-risk">0</div>
+      </div>
+      <div class="stat-item medium">
+        <div class="stat-label">Medium Risk</div>
+        <div class="stat-value" id="medium-risk">0</div>
+      </div>
+      <div class="stat-item low">
+        <div class="stat-label">Low Risk</div>
+        <div class="stat-value" id="low-risk">0</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Average Risk Score</div>
+        <div class="stat-value" id="average-risk">0</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <input type="text" id="search-input" placeholder="Search countries..." class="search-input">
+      <select id="region-filter" class="filter-select">
+        <option value="">All Regions</option>
+      </select>
+      <select id="risk-level-filter" class="filter-select">
+        <option value="">All Risk Levels</option>
+        <option value="critical">Critical</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <select id="trend-filter" class="filter-select">
+        <option value="">All Trends</option>
+        <option value="increasing">Increasing</option>
+        <option value="stable">Stable</option>
+        <option value="decreasing">Decreasing</option>
+      </select>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-button active" data-tab="all">All Countries</button>
+      <button class="tab-button" data-tab="critical">Critical Risk</button>
+      <button class="tab-button" data-tab="high">High Risk</button>
+      <button class="tab-button" data-tab="medium">Medium Risk</button>
+    </div>
+
+    <!-- Country Cards Grid -->
+    <div id="countries-grid" class="countries-grid">
+      <!-- Country cards will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Country Detail Modal -->
+  <div id="country-modal" class="modal">
+    <div class="modal-content large">
+      <span class="modal-close">&times;</span>
+      <div id="modal-body">
+        <!-- Country details will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/geopolitical-risk.js"></script>
+</body>
+</html>

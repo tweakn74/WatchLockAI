@@ -1,0 +1,274 @@
+{
+  "version": "1.0.0",
+  "updated": "2025-11-01T00:00:00Z",
+  "description": "Dark Web Intelligence - Ransomware Leak Sites and Paste Site Monitoring",
+  "ransomwareVictims": [
+    {
+      "id": "RW-0001",
+      "victimName": "MGM Resorts International",
+      "ransomwareGroup": "ALPHV/BlackCat",
+      "discoveredDate": "2023-09-12",
+      "publishedDate": "2023-09-15",
+      "industry": "Hospitality & Gaming",
+      "country": "United States",
+      "revenue": "$14.8 billion",
+      "employeeCount": "70,000+",
+      "ransomAmount": "Unknown",
+      "dataLeaked": true,
+      "leakSiteUrl": "https://ransomware.live/posts/alphv/mgm-resorts",
+      "description": "Major casino and hotel chain hit by ransomware attack causing widespread system outages",
+      "iocs": ["T1486", "T1490", "T1489"],
+      "techniques": [
+        { "id": "T1486", "name": "Data Encrypted for Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery" },
+        { "id": "T1489", "name": "Service Stop" }
+      ],
+      "severity": "CRITICAL",
+      "status": "leaked",
+      "references": [
+        {
+          "title": "MGM Resorts Ransomware Attack",
+          "url": "https://www.bleepingcomputer.com/news/security/mgm-resorts-ransomware-attack-led-to-100-million-loss/"
+        }
+      ]
+    },
+    {
+      "id": "RW-0002",
+      "victimName": "Caesars Entertainment",
+      "ransomwareGroup": "Scattered Spider",
+      "discoveredDate": "2023-09-07",
+      "publishedDate": "2023-09-14",
+      "industry": "Hospitality & Gaming",
+      "country": "United States",
+      "revenue": "$11.5 billion",
+      "employeeCount": "52,000+",
+      "ransomAmount": "$15 million (paid)",
+      "dataLeaked": false,
+      "leakSiteUrl": "https://ransomware.live/posts/scattered-spider/caesars",
+      "description": "Casino operator paid ransom to prevent data leak after social engineering attack",
+      "iocs": ["T1566.002", "T1078", "T1486"],
+      "techniques": [
+        { "id": "T1566.002", "name": "Phishing: Spearphishing Link" },
+        { "id": "T1078", "name": "Valid Accounts" },
+        { "id": "T1486", "name": "Data Encrypted for Impact" }
+      ],
+      "severity": "CRITICAL",
+      "status": "resolved",
+      "references": [
+        {
+          "title": "Caesars Paid Ransom",
+          "url": "https://www.wsj.com/articles/caesars-entertainment-paid-ransom-to-hackers-11695049200"
+        }
+      ]
+    },
+    {
+      "id": "RW-0003",
+      "victimName": "Clorox Company",
+      "ransomwareGroup": "Unknown",
+      "discoveredDate": "2023-08-14",
+      "publishedDate": "2023-08-20",
+      "industry": "Consumer Goods",
+      "country": "United States",
+      "revenue": "$7.1 billion",
+      "employeeCount": "9,000+",
+      "ransomAmount": "Unknown",
+      "dataLeaked": false,
+      "leakSiteUrl": "https://ransomware.live/posts/unknown/clorox",
+      "description": "Consumer goods manufacturer hit by cyberattack causing production delays",
+      "iocs": ["T1486", "T1490"],
+      "techniques": [
+        { "id": "T1486", "name": "Data Encrypted for Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery" }
+      ],
+      "severity": "HIGH",
+      "status": "active",
+      "references": [
+        {
+          "title": "Clorox Cyberattack",
+          "url": "https://www.bleepingcomputer.com/news/security/clorox-says-cyberattack-is-causing-wide-scale-disruption/"
+        }
+      ]
+    },
+    {
+      "id": "RW-0004",
+      "victimName": "Johnson Controls International",
+      "ransomwareGroup": "Dark Angels",
+      "discoveredDate": "2023-09-27",
+      "publishedDate": "2023-10-05",
+      "industry": "Building Automation",
+      "country": "United States",
+      "revenue": "$25.3 billion",
+      "employeeCount": "100,000+",
+      "ransomAmount": "$51 million (demanded)",
+      "dataLeaked": true,
+      "leakSiteUrl": "https://ransomware.live/posts/dark-angels/johnson-controls",
+      "description": "Building automation giant hit by ransomware with massive ransom demand",
+      "iocs": ["T1486", "T1490", "T1567.002"],
+      "techniques": [
+        { "id": "T1486", "name": "Data Encrypted for Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery" },
+        { "id": "T1567.002", "name": "Exfiltration to Cloud Storage" }
+      ],
+      "severity": "CRITICAL",
+      "status": "leaked",
+      "references": [
+        {
+          "title": "Johnson Controls Ransomware",
+          "url": "https://www.securityweek.com/johnson-controls-hit-by-ransomware-attack/"
+        }
+      ]
+    },
+    {
+      "id": "RW-0005",
+      "victimName": "Hanes Brands",
+      "ransomwareGroup": "Unknown",
+      "discoveredDate": "2023-05-25",
+      "publishedDate": "2023-06-01",
+      "industry": "Apparel Manufacturing",
+      "country": "United States",
+      "revenue": "$6.8 billion",
+      "employeeCount": "48,000+",
+      "ransomAmount": "Unknown",
+      "dataLeaked": false,
+      "leakSiteUrl": "https://ransomware.live/posts/unknown/hanes",
+      "description": "Apparel manufacturer experienced cyberattack affecting operations",
+      "iocs": ["T1486"],
+      "techniques": [{ "id": "T1486", "name": "Data Encrypted for Impact" }],
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "references": [
+        {
+          "title": "Hanes Cyberattack",
+          "url": "https://www.bleepingcomputer.com/news/security/hanes-brands-discloses-cyberattack-impacting-operations/"
+        }
+      ]
+    }
+  ],
+  "pasteFindings": [
+    {
+      "id": "PASTE-0001",
+      "title": "Combolist - 500K Credentials",
+      "pasteUrl": "https://pastebin.com/example001",
+      "pasteSite": "pastebin",
+      "discoveredDate": "2025-10-28T14:30:00Z",
+      "author": "anonymous",
+      "category": "credentials",
+      "severity": "CRITICAL",
+      "description": "Large credential dump containing email:password combinations from various breaches",
+      "iocs": {
+        "emails": ["admin@example.com", "user@company.com"],
+        "domains": ["example.com", "company.com", "target.org"],
+        "ips": [],
+        "hashes": [],
+        "urls": [],
+        "cves": []
+      },
+      "affectedOrganizations": ["Example Corp", "Company Inc"],
+      "tags": ["credentials", "combolist", "breach"],
+      "techniques": [
+        { "id": "T1078", "name": "Valid Accounts" },
+        { "id": "T1110", "name": "Brute Force" }
+      ]
+    },
+    {
+      "id": "PASTE-0002",
+      "title": "SQL Injection Exploit - CVE-2024-XXXX",
+      "pasteUrl": "https://ghostbin.com/example002",
+      "pasteSite": "ghostbin",
+      "discoveredDate": "2025-10-29T09:15:00Z",
+      "author": "exploit_dev",
+      "category": "exploit",
+      "severity": "HIGH",
+      "description": "SQL injection exploit code for popular CMS platform",
+      "iocs": {
+        "emails": [],
+        "domains": ["vulnerable-cms.com"],
+        "ips": ["192.168.1.100", "10.0.0.50"],
+        "hashes": [],
+        "urls": ["http://vulnerable-cms.com/admin.php"],
+        "cves": ["CVE-2024-1234"]
+      },
+      "affectedOrganizations": [],
+      "tags": ["exploit", "sql-injection", "cve"],
+      "techniques": [
+        { "id": "T1190", "name": "Exploit Public-Facing Application" },
+        { "id": "T1059.004", "name": "Command and Scripting Interpreter: Unix Shell" }
+      ]
+    },
+    {
+      "id": "PASTE-0003",
+      "title": "Cobalt Strike Beacon Config",
+      "pasteUrl": "https://rentry.co/example003",
+      "pasteSite": "rentry",
+      "discoveredDate": "2025-10-30T16:45:00Z",
+      "author": "redteam_ops",
+      "category": "malware",
+      "severity": "CRITICAL",
+      "description": "Cobalt Strike beacon configuration with C2 infrastructure details",
+      "iocs": {
+        "emails": [],
+        "domains": ["c2-server.evil.com", "backup-c2.malicious.net"],
+        "ips": ["203.0.113.50", "198.51.100.75"],
+        "hashes": ["d41d8cd98f00b204e9800998ecf8427e"],
+        "urls": ["https://c2-server.evil.com/beacon"],
+        "cves": []
+      },
+      "affectedOrganizations": [],
+      "tags": ["cobalt-strike", "c2", "beacon"],
+      "techniques": [
+        { "id": "T1071.001", "name": "Application Layer Protocol: Web Protocols" },
+        { "id": "T1573.002", "name": "Encrypted Channel: Asymmetric Cryptography" }
+      ]
+    },
+    {
+      "id": "PASTE-0004",
+      "title": "Database Dump - Healthcare Provider",
+      "pasteUrl": "https://pastebin.com/example004",
+      "pasteSite": "pastebin",
+      "discoveredDate": "2025-10-31T11:20:00Z",
+      "author": "data_leak",
+      "category": "database_dump",
+      "severity": "CRITICAL",
+      "description": "Patient database dump from healthcare provider containing PII and PHI",
+      "iocs": {
+        "emails": ["admin@healthcorp.com", "it@healthcorp.com"],
+        "domains": ["healthcorp.com", "patient-portal.healthcorp.com"],
+        "ips": ["192.0.2.100"],
+        "hashes": [],
+        "urls": [],
+        "cves": []
+      },
+      "affectedOrganizations": ["HealthCorp Medical"],
+      "tags": ["database", "healthcare", "pii", "phi"],
+      "techniques": [
+        { "id": "T1530", "name": "Data from Cloud Storage" },
+        { "id": "T1567", "name": "Exfiltration Over Web Service" }
+      ]
+    },
+    {
+      "id": "PASTE-0005",
+      "title": "Ransomware Source Code - LockBit Variant",
+      "pasteUrl": "https://ghostbin.com/example005",
+      "pasteSite": "ghostbin",
+      "discoveredDate": "2025-11-01T08:00:00Z",
+      "author": "malware_researcher",
+      "category": "source_code",
+      "severity": "HIGH",
+      "description": "Partial source code of LockBit ransomware variant with encryption routines",
+      "iocs": {
+        "emails": [],
+        "domains": ["lockbit-payment.onion"],
+        "ips": [],
+        "hashes": ["5d41402abc4b2a76b9719d911017c592"],
+        "urls": [],
+        "cves": []
+      },
+      "affectedOrganizations": [],
+      "tags": ["ransomware", "lockbit", "source-code"],
+      "techniques": [
+        { "id": "T1486", "name": "Data Encrypted for Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Geopolitical Risk Schema",
+  "description": "Schema for geopolitical risk assessment data",
+  "type": "object",
+  "required": ["version", "updated", "countries"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "type": "string"
+    },
+    "countries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/countryRisk"
+      }
+    }
+  },
+  "definitions": {
+    "countryRisk": {
+      "type": "object",
+      "required": ["id", "name", "region", "riskScore", "riskLevel", "factors", "lastUpdated"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^CR-\\d{3}$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "region": {
+          "type": "string",
+          "enum": [
+            "North America",
+            "South America",
+            "Europe",
+            "Asia",
+            "Middle East",
+            "Africa",
+            "Oceania"
+          ]
+        },
+        "riskScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "riskLevel": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"]
+        },
+        "factors": {
+          "type": "object",
+          "required": [
+            "threatActorPresence",
+            "cyberConflictHistory",
+            "criticalInfrastructureExposure",
+            "regulatoryEnvironment"
+          ],
+          "properties": {
+            "threatActorPresence": {
+              "type": "object",
+              "properties": {
+                "score": { "type": "number", "minimum": 0, "maximum": 40 },
+                "actorCount": { "type": "number", "minimum": 0 },
+                "sophistication": {
+                  "type": "string",
+                  "enum": ["advanced", "high", "medium", "low"]
+                },
+                "details": { "type": "string" }
+              }
+            },
+            "cyberConflictHistory": {
+              "type": "object",
+              "properties": {
+                "score": { "type": "number", "minimum": 0, "maximum": 30 },
+                "incidentCount": { "type": "number", "minimum": 0 },
+                "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+                "details": { "type": "string" }
+              }
+            },
+            "criticalInfrastructureExposure": {
+              "type": "object",
+              "properties": {
+                "score": { "type": "number", "minimum": 0, "maximum": 20 },
+                "vulnerabilityLevel": {
+                  "type": "string",
+                  "enum": ["critical", "high", "medium", "low"]
+                },
+                "details": { "type": "string" }
+              }
+            },
+            "regulatoryEnvironment": {
+              "type": "object",
+              "properties": {
+                "score": { "type": "number", "minimum": 0, "maximum": 10 },
+                "maturity": {
+                  "type": "string",
+                  "enum": ["advanced", "developing", "emerging", "minimal"]
+                },
+                "details": { "type": "string" }
+              }
+            }
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "impact": { "type": "string", "enum": ["critical", "high", "medium", "low"] }
+            }
+          }
+        },
+        "trends": {
+          "type": "object",
+          "properties": {
+            "direction": { "type": "string", "enum": ["increasing", "stable", "decreasing"] },
+            "velocity": { "type": "string", "enum": ["rapid", "moderate", "slow"] },
+            "forecast": { "type": "string" }
+          }
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
