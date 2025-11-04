@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Threat Actors - WatchLockAI</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1>🎭 Threat Actors</h1>
+        <p class="subtitle">Attribution and profiling of known threat actors</p>
+      </div>
+      <nav class="nav">
+        <a href="/index.html" class="nav-link">Dashboard</a>
+        <a href="/apt-profiles.html" class="nav-link">APT Profiles</a>
+        <a href="/dark-web.html" class="nav-link">Dark Web Intel</a>
+        <a href="/threat-actors.html" class="nav-link active">Threat Actors</a>
+      </nav>
+    </header>
+
+    <!-- Statistics Bar -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-item">
+        <div class="stat-value" id="totalActors">0</div>
+        <div class="stat-label">Total Actors</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="activeActors">0</div>
+        <div class="stat-label">Active Actors</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="nationStateCount">0</div>
+        <div class="stat-label">Nation-State</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="cybercrimeCount">0</div>
+        <div class="stat-label">Cybercrime</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="totalCampaigns">0</div>
+        <div class="stat-label">Campaigns Tracked</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-button active" data-tab="all">All Actors</button>
+      <button class="tab-button" data-tab="nation-state">Nation-State</button>
+      <button class="tab-button" data-tab="cybercrime">Cybercrime</button>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="Search actors..." class="search-input">
+      <select id="typeFilter" class="filter-select">
+        <option value="">All Types</option>
+        <option value="nation-state">Nation-State</option>
+        <option value="cybercrime">Cybercrime</option>
+        <option value="hacktivist">Hacktivist</option>
+        <option value="insider">Insider</option>
+      </select>
+      <select id="countryFilter" class="filter-select">
+        <option value="">All Countries</option>
+      </select>
+      <select id="sophisticationFilter" class="filter-select">
+        <option value="">All Sophistication</option>
+        <option value="advanced">Advanced</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <select id="statusFilter" class="filter-select">
+        <option value="">All Status</option>
+        <option value="active">Active</option>
+        <option value="dormant">Dormant</option>
+        <option value="disbanded">Disbanded</option>
+      </select>
+    </div>
+
+    <!-- Actors Grid -->
+    <div class="grid" id="actorsGrid">
+      <!-- Actor cards will be inserted here -->
+    </div>
+
+    <!-- Modal -->
+    <div id="actorModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/threat-actors.js"></script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Web Intelligence - WatchLockAI</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-primary, #0a0e27);
+      color: var(--text-primary, #e4e4e7);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin: 0 0 10px 0;
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      color: var(--text-secondary, #a1a1aa);
+      font-size: 1.1em;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: 10px 20px;
+      background: var(--bg-secondary, #1e293b);
+      color: var(--text-primary, #e4e4e7);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-tertiary, #334155);
+    }
+
+    .nav-link.active {
+      background: #dc2626;
+      color: white;
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary, #1e293b);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2em;
+      font-weight: bold;
+      color: #dc2626;
+    }
+
+    .stat-label {
+      color: var(--text-secondary, #a1a1aa);
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border-color, #334155);
+    }
+
+    .tab {
+      padding: 12px 24px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary, #a1a1aa);
+      cursor: pointer;
+      font-size: 1em;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--text-primary, #e4e4e7);
+    }
+
+    .tab.active {
+      color: #dc2626;
+      border-bottom-color: #dc2626;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .filter-bar input,
+    .filter-bar select {
+      padding: 10px 15px;
+      background: var(--bg-secondary, #1e293b);
+      border: 1px solid var(--border-color, #334155);
+      border-radius: 6px;
+      color: var(--text-primary, #e4e4e7);
+      font-size: 0.95em;
+    }
+
+    .filter-bar input {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-secondary, #1e293b);
+      border: 1px solid var(--border-color, #334155);
+      border-radius: 8px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .card:hover {
+      border-color: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--text-primary, #e4e4e7);
+      margin-bottom: 4px;
+    }
+
+    .card-subtitle {
+      font-size: 0.85em;
+      color: var(--text-secondary, #a1a1aa);
+    }
+
+    .severity-badge {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .severity-critical {
+      background: #dc2626;
+      color: white;
+    }
+
+    .severity-high {
+      background: #ea580c;
+      color: white;
+    }
+
+    .severity-medium {
+      background: #d97706;
+      color: white;
+    }
+
+    .severity-low {
+      background: #65a30d;
+      color: white;
+    }
+
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      font-weight: 600;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    .status-active {
+      background: #dc2626;
+      color: white;
+    }
+
+    .status-negotiating {
+      background: #ea580c;
+      color: white;
+    }
+
+    .status-leaked {
+      background: #991b1b;
+      color: white;
+    }
+
+    .status-resolved {
+      background: #65a30d;
+      color: white;
+    }
+
+    .card-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+      font-size: 0.85em;
+    }
+
+    .meta-item {
+      color: var(--text-secondary, #a1a1aa);
+    }
+
+    .meta-label {
+      font-weight: 600;
+      color: var(--text-primary, #e4e4e7);
+    }
+
+    .ioc-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color, #334155);
+    }
+
+    .ioc-label {
+      font-size: 0.85em;
+      color: var(--text-secondary, #a1a1aa);
+      margin-bottom: 6px;
+    }
+
+    .ioc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ioc-tag {
+      padding: 3px 8px;
+      background: var(--bg-tertiary, #334155);
+      border-radius: 3px;
+      font-size: 0.75em;
+      color: var(--text-primary, #e4e4e7);
+      font-family: 'Courier New', monospace;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary, #1e293b);
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary, #a1a1aa);
+      font-size: 2em;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: #dc2626;
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      color: var(--text-primary, #e4e4e7);
+    }
+
+    .modal h3 {
+      color: var(--text-primary, #e4e4e7);
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .modal p {
+      color: var(--text-secondary, #a1a1aa);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🕵️ Dark Web Intelligence</h1>
+      <p>Ransomware Leak Sites & Paste Site Monitoring</p>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="/" class="nav-link">Dashboard</a>
+      <a href="/apt-profiles.html" class="nav-link">APT Profiles</a>
+      <a href="/dark-web.html" class="nav-link active">Dark Web Intel</a>
+    </nav>
+
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-card">
+        <div class="stat-value" id="totalVictims">0</div>
+        <div class="stat-label">Total Victims</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="totalPastes">0</div>
+        <div class="stat-label">Total Pastes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="criticalVictims">0</div>
+        <div class="stat-label">Critical Victims</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="criticalPastes">0</div>
+        <div class="stat-label">Critical Pastes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="activeIncidents">0</div>
+        <div class="stat-label">Active Incidents</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="leakedIncidents">0</div>
+        <div class="stat-label">Leaked Incidents</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="victims">Ransomware Victims</button>
+      <button class="tab" data-tab="pastes">Paste Site Findings</button>
+    </div>
+
+    <div id="victimsTab" class="tab-content active">
+      <div class="filter-bar">
+        <input type="text" id="victimSearch" placeholder="Search victims...">
+        <select id="victimSeverity">
+          <option value="ALL">All Severities</option>
+          <option value="CRITICAL">Critical</option>
+          <option value="HIGH">High</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="LOW">Low</option>
+        </select>
+        <select id="victimStatus">
+          <option value="ALL">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="negotiating">Negotiating</option>
+          <option value="leaked">Leaked</option>
+          <option value="resolved">Resolved</option>
+        </select>
+        <select id="ransomwareGroup">
+          <option value="ALL">All Groups</option>
+        </select>
+      </div>
+      <div class="grid" id="victimsGrid"></div>
+    </div>
+
+    <div id="pastesTab" class="tab-content">
+      <div class="filter-bar">
+        <input type="text" id="pasteSearch" placeholder="Search pastes...">
+        <select id="pasteSeverity">
+          <option value="ALL">All Severities</option>
+          <option value="CRITICAL">Critical</option>
+          <option value="HIGH">High</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="LOW">Low</option>
+        </select>
+        <select id="pasteCategory">
+          <option value="ALL">All Categories</option>
+          <option value="credentials">Credentials</option>
+          <option value="database_dump">Database Dump</option>
+          <option value="source_code">Source Code</option>
+          <option value="malware">Malware</option>
+          <option value="exploit">Exploit</option>
+          <option value="other">Other</option>
+        </select>
+        <select id="pasteSite">
+          <option value="ALL">All Sites</option>
+          <option value="pastebin">Pastebin</option>
+          <option value="ghostbin">Ghostbin</option>
+          <option value="rentry">Rentry</option>
+          <option value="privatebin">PrivateBin</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="grid" id="pastesGrid"></div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="document.getElementById('modal').style.display='none'">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="./src/dark-web.js"></script>
+</body>
+</html>

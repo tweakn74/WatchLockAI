@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Threat Actor Schema",
+  "description": "Schema for threat actor profiles and attribution data",
+  "type": "object",
+  "properties": {
+    "version": { "type": "string" },
+    "updated": { "type": "string", "format": "date-time" },
+    "description": { "type": "string" },
+    "threatActors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "aliases": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "type": {
+            "type": "string",
+            "enum": ["nation-state", "cybercrime", "hacktivist", "insider"]
+          },
+          "country": { "type": "string" },
+          "motivation": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["espionage", "financial", "disruption", "ideology", "revenge"]
+            }
+          },
+          "firstSeen": { "type": "string", "format": "date" },
+          "lastSeen": { "type": "string", "format": "date" },
+          "status": {
+            "type": "string",
+            "enum": ["active", "dormant", "disbanded"]
+          },
+          "sophistication": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "advanced"]
+          },
+          "targets": {
+            "type": "object",
+            "properties": {
+              "industries": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "countries": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "sectors": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          },
+          "ttps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string", "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$" },
+                "name": { "type": "string" }
+              }
+            }
+          },
+          "malwareFamilies": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "infrastructure": {
+            "type": "object",
+            "properties": {
+              "domains": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "ips": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "asns": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          },
+          "campaigns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "date": { "type": "string", "format": "date" },
+                "description": { "type": "string" },
+                "targets": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          },
+          "attribution": {
+            "type": "object",
+            "properties": {
+              "confidence": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "very-high"]
+              },
+              "evidence": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "url": { "type": "string", "format": "uri" },
+                "date": { "type": "string", "format": "date" }
+              }
+            }
+          }
+        },
+        "required": ["id", "name", "type", "country", "status", "sophistication"]
+      }
+    }
+  },
+  "required": ["version", "updated", "threatActors"]
+}

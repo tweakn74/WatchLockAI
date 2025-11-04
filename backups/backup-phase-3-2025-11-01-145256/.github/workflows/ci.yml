@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run ESLint
+        run: npm run lint
+      
+      - name: Run Prettier check
+        run: npm run format:check
+      
+      - name: Validate JSON Schema
+        run: |
+          node -e "
+          const Ajv = require('ajv');
+          const fs = require('fs');
+          const ajv = new Ajv();
+          const schema = JSON.parse(fs.readFileSync('packages/schemas/unified-threat.schema.json', 'utf8'));
+          const data = JSON.parse(fs.readFileSync('data/demo/unified-threats.sample.json', 'utf8'));
+          const validate = ajv.compile(schema);
+          const valid = validate(data.items[0]);
+          if (!valid) {
+            console.error('Schema validation failed:', validate.errors);
+            process.exit(1);
+          }
+          console.log('✅ Schema validation passed');
+          "
+  
+  playwright-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+      
+      - name: Build dashboard
+        run: npm run build --workspace=apps/intel-dashboard
+      
+      - name: Run Playwright tests
+        run: npx playwright test
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

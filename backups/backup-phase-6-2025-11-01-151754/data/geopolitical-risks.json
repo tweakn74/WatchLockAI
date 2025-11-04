@@ -1,0 +1,1303 @@
+{
+  "version": "1.0.0",
+  "updated": "2025-11-01T00:00:00Z",
+  "description": "Geopolitical Risk Assessment Data - Country-level cyber risk profiles",
+  "countries": [
+    {
+      "id": "CR-001",
+      "name": "Russia",
+      "code": "RU",
+      "region": "Europe",
+      "riskScore": 95,
+      "riskLevel": "critical",
+      "factors": {
+        "threatActorPresence": {
+          "score": 40,
+          "actorCount": 7,
+          "sophistication": "advanced",
+          "details": "Home to APT28, APT29, Sandworm, Turla, and other advanced persistent threat groups"
+        },
+        "cyberConflictHistory": {
+          "score": 30,
+          "incidentCount": 150,
+          "severity": "critical",
+          "details": "Extensive history of state-sponsored cyber operations including Ukraine power grid attacks, NotPetya, SolarWinds"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 18,
+          "vulnerabilityLevel": "high",
+          "details": "Significant critical infrastructure with known vulnerabilities, frequent targeting by adversaries"
+        },
+        "regulatoryEnvironment": {
+          "score": 7,
+          "maturity": "developing",
+          "details": "Developing cybersecurity regulations, limited international cooperation"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-12-13",
+          "title": "SolarWinds Supply Chain Attack",
+          "description": "APT29 compromised SolarWinds Orion platform",
+          "impact": "critical"
+        },
+        {
+          "date": "2017-06-27",
+          "title": "NotPetya Ransomware",
+          "description": "Sandworm deployed destructive malware globally",
+          "impact": "critical"
+        },
+        {
+          "date": "2015-12-23",
+          "title": "Ukraine Power Grid Attack",
+          "description": "First known cyber attack on power grid",
+          "impact": "critical"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "moderate",
+        "forecast": "Continued state-sponsored cyber operations expected, focus on critical infrastructure and supply chains"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-002",
+      "name": "China",
+      "code": "CN",
+      "region": "Asia",
+      "riskScore": 92,
+      "riskLevel": "critical",
+      "factors": {
+        "threatActorPresence": {
+          "score": 40,
+          "actorCount": 5,
+          "sophistication": "advanced",
+          "details": "Home to APT41, APT10, APT1, and numerous other state-sponsored groups"
+        },
+        "cyberConflictHistory": {
+          "score": 28,
+          "incidentCount": 120,
+          "severity": "critical",
+          "details": "Long history of cyber espionage targeting intellectual property, government, and defense sectors"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 17,
+          "vulnerabilityLevel": "high",
+          "details": "Massive critical infrastructure footprint with increasing digitalization"
+        },
+        "regulatoryEnvironment": {
+          "score": 7,
+          "maturity": "developing",
+          "details": "Strict domestic regulations, limited international transparency"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-09-16",
+          "title": "Healthcare Sector Attacks",
+          "description": "APT41 targeted healthcare organizations during COVID-19",
+          "impact": "high"
+        },
+        {
+          "date": "2018-12-20",
+          "title": "Cloud Hopper Campaign",
+          "description": "APT10 compromised managed service providers globally",
+          "impact": "critical"
+        },
+        {
+          "date": "2015-06-04",
+          "title": "OPM Data Breach",
+          "description": "Theft of 21.5 million personnel records",
+          "impact": "critical"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "rapid",
+        "forecast": "Expanding cyber capabilities with focus on technology theft and strategic intelligence"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-003",
+      "name": "North Korea",
+      "code": "KP",
+      "region": "Asia",
+      "riskScore": 90,
+      "riskLevel": "critical",
+      "factors": {
+        "threatActorPresence": {
+          "score": 38,
+          "actorCount": 3,
+          "sophistication": "advanced",
+          "details": "Lazarus Group, APT38, and other state-sponsored groups focused on financial gain and espionage"
+        },
+        "cyberConflictHistory": {
+          "score": 28,
+          "incidentCount": 80,
+          "severity": "critical",
+          "details": "Notable for WannaCry ransomware, Sony Pictures hack, SWIFT banking attacks"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 16,
+          "vulnerabilityLevel": "medium",
+          "details": "Limited critical infrastructure but highly isolated and vulnerable"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "minimal",
+          "details": "Minimal cybersecurity regulations, state-controlled internet"
+        }
+      },
+      "events": [
+        {
+          "date": "2017-05-12",
+          "title": "WannaCry Ransomware",
+          "description": "Global ransomware attack affecting 200,000+ computers",
+          "impact": "critical"
+        },
+        {
+          "date": "2016-02-05",
+          "title": "Bangladesh Bank Heist",
+          "description": "APT38 stole $81 million via SWIFT network",
+          "impact": "critical"
+        },
+        {
+          "date": "2014-11-24",
+          "title": "Sony Pictures Hack",
+          "description": "Destructive attack on Sony Pictures Entertainment",
+          "impact": "high"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "moderate",
+        "forecast": "Continued focus on financial cybercrime to fund regime, cryptocurrency theft"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-004",
+      "name": "Iran",
+      "code": "IR",
+      "region": "Middle East",
+      "riskScore": 85,
+      "riskLevel": "high",
+      "factors": {
+        "threatActorPresence": {
+          "score": 35,
+          "actorCount": 4,
+          "sophistication": "high",
+          "details": "APT33, APT34, OilRig, and other groups targeting critical infrastructure"
+        },
+        "cyberConflictHistory": {
+          "score": 26,
+          "incidentCount": 60,
+          "severity": "high",
+          "details": "History of destructive attacks on critical infrastructure, particularly energy sector"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 16,
+          "vulnerabilityLevel": "high",
+          "details": "Significant oil and gas infrastructure, frequent targeting by adversaries"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "emerging",
+          "details": "Emerging cybersecurity framework, limited international cooperation"
+        }
+      },
+      "events": [
+        {
+          "date": "2012-08-15",
+          "title": "Shamoon Attacks",
+          "description": "Destructive malware targeting Saudi Aramco",
+          "impact": "critical"
+        },
+        {
+          "date": "2019-06-20",
+          "title": "US Drone Shootdown Retaliation",
+          "description": "Cyber operations following military tensions",
+          "impact": "medium"
+        },
+        {
+          "date": "2020-05-09",
+          "title": "Israeli Water Facility Attack",
+          "description": "Attempted attack on water treatment facilities",
+          "impact": "high"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "moderate",
+        "forecast": "Growing cyber capabilities with focus on regional adversaries and critical infrastructure"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-005",
+      "name": "United States",
+      "code": "US",
+      "region": "North America",
+      "riskScore": 75,
+      "riskLevel": "high",
+      "factors": {
+        "threatActorPresence": {
+          "score": 32,
+          "actorCount": 2,
+          "sophistication": "advanced",
+          "details": "Home to Equation Group and other advanced capabilities, primary target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 22,
+          "incidentCount": 200,
+          "severity": "high",
+          "details": "Frequent target of state-sponsored attacks, extensive offensive capabilities"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 15,
+          "vulnerabilityLevel": "high",
+          "details": "Massive critical infrastructure footprint, frequent targeting by adversaries"
+        },
+        "regulatoryEnvironment": {
+          "score": 6,
+          "maturity": "advanced",
+          "details": "Mature cybersecurity regulations, strong public-private partnerships"
+        }
+      },
+      "events": [
+        {
+          "date": "2021-05-07",
+          "title": "Colonial Pipeline Ransomware",
+          "description": "DarkSide ransomware disrupted fuel supply",
+          "impact": "critical"
+        },
+        {
+          "date": "2020-12-13",
+          "title": "SolarWinds Compromise",
+          "description": "APT29 compromised government and private sector",
+          "impact": "critical"
+        },
+        {
+          "date": "2015-06-04",
+          "title": "OPM Data Breach",
+          "description": "Theft of 21.5 million personnel records",
+          "impact": "critical"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "moderate",
+        "forecast": "Continued targeting by nation-state actors, focus on critical infrastructure protection"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-006",
+      "name": "United Kingdom",
+      "code": "GB",
+      "region": "Europe",
+      "riskScore": 72,
+      "riskLevel": "high",
+      "factors": {
+        "threatActorPresence": {
+          "score": 30,
+          "actorCount": 1,
+          "sophistication": "advanced",
+          "details": "Advanced offensive capabilities, frequent target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 21,
+          "incidentCount": 90,
+          "severity": "high",
+          "details": "Frequent target of state-sponsored attacks, particularly from Russia and China"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 14,
+          "vulnerabilityLevel": "medium",
+          "details": "Significant critical infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 7,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity regulations, NCSC leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2017-05-12",
+          "title": "WannaCry NHS Attack",
+          "description": "Ransomware disrupted National Health Service",
+          "impact": "critical"
+        },
+        {
+          "date": "2018-10-04",
+          "title": "NotPetya Impact",
+          "description": "Collateral damage from Russian attack",
+          "impact": "high"
+        },
+        {
+          "date": "2020-07-16",
+          "title": "COVID-19 Vaccine Research Targeting",
+          "description": "APT29 targeted vaccine research",
+          "impact": "high"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "moderate",
+        "forecast": "Continued targeting by nation-state actors, strong defensive posture"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-007",
+      "name": "Israel",
+      "code": "IL",
+      "region": "Middle East",
+      "riskScore": 78,
+      "riskLevel": "high",
+      "factors": {
+        "threatActorPresence": {
+          "score": 32,
+          "actorCount": 2,
+          "sophistication": "advanced",
+          "details": "Advanced offensive capabilities, frequent target of regional adversaries"
+        },
+        "cyberConflictHistory": {
+          "score": 24,
+          "incidentCount": 100,
+          "severity": "high",
+          "details": "Frequent cyber conflicts with Iran and other regional actors"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 15,
+          "vulnerabilityLevel": "high",
+          "details": "Critical infrastructure frequently targeted by adversaries"
+        },
+        "regulatoryEnvironment": {
+          "score": 7,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity industry and regulations"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-05-09",
+          "title": "Water Facility Attack",
+          "description": "Iranian attack on water treatment facilities",
+          "impact": "high"
+        },
+        {
+          "date": "2021-10-21",
+          "title": "Healthcare Sector Attacks",
+          "description": "Ransomware attacks on hospitals",
+          "impact": "medium"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "moderate",
+        "forecast": "Continued regional cyber conflicts, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-008",
+      "name": "South Korea",
+      "code": "KR",
+      "region": "Asia",
+      "riskScore": 74,
+      "riskLevel": "high",
+      "factors": {
+        "threatActorPresence": {
+          "score": 28,
+          "actorCount": 1,
+          "sophistication": "high",
+          "details": "Advanced capabilities, primary target of North Korean cyber operations"
+        },
+        "cyberConflictHistory": {
+          "score": 23,
+          "incidentCount": 85,
+          "severity": "high",
+          "details": "Frequent target of North Korean attacks, including destructive malware"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 16,
+          "vulnerabilityLevel": "high",
+          "details": "Highly digitalized infrastructure, frequent targeting"
+        },
+        "regulatoryEnvironment": {
+          "score": 7,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity regulations and capabilities"
+        }
+      },
+      "events": [
+        {
+          "date": "2013-03-20",
+          "title": "DarkSeoul Attacks",
+          "description": "Destructive attacks on banks and broadcasters",
+          "impact": "critical"
+        },
+        {
+          "date": "2018-02-09",
+          "title": "Olympic Destroyer",
+          "description": "Attack on PyeongChang Olympics",
+          "impact": "high"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "moderate",
+        "forecast": "Continued targeting by North Korea, strong defensive posture"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-009",
+      "name": "Germany",
+      "code": "DE",
+      "region": "Europe",
+      "riskScore": 65,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 25,
+          "actorCount": 0,
+          "sophistication": "medium",
+          "details": "No major threat actor groups, frequent target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 18,
+          "incidentCount": 70,
+          "severity": "medium",
+          "details": "Target of Russian and Chinese espionage, industrial sector targeting"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 14,
+          "vulnerabilityLevel": "medium",
+          "details": "Significant industrial infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong EU regulations, BSI leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2015-05-08",
+          "title": "Bundestag Hack",
+          "description": "APT28 compromised German parliament",
+          "impact": "high"
+        },
+        {
+          "date": "2020-09-24",
+          "title": "University Hospital Ransomware",
+          "description": "Ransomware attack led to patient death",
+          "impact": "critical"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Continued targeting of industrial sector, strong regulatory framework"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-010",
+      "name": "France",
+      "code": "FR",
+      "region": "Europe",
+      "riskScore": 63,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 24,
+          "actorCount": 0,
+          "sophistication": "medium",
+          "details": "Advanced offensive capabilities, target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 17,
+          "incidentCount": 65,
+          "severity": "medium",
+          "details": "Target of state-sponsored attacks, particularly during elections"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 14,
+          "vulnerabilityLevel": "medium",
+          "details": "Significant critical infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong EU regulations, ANSSI leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2017-05-05",
+          "title": "Macron Campaign Hack",
+          "description": "APT28 targeted presidential campaign",
+          "impact": "high"
+        },
+        {
+          "date": "2015-04-08",
+          "title": "TV5Monde Attack",
+          "description": "Cyber attack disrupted broadcasting",
+          "impact": "medium"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Continued targeting during political events, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-011",
+      "name": "Japan",
+      "code": "JP",
+      "region": "Asia",
+      "riskScore": 64,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 24,
+          "actorCount": 0,
+          "sophistication": "medium",
+          "details": "Advanced capabilities, frequent target of Chinese and North Korean APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 18,
+          "incidentCount": 75,
+          "severity": "medium",
+          "details": "Frequent target of cyber espionage, particularly technology sector"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 14,
+          "vulnerabilityLevel": "medium",
+          "details": "Significant critical infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity regulations and capabilities"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-10-20",
+          "title": "Defense Contractor Breach",
+          "description": "Chinese APT targeted defense contractors",
+          "impact": "high"
+        },
+        {
+          "date": "2018-12-13",
+          "title": "Mitsubishi Electric Breach",
+          "description": "Long-term compromise of major contractor",
+          "impact": "high"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Continued targeting of technology and defense sectors"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-012",
+      "name": "Australia",
+      "code": "AU",
+      "region": "Oceania",
+      "riskScore": 62,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 23,
+          "actorCount": 0,
+          "sophistication": "medium",
+          "details": "Advanced capabilities, target of Chinese APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 17,
+          "incidentCount": 60,
+          "severity": "medium",
+          "details": "Frequent target of state-sponsored attacks, particularly from China"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 14,
+          "vulnerabilityLevel": "medium",
+          "details": "Significant critical infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity regulations, ASD leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-06-19",
+          "title": "State-Sponsored Attacks",
+          "description": "Widespread targeting of government and critical infrastructure",
+          "impact": "high"
+        },
+        {
+          "date": "2019-02-18",
+          "title": "Parliament Hack",
+          "description": "Chinese APT compromised parliament networks",
+          "impact": "high"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "moderate",
+        "forecast": "Continued targeting by Chinese APTs, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-013",
+      "name": "Canada",
+      "code": "CA",
+      "region": "North America",
+      "riskScore": 60,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 22,
+          "actorCount": 0,
+          "sophistication": "medium",
+          "details": "Advanced capabilities, target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 16,
+          "incidentCount": 55,
+          "severity": "medium",
+          "details": "Target of state-sponsored attacks, particularly from China and Russia"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 14,
+          "vulnerabilityLevel": "medium",
+          "details": "Significant critical infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity regulations, CSE leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-07-16",
+          "title": "COVID-19 Vaccine Research Targeting",
+          "description": "APT29 targeted vaccine research",
+          "impact": "high"
+        },
+        {
+          "date": "2018-10-30",
+          "title": "Government Email Compromise",
+          "description": "Chinese APT targeted government agencies",
+          "impact": "medium"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Continued targeting by nation-state actors, strong defensive posture"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-014",
+      "name": "Netherlands",
+      "code": "NL",
+      "region": "Europe",
+      "riskScore": 52,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 18,
+          "actorCount": 0,
+          "sophistication": "low",
+          "details": "No major threat actor groups, occasional target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 14,
+          "incidentCount": 45,
+          "severity": "medium",
+          "details": "Target of Russian APTs, particularly related to MH17 investigation"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 12,
+          "vulnerabilityLevel": "medium",
+          "details": "Significant digital infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong EU regulations, NCSC leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2018-10-04",
+          "title": "GRU Hacking Attempt",
+          "description": "Russian intelligence attempted to hack OPCW",
+          "impact": "high"
+        },
+        {
+          "date": "2017-06-27",
+          "title": "NotPetya Impact",
+          "description": "Collateral damage from Russian attack",
+          "impact": "medium"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Low risk profile, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-015",
+      "name": "Switzerland",
+      "code": "CH",
+      "region": "Europe",
+      "riskScore": 48,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 16,
+          "actorCount": 0,
+          "sophistication": "low",
+          "details": "No major threat actor groups, occasional target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 12,
+          "incidentCount": 35,
+          "severity": "low",
+          "details": "Limited cyber conflict history, occasional targeting of financial sector"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 12,
+          "vulnerabilityLevel": "low",
+          "details": "Strong security posture, limited exposure"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity regulations and privacy laws"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-11-10",
+          "title": "Pharmaceutical Company Attacks",
+          "description": "Targeting of COVID-19 vaccine research",
+          "impact": "medium"
+        },
+        {
+          "date": "2019-05-15",
+          "title": "Financial Sector Targeting",
+          "description": "APT targeting Swiss banks",
+          "impact": "low"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Low risk profile, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-016",
+      "name": "Singapore",
+      "code": "SG",
+      "region": "Asia",
+      "riskScore": 55,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 20,
+          "actorCount": 0,
+          "sophistication": "low",
+          "details": "No major threat actor groups, target of Chinese APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 15,
+          "incidentCount": 50,
+          "severity": "medium",
+          "details": "Target of cyber espionage, particularly healthcare and government sectors"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 12,
+          "vulnerabilityLevel": "medium",
+          "details": "Highly digitalized infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity regulations, CSA leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2018-07-20",
+          "title": "SingHealth Data Breach",
+          "description": "1.5 million patient records stolen",
+          "impact": "critical"
+        },
+        {
+          "date": "2020-01-05",
+          "title": "Government Agency Breach",
+          "description": "Chinese APT targeted government systems",
+          "impact": "medium"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Continued targeting by Chinese APTs, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-017",
+      "name": "Sweden",
+      "code": "SE",
+      "region": "Europe",
+      "riskScore": 50,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 17,
+          "actorCount": 0,
+          "sophistication": "low",
+          "details": "No major threat actor groups, occasional target of Russian APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 13,
+          "incidentCount": 40,
+          "severity": "low",
+          "details": "Limited cyber conflict history, occasional targeting"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 12,
+          "vulnerabilityLevel": "low",
+          "details": "Strong security posture, limited exposure"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong EU regulations, MSB leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2017-07-19",
+          "title": "Transport Agency Data Leak",
+          "description": "Outsourcing led to data exposure",
+          "impact": "high"
+        },
+        {
+          "date": "2020-03-12",
+          "title": "Government Agency Targeting",
+          "description": "Russian APT targeted government systems",
+          "impact": "low"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Low risk profile, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-018",
+      "name": "Norway",
+      "code": "NO",
+      "region": "Europe",
+      "riskScore": 51,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 18,
+          "actorCount": 0,
+          "sophistication": "low",
+          "details": "No major threat actor groups, target of Russian APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 13,
+          "incidentCount": 42,
+          "severity": "low",
+          "details": "Target of Russian espionage, particularly energy sector"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 12,
+          "vulnerabilityLevel": "medium",
+          "details": "Significant energy infrastructure, strong security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong cybersecurity regulations, NSM leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2018-03-15",
+          "title": "Parliament Email Compromise",
+          "description": "Russian APT targeted parliament",
+          "impact": "medium"
+        },
+        {
+          "date": "2020-08-24",
+          "title": "Energy Sector Targeting",
+          "description": "APT targeting oil and gas companies",
+          "impact": "medium"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Continued targeting of energy sector, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-019",
+      "name": "Finland",
+      "code": "FI",
+      "region": "Europe",
+      "riskScore": 49,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 17,
+          "actorCount": 0,
+          "sophistication": "low",
+          "details": "No major threat actor groups, occasional target of Russian APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 12,
+          "incidentCount": 38,
+          "severity": "low",
+          "details": "Limited cyber conflict history, occasional targeting by Russia"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 12,
+          "vulnerabilityLevel": "low",
+          "details": "Strong security posture, limited exposure"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "advanced",
+          "details": "Strong EU regulations, NCSC-FI leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-10-23",
+          "title": "Parliament Cyber Attack",
+          "description": "Russian APT targeted parliament",
+          "impact": "medium"
+        },
+        {
+          "date": "2019-11-28",
+          "title": "Government Email Compromise",
+          "description": "APT targeting government agencies",
+          "impact": "low"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "slow",
+        "forecast": "Low risk profile, strong defensive capabilities"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-020",
+      "name": "India",
+      "code": "IN",
+      "region": "Asia",
+      "riskScore": 68,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 26,
+          "actorCount": 1,
+          "sophistication": "medium",
+          "details": "Emerging threat actor capabilities, frequent target of Chinese and Pakistani APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 19,
+          "incidentCount": 80,
+          "severity": "medium",
+          "details": "Frequent cyber conflicts with China and Pakistan, critical infrastructure targeting"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 15,
+          "vulnerabilityLevel": "high",
+          "details": "Massive critical infrastructure footprint, increasing digitalization"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "developing",
+          "details": "Developing cybersecurity regulations, CERT-In leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-10-12",
+          "title": "Mumbai Power Outage",
+          "description": "Suspected Chinese APT attack on power grid",
+          "impact": "critical"
+        },
+        {
+          "date": "2021-02-28",
+          "title": "Government Portal Breaches",
+          "description": "Multiple government portals compromised",
+          "impact": "high"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "rapid",
+        "forecast": "Growing cyber capabilities and threats, focus on critical infrastructure protection"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-021",
+      "name": "Brazil",
+      "code": "BR",
+      "region": "South America",
+      "riskScore": 66,
+      "riskLevel": "medium",
+      "factors": {
+        "threatActorPresence": {
+          "score": 24,
+          "actorCount": 0,
+          "sophistication": "medium",
+          "details": "Emerging cybercrime ecosystem, target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 18,
+          "incidentCount": 70,
+          "severity": "medium",
+          "details": "Frequent cybercrime activity, occasional state-sponsored targeting"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 16,
+          "vulnerabilityLevel": "high",
+          "details": "Significant critical infrastructure, developing security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "developing",
+          "details": "Developing cybersecurity regulations, LGPD implementation"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-11-10",
+          "title": "Superior Electoral Court Attack",
+          "description": "Cyber attack during elections",
+          "impact": "high"
+        },
+        {
+          "date": "2021-05-14",
+          "title": "JBS Ransomware Attack",
+          "description": "REvil ransomware disrupted meat processing",
+          "impact": "critical"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "moderate",
+        "forecast": "Growing cyber threats, focus on critical infrastructure and elections"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-022",
+      "name": "Turkey",
+      "code": "TR",
+      "region": "Europe",
+      "riskScore": 70,
+      "riskLevel": "high",
+      "factors": {
+        "threatActorPresence": {
+          "score": 27,
+          "actorCount": 1,
+          "sophistication": "medium",
+          "details": "Emerging threat actor capabilities, target of foreign APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 20,
+          "incidentCount": 75,
+          "severity": "medium",
+          "details": "Frequent cyber conflicts with regional adversaries, hacktivist activity"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 15,
+          "vulnerabilityLevel": "high",
+          "details": "Significant critical infrastructure, developing security posture"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "developing",
+          "details": "Developing cybersecurity regulations, increasing government control"
+        }
+      },
+      "events": [
+        {
+          "date": "2020-07-15",
+          "title": "Twitter Hack Impact",
+          "description": "High-profile accounts compromised",
+          "impact": "medium"
+        },
+        {
+          "date": "2019-10-09",
+          "title": "Syrian Conflict Cyber Operations",
+          "description": "Cyber operations related to military conflict",
+          "impact": "medium"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "moderate",
+        "forecast": "Growing cyber capabilities and regional conflicts"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-023",
+      "name": "Saudi Arabia",
+      "code": "SA",
+      "region": "Middle East",
+      "riskScore": 72,
+      "riskLevel": "high",
+      "factors": {
+        "threatActorPresence": {
+          "score": 28,
+          "actorCount": 0,
+          "sophistication": "medium",
+          "details": "Developing offensive capabilities, frequent target of Iranian APTs"
+        },
+        "cyberConflictHistory": {
+          "score": 21,
+          "incidentCount": 65,
+          "severity": "high",
+          "details": "Frequent target of destructive attacks, particularly from Iran"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 15,
+          "vulnerabilityLevel": "high",
+          "details": "Massive oil and gas infrastructure, frequent targeting"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "developing",
+          "details": "Developing cybersecurity regulations, NCA leadership"
+        }
+      },
+      "events": [
+        {
+          "date": "2012-08-15",
+          "title": "Shamoon Attacks",
+          "description": "Destructive malware targeting Saudi Aramco",
+          "impact": "critical"
+        },
+        {
+          "date": "2017-12-10",
+          "title": "Triton/Trisis Attack",
+          "description": "Attack on petrochemical plant safety systems",
+          "impact": "critical"
+        },
+        {
+          "date": "2019-01-29",
+          "title": "Shamoon 3",
+          "description": "Return of destructive malware",
+          "impact": "high"
+        }
+      ],
+      "trends": {
+        "direction": "stable",
+        "velocity": "moderate",
+        "forecast": "Continued targeting by Iranian APTs, focus on critical infrastructure protection"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    },
+    {
+      "id": "CR-024",
+      "name": "Ukraine",
+      "code": "UA",
+      "region": "Europe",
+      "riskScore": 88,
+      "riskLevel": "high",
+      "factors": {
+        "threatActorPresence": {
+          "score": 34,
+          "actorCount": 0,
+          "sophistication": "medium",
+          "details": "Developing defensive capabilities, primary target of Russian cyber operations"
+        },
+        "cyberConflictHistory": {
+          "score": 28,
+          "incidentCount": 150,
+          "severity": "critical",
+          "details": "Extensive history of Russian cyber attacks, including critical infrastructure"
+        },
+        "criticalInfrastructureExposure": {
+          "score": 18,
+          "vulnerabilityLevel": "critical",
+          "details": "Critical infrastructure frequently targeted, ongoing conflict"
+        },
+        "regulatoryEnvironment": {
+          "score": 8,
+          "maturity": "developing",
+          "details": "Developing cybersecurity regulations, wartime posture"
+        }
+      },
+      "events": [
+        {
+          "date": "2015-12-23",
+          "title": "Power Grid Attack",
+          "description": "First known cyber attack on power grid",
+          "impact": "critical"
+        },
+        {
+          "date": "2017-06-27",
+          "title": "NotPetya Attack",
+          "description": "Destructive malware disguised as ransomware",
+          "impact": "critical"
+        },
+        {
+          "date": "2022-02-24",
+          "title": "Invasion Cyber Operations",
+          "description": "Coordinated cyber attacks during military invasion",
+          "impact": "critical"
+        }
+      ],
+      "trends": {
+        "direction": "increasing",
+        "velocity": "rapid",
+        "forecast": "Continued intense cyber conflict, focus on resilience and defense"
+      },
+      "lastUpdated": "2025-11-01T00:00:00Z"
+    }
+  ]
+}

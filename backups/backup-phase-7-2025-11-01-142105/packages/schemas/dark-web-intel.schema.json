@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dark Web Intelligence Schema",
+  "description": "Schema for dark web intelligence including ransomware victims and paste site findings",
+  "type": "object",
+  "properties": {
+    "version": { "type": "string" },
+    "updated": { "type": "string", "format": "date-time" },
+    "description": { "type": "string" },
+    "ransomwareVictims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "victimName": { "type": "string" },
+          "ransomwareGroup": { "type": "string" },
+          "discoveredDate": { "type": "string", "format": "date" },
+          "publishedDate": { "type": "string", "format": "date" },
+          "industry": { "type": "string" },
+          "country": { "type": "string" },
+          "revenue": { "type": "string" },
+          "employeeCount": { "type": "string" },
+          "ransomAmount": { "type": "string" },
+          "dataLeaked": { "type": "boolean" },
+          "leakSiteUrl": { "type": "string" },
+          "description": { "type": "string" },
+          "iocs": { "type": "array", "items": { "type": "string" } },
+          "techniques": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string", "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$" },
+                "name": { "type": "string" }
+              }
+            }
+          },
+          "severity": { "type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"] },
+          "status": { "type": "string", "enum": ["active", "resolved", "negotiating", "leaked"] },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "url": { "type": "string", "format": "uri" }
+              }
+            }
+          }
+        },
+        "required": ["id", "victimName", "ransomwareGroup", "discoveredDate"]
+      }
+    },
+    "pasteFindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "pasteUrl": { "type": "string", "format": "uri" },
+          "pasteSite": {
+            "type": "string",
+            "enum": ["pastebin", "ghostbin", "rentry", "privatebin", "other"]
+          },
+          "discoveredDate": { "type": "string", "format": "date-time" },
+          "author": { "type": "string" },
+          "category": {
+            "type": "string",
+            "enum": ["credentials", "database_dump", "source_code", "malware", "exploit", "other"]
+          },
+          "severity": { "type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"] },
+          "description": { "type": "string" },
+          "iocs": {
+            "type": "object",
+            "properties": {
+              "ips": { "type": "array", "items": { "type": "string" } },
+              "domains": { "type": "array", "items": { "type": "string" } },
+              "emails": { "type": "array", "items": { "type": "string" } },
+              "hashes": { "type": "array", "items": { "type": "string" } },
+              "urls": { "type": "array", "items": { "type": "string" } },
+              "cves": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "affectedOrganizations": { "type": "array", "items": { "type": "string" } },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "techniques": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string", "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$" },
+                "name": { "type": "string" }
+              }
+            }
+          }
+        },
+        "required": ["id", "title", "pasteUrl", "pasteSite", "discoveredDate", "category"]
+      }
+    }
+  },
+  "required": ["version", "updated", "ransomwareVictims", "pasteFindings"]
+}
