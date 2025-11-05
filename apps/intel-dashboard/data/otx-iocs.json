@@ -1,0 +1,6 @@
+{
+  "pulses": [],
+  "indicators": [],
+  "fetchedAt": "2025-11-05T05:29:36.646Z",
+  "note": "OTX API key required for full access. Set OTX_API_KEY environment variable."
+}
