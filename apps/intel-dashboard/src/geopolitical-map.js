@@ -3,6 +3,8 @@
  * Interactive world map visualization of APT actor locations and threat density
  */
 
+import dataService from './services/data-service.js';
+
 // Country coordinates (capital cities)
 const countryCoordinates = {
   Russia: [55.7558, 37.6173],
@@ -59,17 +61,30 @@ function initMap() {
 }
 
 /**
- * Load APT data from JSON file
+ * Load APT data from centralized data service
  */
 async function loadAPTData() {
   try {
-    const response = await fetch('/data/apt-profiles.json');
-    const data = await response.json();
-    allAPTData = data.groups;
+    console.log('[Geopolitical Map] Loading APT profiles from centralized data service...');
+    const profiles = await dataService.loadAPTProfiles();
+
+    // Map new schema to old schema for compatibility
+    allAPTData = profiles.map(apt => ({
+      ...apt,
+      country: apt.origin || apt.country || 'Unknown',
+      targetedSectors: apt.targets?.sectors || apt.targetedSectors || [],
+      targetedCountries: apt.targets?.countries || apt.targetedCountries || [],
+      firstSeen: apt.activeSince || apt.firstSeen || 'Unknown',
+      lastActivity: apt.lastSeen || apt.lastActivity || new Date().toISOString(),
+      sophistication: apt.sophistication || 'medium',
+      motivation: apt.motivation || []
+    }));
+
     filteredAPTData = [...allAPTData];
+    console.log(`[Geopolitical Map] Loaded ${allAPTData.length} APT profiles`);
     return allAPTData;
   } catch (error) {
-    console.error('Failed to load APT data:', error);
+    console.error('[Geopolitical Map] Failed to load APT data:', error);
     return [];
   }
 }

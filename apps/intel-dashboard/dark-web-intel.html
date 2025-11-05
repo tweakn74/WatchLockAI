@@ -819,7 +819,10 @@
   </div>
 
   <script type="module">
+    import dataService from './src/services/data-service.js';
+
     let victimData = [];
+    let aptProfiles = []; // APT profiles for correlation
 
     // Sample data (in production, this would come from API/database)
     const sampleVictims = [
@@ -916,17 +919,59 @@
       return daysSince <= 10; // Changed from 7 to 10 to include both Acme and TechStart
     }
 
+    // Load APT profiles for correlation
+    async function loadAPTProfiles() {
+      try {
+        console.log('[Dark Web Intel] Loading APT profiles from centralized data service...');
+        aptProfiles = await dataService.loadAPTProfiles();
+        console.log(`[Dark Web Intel] Loaded ${aptProfiles.length} APT profiles for correlation`);
+      } catch (error) {
+        console.error('[Dark Web Intel] Failed to load APT profiles:', error);
+        aptProfiles = [];
+      }
+    }
+
+    // Correlate victim with APT groups based on ransomware group name
+    function correlateAPTGroups(victim) {
+      const correlatedAPTs = [];
+
+      aptProfiles.forEach(apt => {
+        // Check if ransomware group matches APT name or aliases
+        const ransomwareGroup = victim.ransomwareGroup.toLowerCase();
+        const aptName = apt.name.toLowerCase();
+        const aptAliases = apt.aliases?.map(a => a.toLowerCase()) || [];
+
+        if (aptName.includes(ransomwareGroup) ||
+            ransomwareGroup.includes(aptName) ||
+            aptAliases.some(alias => alias.includes(ransomwareGroup) || ransomwareGroup.includes(alias))) {
+          correlatedAPTs.push({
+            name: apt.name,
+            mitreId: apt.mitreId || apt.id,
+            aliases: apt.aliases || [],
+            techniques: apt.techniques || [],
+            malware: apt.malware || []
+          });
+        }
+      });
+
+      return correlatedAPTs;
+    }
+
     async function loadVictimData() {
       try {
+        // Load APT profiles first for correlation
+        await loadAPTProfiles();
+
         // In production, fetch from API
         // const response = await fetch('/api/dark-web-victims');
         // victimData = await response.json();
 
-        // For now, use sample data
+        // For now, use sample data with APT correlation
         victimData = sampleVictims.map(victim => ({
           ...victim,
           severity: calculateSeverity(victim),
-          isNew: isRecent(victim.datePosted)
+          isNew: isRecent(victim.datePosted),
+          correlatedAPTs: correlateAPTGroups(victim)
         }));
 
         // Sort by date (most recent first)

@@ -1,17 +1,67 @@
 // Detection Engineering Module
+import dataService from './services/data-service.js';
+
 let allDetections = [];
 let filteredDetections = [];
+let aptProfiles = []; // APT profiles for correlation
 let coverageFilters = {
   severity: '',
   platform: '',
 };
 
+// Load APT profiles for correlation
+async function loadAPTProfiles() {
+  try {
+    console.log('[Detections] Loading APT profiles from centralized data service...');
+    aptProfiles = await dataService.loadAPTProfiles();
+    console.log(`[Detections] Loaded ${aptProfiles.length} APT profiles for correlation`);
+  } catch (error) {
+    console.error('[Detections] Failed to load APT profiles:', error);
+    aptProfiles = [];
+  }
+}
+
+// Correlate detection with APT groups based on techniques
+function correlateAPTGroups(detection) {
+  const correlatedAPTs = [];
+
+  aptProfiles.forEach(apt => {
+    const matchingTechniques = detection.techniques.filter(detTech =>
+      apt.techniques?.includes(detTech.id)
+    );
+
+    if (matchingTechniques.length > 0) {
+      correlatedAPTs.push({
+        name: apt.name,
+        mitreId: apt.mitreId || apt.id,
+        matchCount: matchingTechniques.length,
+        matchingTechniques: matchingTechniques.map(t => t.id)
+      });
+    }
+  });
+
+  // Sort by match count (highest first)
+  correlatedAPTs.sort((a, b) => b.matchCount - a.matchCount);
+
+  return correlatedAPTs;
+}
+
 // Load detections from JSON
 async function loadDetections() {
   try {
+    // Load both detections and APT profiles
+    await loadAPTProfiles();
+
     const response = await fetch('/data/detections.json');
     const data = await response.json();
     allDetections = data.detections || [];
+
+    // Add APT correlation to each detection
+    allDetections = allDetections.map(detection => ({
+      ...detection,
+      correlatedAPTs: correlateAPTGroups(detection)
+    }));
+
     filteredDetections = [...allDetections];
 
     updateStats();

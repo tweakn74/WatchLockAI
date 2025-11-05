@@ -483,10 +483,40 @@
     </div>
   </footer>
 
-  <!-- Load centralized APT database -->
-  <script src="data/apt-database.js"></script>
+  <script type="module">
+    import dataService from './src/services/data-service.js';
 
-  <script>
+    let aptProfiles = [];
+    let aptDatabase = {}; // Compatibility layer
+
+    // Load APT profiles from centralized data service
+    async function loadAPTProfiles() {
+      try {
+        console.log('[Breach Simulation] Loading APT profiles from centralized data service...');
+        aptProfiles = await dataService.loadAPTProfiles();
+
+        // Create compatibility layer (convert array to object keyed by name)
+        aptDatabase = {};
+        aptProfiles.forEach(apt => {
+          aptDatabase[apt.name] = {
+            ...apt,
+            mitreId: apt.mitreId || apt.id,
+            aliases: apt.aliases?.join(', ') || 'None',
+            country: apt.origin || apt.country || 'Unknown',
+            targetedSectors: apt.targets?.sectors || apt.targetedSectors || [],
+            targetedCountries: apt.targets?.countries || apt.targetedCountries || [],
+            firstSeen: apt.activeSince || apt.firstSeen || 'Unknown',
+            lastActivity: apt.lastSeen || apt.lastActivity || new Date().toISOString()
+          };
+        });
+
+        console.log(`[Breach Simulation] Loaded ${aptProfiles.length} APT profiles`);
+        populateDropdowns();
+      } catch (error) {
+        console.error('[Breach Simulation] Failed to load APT profiles:', error);
+      }
+    }
+
     // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navMenu = document.getElementById('navMenu');
@@ -654,8 +684,8 @@
     // Event listener
     document.getElementById('aptGroup').addEventListener('change', updateDisplay);
 
-    // Initialize
-    populateDropdowns();
+    // Initialize - load APT profiles first
+    loadAPTProfiles();
   </script>
 </body>
 </html>
