@@ -64,16 +64,17 @@ class ThreatIntelDataService {
 
       const data = await response.json();
 
-      // Validate data structure
-      if (!data.groups || !Array.isArray(data.groups)) {
+      // Validate data structure (support both old 'groups' and new 'profiles' schema)
+      const profiles = data.profiles || data.groups;
+      if (!profiles || !Array.isArray(profiles)) {
         throw new Error('Invalid APT profiles data structure');
       }
 
       // Update cache
-      this.cache.aptProfiles = data.groups;
+      this.cache.aptProfiles = profiles;
       this.cache.lastUpdated.aptProfiles = Date.now();
 
-      console.log(`[DataService] Loaded ${data.groups.length} APT profiles (v${data.version})`);
+      console.log(`[DataService] Loaded ${profiles.length} APT profiles (v${data.version})`);
       return this.cache.aptProfiles;
     } catch (error) {
       console.error('[DataService] Failed to load APT profiles:', error);

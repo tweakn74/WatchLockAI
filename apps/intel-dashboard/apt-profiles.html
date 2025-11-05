@@ -1153,6 +1153,8 @@
   </footer>
 
   <script type="module">
+    import dataService from './src/services/data-service.js';
+
     let aptData = [];
 
     /**
@@ -1247,22 +1249,30 @@
 
     async function loadAPTProfiles() {
       try {
-        const response = await fetch('/data/apt-profiles.json');
-        const data = await response.json();
+        console.log('[APT Profiles] Loading APT profiles from centralized data service...');
+        const profiles = await dataService.loadAPTProfiles();
 
         // Calculate risk scores for each APT group
-        aptData = data.groups.map(apt => ({
+        aptData = profiles.map(apt => ({
           ...apt,
+          // Map new schema fields to old schema for compatibility
+          country: apt.origin || apt.country || 'Unknown',
+          targetedSectors: apt.targets?.sectors || apt.targetedSectors || [],
+          targetedCountries: apt.targets?.countries || apt.targetedCountries || [],
+          firstSeen: apt.activeSince || apt.firstSeen || 'Unknown',
+          lastActivity: apt.lastSeen || apt.lastActivity || new Date().toISOString(),
           riskScore: calculateRiskScore(apt),
           riskLevel: getRiskLevel(calculateRiskScore(apt)),
-          activityStatus: getActivityStatus(apt.lastActivity)
+          activityStatus: getActivityStatus(apt.lastSeen || apt.lastActivity)
         }));
 
         // Sort by risk score (highest first) by default
         aptData.sort((a, b) => b.riskScore - a.riskScore);
 
+        console.log(`[APT Profiles] Loaded ${aptData.length} APT profiles`);
+
         // Populate country filter
-        const countries = [...new Set(aptData.map(apt => apt.country))].sort();
+        const countries = [...new Set(aptData.map(apt => apt.country))].filter(Boolean).sort();
         const countryFilter = document.getElementById('countryFilter');
         countries.forEach(country => {
           const option = document.createElement('option');

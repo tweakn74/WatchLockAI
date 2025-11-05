@@ -53,7 +53,8 @@
     "STIX",
     "TAXII",
     "Carbanak",
-    "Lapsus"
+    "Lapsus",
+    "iocs"
   ],
   "ignorePaths": [
     "node_modules/**",
