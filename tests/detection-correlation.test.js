@@ -339,4 +339,3 @@ describe('Detection Correlation Module', () => {
     });
   });
 });
-

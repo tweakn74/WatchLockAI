@@ -16,12 +16,14 @@ WatchLockAI is a free, open-source threat intelligence aggregation and correlati
 ## ✨ Features
 
 ### Phase 1: Enhanced Data Aggregation & Correlation ✅
+
 - **Advanced Deduplication**: CVE-based, title similarity (Levenshtein), IOC matching
 - **Cross-Source Correlation**: Identifies related threats across multiple sources
 - **Multi-Source Tracking**: Shows which sources reported each threat
 - **IOC Extraction**: Automatic extraction of IPs, domains, file hashes
 
 ### Phase 2: Bubble-Up Logic & Critical Alerts ✅
+
 - **Enhanced Risk Scoring**: Multi-source bonus, critical combo detection
 - **Top Threats Dashboard**: Auto-sorted by score → sources → recency
 - **Executive/Analyst Toggle**: Compact view vs. full table
@@ -29,6 +31,7 @@ WatchLockAI is a free, open-source threat intelligence aggregation and correlati
 - **Visual Badges**: 🔴 CRITICAL, 🟠 HIGH, 🔵 TRENDING, 🟣 APT
 
 ### Coming Soon
+
 - **Phase 3**: Free API Integrations (AbuseIPDB, VirusTotal, OTX)
 - **Phase 4-5**: Site Merge (APT Profiles + Detection Engineering)
 - **Phase 6**: Universal Search
@@ -66,11 +69,13 @@ WatchLockAI/
 ## 🛠️ Development
 
 ### Prerequisites
+
 - Node.js ≥18.0.0
 - Cloudflare account (free tier)
 - GitHub account
 
 ### Setup
+
 ```bash
 # Clone repository
 git clone https://github.com/tweakn74/WatchLockAI.git
@@ -87,6 +92,7 @@ npm run worker:dev
 ```
 
 ### Deployment
+
 ```bash
 # Deploy Cloudflare Worker
 npm run worker:deploy

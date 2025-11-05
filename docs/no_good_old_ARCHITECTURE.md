@@ -29,6 +29,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 **Purpose**: Serverless API for threat intelligence aggregation, processing, and serving.
 
 **Key Files**:
+
 - `src/index.js` - Main worker entry point with request routing
 - `src/feeds.js` - Feed fetching and normalization
 - `src/deduplication.js` - Advanced deduplication logic (Phase 1)
@@ -39,12 +40,14 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 - `src/sources.js` - Source management
 
 **Endpoints**:
+
 - `GET /api/threats?limit=100` - Full threat list with pagination
 - `GET /api/top?limit=10` - Top threats sorted by bubble-up algorithm
 - `GET /health` - Health check
 - `GET /version` - API version info
 
 **Processing Pipeline**:
+
 ```
 1. Fetch feeds (12+ sources)
 2. Normalize items
@@ -61,6 +64,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 **Cron Schedule**: Every 15 minutes (`*/15 * * * *`)
 
 **KV Storage**:
+
 - `unified-threats` - Full processed threat list (TTL: 30 min)
 - `top-threats` - Top 20 threats (TTL: 30 min)
 
@@ -69,17 +73,20 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 **Purpose**: Interactive web UI for threat visualization and analysis.
 
 **Technology Stack**:
+
 - Vite (build tool)
 - Vanilla JavaScript (no framework overhead)
 - Modern CSS with CSS Grid and Flexbox
 
 **Key Files**:
+
 - `index.html` - Main HTML structure
 - `src/main.js` - Application logic
 - `src/style.css` - Styling
 - `vite.config.js` - Build configuration
 
 **Features**:
+
 - **Executive View**: Top 10 threats as cards with badges
 - **Analyst View**: Full table with sorting and filtering
 - **Auto-Refresh**: Updates every 60 seconds
@@ -87,6 +94,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 - **Responsive**: Mobile-friendly design
 
 **Data Flow**:
+
 ```
 1. Try primary API (Cloudflare Worker)
 2. If fails, try fallback dataset
@@ -127,6 +135,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
    - Requires 50%+ overlap + 50%+ title similarity
 
 **Merge Strategy**:
+
 - Use most recent item as primary
 - Combine sources array
 - Merge tags (unique)
@@ -135,6 +144,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 ### Correlation Engine
 
 **Relation Scoring**:
+
 - Shared CVEs: +50 points per CVE
 - Shared tags (3+): +20 points
 - Same APT group: +30 points
@@ -149,6 +159,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 ### Enhanced Risk Scoring
 
 **Base Score** (from Phase 1):
+
 - KEV: 40 points
 - Zero-day: 30 points
 - CVE: 20 points
@@ -158,6 +169,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 - Threat type: 0-10 points
 
 **Phase 2 Bonuses**:
+
 - Multi-source (3+): +10 points
 - Gov sources (2+): +15 points
 - Critical combo (KEV + Zero-day + Exploited): +20 points
@@ -165,6 +177,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 - Trending (3+ related): +5 points
 
 **Severity Thresholds**:
+
 - CRITICAL: ≥95
 - HIGH: 85-94
 - MEDIUM: 70-84
@@ -174,6 +187,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 ### Bubble-Up Algorithm
 
 **Sort Priority**:
+
 1. Risk score (descending)
 2. Source count (descending)
 3. Recency (newest first)
@@ -192,6 +206,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 ## Data Sources
 
 **Current Sources** (12+):
+
 1. CISA KEV (Known Exploited Vulnerabilities)
 2. CISA News
 3. NCSC UK
@@ -206,6 +221,7 @@ WatchLockAI is an enterprise-grade threat intelligence platform built on a serve
 12. Additional RSS/JSON feeds
 
 **Source Tiers**:
+
 - Tier 1 (Gov/Official): 1.2x multiplier
 - Tier 2 (Vendor/Research): 1.1x multiplier
 - Tier 3 (News): 1.0x multiplier
@@ -227,6 +243,7 @@ External Feeds (12+ sources)
 ### CI/CD Pipeline
 
 **On Push to Main**:
+
 1. Run ESLint
 2. Run Prettier check
 3. Validate JSON Schema
@@ -236,6 +253,7 @@ External Feeds (12+ sources)
 7. Deploy Worker to Cloudflare
 
 **Workflows**:
+
 - `.github/workflows/ci.yml` - Lint, test, validate
 - `.github/workflows/pages.yml` - Deploy dashboard
 - `.github/workflows/worker-deploy.yml` - Deploy worker
@@ -260,6 +278,7 @@ External Feeds (12+ sources)
 ## Monitoring & Observability
 
 **Metrics**:
+
 - API response time
 - Cache hit rate
 - Error rate
@@ -267,6 +286,7 @@ External Feeds (12+ sources)
 - Correlation statistics
 
 **Logging**:
+
 - Structured JSON logs
 - Error tracking
 - Performance metrics

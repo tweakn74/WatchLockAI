@@ -112,13 +112,23 @@ test.describe('Dashboard 8: Dark Web Intelligence Feed', () => {
     await firstCard.click();
 
     const modal = page.locator('#breachModal');
-    
+
     // Check modal sections
-    await expect(modal.locator('.modal-section-title').filter({ hasText: 'Overview' })).toBeVisible();
-    await expect(modal.locator('.modal-section-title').filter({ hasText: 'Compromised Data Types' })).toBeVisible();
-    await expect(modal.locator('.modal-section-title').filter({ hasText: 'Breach Timeline' })).toBeVisible();
-    await expect(modal.locator('.modal-section-title').filter({ hasText: 'Indicators of Compromise' })).toBeVisible();
-    await expect(modal.locator('.modal-section-title').filter({ hasText: 'External References' })).toBeVisible();
+    await expect(
+      modal.locator('.modal-section-title').filter({ hasText: 'Overview' })
+    ).toBeVisible();
+    await expect(
+      modal.locator('.modal-section-title').filter({ hasText: 'Compromised Data Types' })
+    ).toBeVisible();
+    await expect(
+      modal.locator('.modal-section-title').filter({ hasText: 'Breach Timeline' })
+    ).toBeVisible();
+    await expect(
+      modal.locator('.modal-section-title').filter({ hasText: 'Indicators of Compromise' })
+    ).toBeVisible();
+    await expect(
+      modal.locator('.modal-section-title').filter({ hasText: 'External References' })
+    ).toBeVisible();
 
     // Check data types tags
     const tags = modal.locator('.tag');
@@ -171,10 +181,10 @@ test.describe('Dashboard 8: Dark Web Intelligence Feed', () => {
 
   test('victim cards have hover effects', async ({ page }) => {
     const firstCard = page.locator('.victim-card').first();
-    
+
     // Hover over card
     await firstCard.hover();
-    
+
     // Check that card has cursor pointer
     const cursor = await firstCard.evaluate(el => window.getComputedStyle(el).cursor);
     expect(cursor).toBe('pointer');
@@ -197,7 +207,7 @@ test.describe('Dashboard 8: Dark Web Intelligence Feed', () => {
     await firstCard.click();
 
     const modalBody = page.locator('.modal-body');
-    
+
     // Check overflow-y is auto
     const overflowY = await modalBody.evaluate(el => window.getComputedStyle(el).overflowY);
     expect(overflowY).toBe('auto');
@@ -317,4 +327,3 @@ test.describe('Dashboard 8: Dark Web Intelligence Feed', () => {
     await expect(firstCard.locator('.badge').first()).toBeVisible(); // Use .first() to avoid strict mode violation
   });
 });
-

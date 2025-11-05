@@ -12,27 +12,42 @@
       "firstSeen": "2007-01-01",
       "lastActivity": "2024-12-01",
       "targetedSectors": ["Government", "Military", "Defense", "Media", "Energy", "Aerospace"],
-      "targetedCountries": ["United States", "Ukraine", "Georgia", "France", "Germany", "NATO members"],
+      "targetedCountries": [
+        "United States",
+        "Ukraine",
+        "Georgia",
+        "France",
+        "Germany",
+        "NATO members"
+      ],
       "techniques": [
-        {"id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access"},
-        {"id": "T1566.002", "name": "Spearphishing Link", "tactic": "Initial Access"},
-        {"id": "T1059.001", "name": "PowerShell", "tactic": "Execution"},
-        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence"},
-        {"id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access"},
-        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"},
-        {"id": "T1027", "name": "Obfuscated Files or Information", "tactic": "Defense Evasion"}
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1566.002", "name": "Spearphishing Link", "tactic": "Initial Access" },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution" },
+        { "id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence" },
+        { "id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access" },
+        { "id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control" },
+        { "id": "T1027", "name": "Obfuscated Files or Information", "tactic": "Defense Evasion" }
       ],
       "malware": [
-        {"name": "X-Agent", "type": "Backdoor", "description": "Modular backdoor with extensive capabilities"},
-        {"name": "Sofacy", "type": "Backdoor", "description": "First-stage backdoor"},
-        {"name": "X-Tunnel", "type": "Network Tool", "description": "Network tunneling tool"},
-        {"name": "CHOPSTICK", "type": "Backdoor", "description": "Modular backdoor"}
+        {
+          "name": "X-Agent",
+          "type": "Backdoor",
+          "description": "Modular backdoor with extensive capabilities"
+        },
+        { "name": "Sofacy", "type": "Backdoor", "description": "First-stage backdoor" },
+        { "name": "X-Tunnel", "type": "Network Tool", "description": "Network tunneling tool" },
+        { "name": "CHOPSTICK", "type": "Backdoor", "description": "Modular backdoor" }
       ],
       "tools": ["Mimikatz", "Responder", "Koadic"],
       "sophistication": "advanced",
       "mitreAttackId": "G0007",
       "references": [
-        {"title": "APT28: A Window into Russia's Cyber Espionage Operations", "url": "https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/rpt-apt28.pdf", "date": "2014-10-27"}
+        {
+          "title": "APT28: A Window into Russia's Cyber Espionage Operations",
+          "url": "https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/rpt-apt28.pdf",
+          "date": "2014-10-27"
+        }
       ]
     },
     {
@@ -47,27 +62,44 @@
       "targetedSectors": ["Government", "Think Tanks", "Technology", "Healthcare", "Energy"],
       "targetedCountries": ["United States", "Europe", "NATO members"],
       "techniques": [
-        {"id": "T1195.002", "name": "Compromise Software Supply Chain", "tactic": "Initial Access"},
-        {"id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access"},
-        {"id": "T1059.001", "name": "PowerShell", "tactic": "Execution"},
-        {"id": "T1547.001", "name": "Registry Run Keys", "tactic": "Persistence"},
-        {"id": "T1055", "name": "Process Injection", "tactic": "Defense Evasion"},
-        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"}
+        {
+          "id": "T1195.002",
+          "name": "Compromise Software Supply Chain",
+          "tactic": "Initial Access"
+        },
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution" },
+        { "id": "T1547.001", "name": "Registry Run Keys", "tactic": "Persistence" },
+        { "id": "T1055", "name": "Process Injection", "tactic": "Defense Evasion" },
+        { "id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control" }
       ],
       "malware": [
-        {"name": "SUNBURST", "type": "Backdoor", "description": "SolarWinds supply chain backdoor"},
-        {"name": "TEARDROP", "type": "Dropper", "description": "Memory-only dropper"},
-        {"name": "CozyDuke", "type": "Backdoor", "description": "Sophisticated backdoor"},
-        {"name": "SeaDuke", "type": "Backdoor", "description": "Python-based backdoor"}
+        {
+          "name": "SUNBURST",
+          "type": "Backdoor",
+          "description": "SolarWinds supply chain backdoor"
+        },
+        { "name": "TEARDROP", "type": "Dropper", "description": "Memory-only dropper" },
+        { "name": "CozyDuke", "type": "Backdoor", "description": "Sophisticated backdoor" },
+        { "name": "SeaDuke", "type": "Backdoor", "description": "Python-based backdoor" }
       ],
       "tools": ["Cobalt Strike", "Mimikatz"],
       "sophistication": "advanced",
       "mitreAttackId": "G0016",
       "campaigns": [
-        {"name": "SolarWinds Supply Chain Attack", "date": "2020-03-01", "description": "Massive supply chain compromise affecting thousands of organizations", "targets": ["Government", "Technology", "Consulting"]}
+        {
+          "name": "SolarWinds Supply Chain Attack",
+          "date": "2020-03-01",
+          "description": "Massive supply chain compromise affecting thousands of organizations",
+          "targets": ["Government", "Technology", "Consulting"]
+        }
       ],
       "references": [
-        {"title": "Highly Evasive Attacker Leverages SolarWinds Supply Chain", "url": "https://www.fireeye.com/blog/threat-research/2020/12/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor.html", "date": "2020-12-13"}
+        {
+          "title": "Highly Evasive Attacker Leverages SolarWinds Supply Chain",
+          "url": "https://www.fireeye.com/blog/threat-research/2020/12/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor.html",
+          "date": "2020-12-13"
+        }
       ]
     },
     {
@@ -82,29 +114,52 @@
       "targetedSectors": ["Financial", "Cryptocurrency", "Media", "Defense", "Government"],
       "targetedCountries": ["South Korea", "United States", "Global"],
       "techniques": [
-        {"id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access"},
-        {"id": "T1204.002", "name": "Malicious File", "tactic": "Execution"},
-        {"id": "T1486", "name": "Data Encrypted for Impact", "tactic": "Impact"},
-        {"id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact"},
-        {"id": "T1078", "name": "Valid Accounts", "tactic": "Persistence"},
-        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"}
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1204.002", "name": "Malicious File", "tactic": "Execution" },
+        { "id": "T1486", "name": "Data Encrypted for Impact", "tactic": "Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact" },
+        { "id": "T1078", "name": "Valid Accounts", "tactic": "Persistence" },
+        { "id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control" }
       ],
       "malware": [
-        {"name": "WannaCry", "type": "Ransomware", "description": "Global ransomware outbreak"},
-        {"name": "BLINDINGCAN", "type": "RAT", "description": "Remote access trojan"},
-        {"name": "HOPLIGHT", "type": "Backdoor", "description": "Trojan malware"},
-        {"name": "ELECTRICFISH", "type": "Tunneling Tool", "description": "Network tunneling tool"}
+        { "name": "WannaCry", "type": "Ransomware", "description": "Global ransomware outbreak" },
+        { "name": "BLINDINGCAN", "type": "RAT", "description": "Remote access trojan" },
+        { "name": "HOPLIGHT", "type": "Backdoor", "description": "Trojan malware" },
+        {
+          "name": "ELECTRICFISH",
+          "type": "Tunneling Tool",
+          "description": "Network tunneling tool"
+        }
       ],
       "tools": ["Mimikatz", "PowerShell Empire"],
       "sophistication": "advanced",
       "mitreAttackId": "G0032",
       "campaigns": [
-        {"name": "Sony Pictures Hack", "date": "2014-11-24", "description": "Destructive attack on Sony Pictures Entertainment", "targets": ["Media"]},
-        {"name": "WannaCry Ransomware", "date": "2017-05-12", "description": "Global ransomware outbreak", "targets": ["Healthcare", "Government", "Business"]},
-        {"name": "SWIFT Banking Heists", "date": "2016-02-01", "description": "Theft of millions from banks via SWIFT network", "targets": ["Financial"]}
+        {
+          "name": "Sony Pictures Hack",
+          "date": "2014-11-24",
+          "description": "Destructive attack on Sony Pictures Entertainment",
+          "targets": ["Media"]
+        },
+        {
+          "name": "WannaCry Ransomware",
+          "date": "2017-05-12",
+          "description": "Global ransomware outbreak",
+          "targets": ["Healthcare", "Government", "Business"]
+        },
+        {
+          "name": "SWIFT Banking Heists",
+          "date": "2016-02-01",
+          "description": "Theft of millions from banks via SWIFT network",
+          "targets": ["Financial"]
+        }
       ],
       "references": [
-        {"title": "HIDDEN COBRA - North Korean Malicious Cyber Activity", "url": "https://www.us-cert.gov/ncas/alerts/TA17-164A", "date": "2017-06-13"}
+        {
+          "title": "HIDDEN COBRA - North Korean Malicious Cyber Activity",
+          "url": "https://www.us-cert.gov/ncas/alerts/TA17-164A",
+          "date": "2017-06-13"
+        }
       ]
     },
     {
@@ -116,27 +171,42 @@
       "motivation": ["espionage", "financial"],
       "firstSeen": "2012-01-01",
       "lastActivity": "2024-12-01",
-      "targetedSectors": ["Healthcare", "Telecommunications", "Technology", "Gaming", "Media", "Education"],
+      "targetedSectors": [
+        "Healthcare",
+        "Telecommunications",
+        "Technology",
+        "Gaming",
+        "Media",
+        "Education"
+      ],
       "targetedCountries": ["United States", "Europe", "Asia"],
       "techniques": [
-        {"id": "T1190", "name": "Exploit Public-Facing Application", "tactic": "Initial Access"},
-        {"id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access"},
-        {"id": "T1059.003", "name": "Windows Command Shell", "tactic": "Execution"},
-        {"id": "T1543.003", "name": "Windows Service", "tactic": "Persistence"},
-        {"id": "T1055", "name": "Process Injection", "tactic": "Defense Evasion"},
-        {"id": "T1027.002", "name": "Software Packing", "tactic": "Defense Evasion"}
+        { "id": "T1190", "name": "Exploit Public-Facing Application", "tactic": "Initial Access" },
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1059.003", "name": "Windows Command Shell", "tactic": "Execution" },
+        { "id": "T1543.003", "name": "Windows Service", "tactic": "Persistence" },
+        { "id": "T1055", "name": "Process Injection", "tactic": "Defense Evasion" },
+        { "id": "T1027.002", "name": "Software Packing", "tactic": "Defense Evasion" }
       ],
       "malware": [
-        {"name": "HIGHNOON", "type": "Backdoor", "description": "Backdoor with extensive capabilities"},
-        {"name": "LOWKEY", "type": "Backdoor", "description": "Credential theft backdoor"},
-        {"name": "DUSTPAN", "type": "Dropper", "description": "Malware dropper"},
-        {"name": "MESSAGETAP", "type": "Implant", "description": "SMS interception tool"}
+        {
+          "name": "HIGHNOON",
+          "type": "Backdoor",
+          "description": "Backdoor with extensive capabilities"
+        },
+        { "name": "LOWKEY", "type": "Backdoor", "description": "Credential theft backdoor" },
+        { "name": "DUSTPAN", "type": "Dropper", "description": "Malware dropper" },
+        { "name": "MESSAGETAP", "type": "Implant", "description": "SMS interception tool" }
       ],
       "tools": ["Cobalt Strike", "Mimikatz", "China Chopper"],
       "sophistication": "advanced",
       "mitreAttackId": "G0096",
       "references": [
-        {"title": "APT41: A Dual Espionage and Cyber Crime Operation", "url": "https://www.fireeye.com/blog/threat-research/2019/08/apt41-dual-espionage-and-cyber-crime-operation.html", "date": "2019-08-07"}
+        {
+          "title": "APT41: A Dual Espionage and Cyber Crime Operation",
+          "url": "https://www.fireeye.com/blog/threat-research/2019/08/apt41-dual-espionage-and-cyber-crime-operation.html",
+          "date": "2019-08-07"
+        }
       ]
     },
     {
@@ -151,22 +221,26 @@
       "targetedSectors": ["Aerospace", "Defense", "Technology", "Manufacturing", "Energy"],
       "targetedCountries": ["United States", "Canada", "Europe"],
       "techniques": [
-        {"id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access"},
-        {"id": "T1059.003", "name": "Windows Command Shell", "tactic": "Execution"},
-        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence"},
-        {"id": "T1003", "name": "OS Credential Dumping", "tactic": "Credential Access"},
-        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"}
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1059.003", "name": "Windows Command Shell", "tactic": "Execution" },
+        { "id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence" },
+        { "id": "T1003", "name": "OS Credential Dumping", "tactic": "Credential Access" },
+        { "id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control" }
       ],
       "malware": [
-        {"name": "WEBC2", "type": "Backdoor", "description": "Web-based backdoor"},
-        {"name": "TROJAN.ECLTYS", "type": "Backdoor", "description": "Custom backdoor"},
-        {"name": "BACKDOOR.BARKIOFORK", "type": "Backdoor", "description": "Persistent backdoor"}
+        { "name": "WEBC2", "type": "Backdoor", "description": "Web-based backdoor" },
+        { "name": "TROJAN.ECLTYS", "type": "Backdoor", "description": "Custom backdoor" },
+        { "name": "BACKDOOR.BARKIOFORK", "type": "Backdoor", "description": "Persistent backdoor" }
       ],
       "tools": ["gsecdump", "Htran"],
       "sophistication": "medium",
       "mitreAttackId": "G0006",
       "references": [
-        {"title": "APT1: Exposing One of China's Cyber Espionage Units", "url": "https://www.mandiant.com/resources/apt1-exposing-one-of-chinas-cyber-espionage-units", "date": "2013-02-18"}
+        {
+          "title": "APT1: Exposing One of China's Cyber Espionage Units",
+          "url": "https://www.mandiant.com/resources/apt1-exposing-one-of-chinas-cyber-espionage-units",
+          "date": "2013-02-18"
+        }
       ]
     },
     {
@@ -178,28 +252,47 @@
       "motivation": ["espionage"],
       "firstSeen": "2009-01-01",
       "lastActivity": "2024-10-01",
-      "targetedSectors": ["Managed Service Providers", "Technology", "Telecommunications", "Government", "Healthcare"],
+      "targetedSectors": [
+        "Managed Service Providers",
+        "Technology",
+        "Telecommunications",
+        "Government",
+        "Healthcare"
+      ],
       "targetedCountries": ["United States", "Europe", "Japan"],
       "techniques": [
-        {"id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access"},
-        {"id": "T1059.001", "name": "PowerShell", "tactic": "Execution"},
-        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence"},
-        {"id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access"},
-        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"}
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution" },
+        { "id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence" },
+        { "id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access" },
+        { "id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control" }
       ],
       "malware": [
-        {"name": "UPPERCUT", "type": "Backdoor", "description": "Backdoor with extensive capabilities"},
-        {"name": "ANEL", "type": "Backdoor", "description": "Downloader and backdoor"},
-        {"name": "HAYMAKER", "type": "Backdoor", "description": "Custom backdoor"}
+        {
+          "name": "UPPERCUT",
+          "type": "Backdoor",
+          "description": "Backdoor with extensive capabilities"
+        },
+        { "name": "ANEL", "type": "Backdoor", "description": "Downloader and backdoor" },
+        { "name": "HAYMAKER", "type": "Backdoor", "description": "Custom backdoor" }
       ],
       "tools": ["Mimikatz", "PwDump", "Impacket"],
       "sophistication": "advanced",
       "mitreAttackId": "G0045",
       "campaigns": [
-        {"name": "Cloud Hopper", "date": "2016-01-01", "description": "Massive campaign targeting MSPs to access their clients", "targets": ["Managed Service Providers"]}
+        {
+          "name": "Cloud Hopper",
+          "date": "2016-01-01",
+          "description": "Massive campaign targeting MSPs to access their clients",
+          "targets": ["Managed Service Providers"]
+        }
       ],
       "references": [
-        {"title": "APT10 (MenuPass Group): New Tools, Global Campaign Latest Manifestation of Longstanding Threat", "url": "https://www.fireeye.com/blog/threat-research/2017/04/apt10_menupass_grou.html", "date": "2017-04-06"}
+        {
+          "title": "APT10 (MenuPass Group): New Tools, Global Campaign Latest Manifestation of Longstanding Threat",
+          "url": "https://www.fireeye.com/blog/threat-research/2017/04/apt10_menupass_grou.html",
+          "date": "2017-04-06"
+        }
       ]
     },
     {
@@ -214,22 +307,26 @@
       "targetedSectors": ["Aviation", "Energy", "Petrochemical", "Government"],
       "targetedCountries": ["United States", "Saudi Arabia", "South Korea"],
       "techniques": [
-        {"id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access"},
-        {"id": "T1059.001", "name": "PowerShell", "tactic": "Execution"},
-        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence"},
-        {"id": "T1003", "name": "OS Credential Dumping", "tactic": "Credential Access"},
-        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"}
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution" },
+        { "id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence" },
+        { "id": "T1003", "name": "OS Credential Dumping", "tactic": "Credential Access" },
+        { "id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control" }
       ],
       "malware": [
-        {"name": "SHAPESHIFT", "type": "Backdoor", "description": "Modular backdoor"},
-        {"name": "DROPSHOT", "type": "Wiper", "description": "Destructive wiper malware"},
-        {"name": "TURNEDUP", "type": "Backdoor", "description": "DNS tunneling backdoor"}
+        { "name": "SHAPESHIFT", "type": "Backdoor", "description": "Modular backdoor" },
+        { "name": "DROPSHOT", "type": "Wiper", "description": "Destructive wiper malware" },
+        { "name": "TURNEDUP", "type": "Backdoor", "description": "DNS tunneling backdoor" }
       ],
       "tools": ["Nanocore", "Remcos"],
       "sophistication": "medium",
       "mitreAttackId": "G0064",
       "references": [
-        {"title": "Insights into Iranian Cyber Espionage: APT33 Targets Aerospace and Energy Sectors", "url": "https://www.fireeye.com/blog/threat-research/2017/09/apt33-insights-into-iranian-cyber-espionage.html", "date": "2017-09-20"}
+        {
+          "title": "Insights into Iranian Cyber Espionage: APT33 Targets Aerospace and Energy Sectors",
+          "url": "https://www.fireeye.com/blog/threat-research/2017/09/apt33-insights-into-iranian-cyber-espionage.html",
+          "date": "2017-09-20"
+        }
       ]
     },
     {
@@ -244,27 +341,35 @@
       "targetedSectors": ["Financial", "Hospitality", "Retail", "Restaurant"],
       "targetedCountries": ["Global"],
       "techniques": [
-        {"id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access"},
-        {"id": "T1059.001", "name": "PowerShell", "tactic": "Execution"},
-        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence"},
-        {"id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access"},
-        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"}
+        { "id": "T1566.001", "name": "Spearphishing Attachment", "tactic": "Initial Access" },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution" },
+        { "id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence" },
+        { "id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access" },
+        { "id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control" }
       ],
       "malware": [
-        {"name": "Carbanak", "type": "Backdoor", "description": "Banking trojan and backdoor"},
-        {"name": "GRIFFON", "type": "Backdoor", "description": "JavaScript backdoor"},
-        {"name": "POWERSOURCE", "type": "Backdoor", "description": "PowerShell backdoor"}
+        { "name": "Carbanak", "type": "Backdoor", "description": "Banking trojan and backdoor" },
+        { "name": "GRIFFON", "type": "Backdoor", "description": "JavaScript backdoor" },
+        { "name": "POWERSOURCE", "type": "Backdoor", "description": "PowerShell backdoor" }
       ],
       "tools": ["Cobalt Strike", "Mimikatz", "PsExec"],
       "sophistication": "advanced",
       "mitreAttackId": "G0008",
       "campaigns": [
-        {"name": "Carbanak Banking Heists", "date": "2013-01-01", "description": "Theft of over $1 billion from banks worldwide", "targets": ["Financial"]}
+        {
+          "name": "Carbanak Banking Heists",
+          "date": "2013-01-01",
+          "description": "Theft of over $1 billion from banks worldwide",
+          "targets": ["Financial"]
+        }
       ],
       "references": [
-        {"title": "Carbanak APT: The Great Bank Robbery", "url": "https://securelist.com/carbanak-apt-the-great-bank-robbery/68732/", "date": "2015-02-16"}
+        {
+          "title": "Carbanak APT: The Great Bank Robbery",
+          "url": "https://securelist.com/carbanak-apt-the-great-bank-robbery/68732/",
+          "date": "2015-02-16"
+        }
       ]
     }
   ]
 }
-

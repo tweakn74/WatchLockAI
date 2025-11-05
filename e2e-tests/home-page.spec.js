@@ -70,10 +70,13 @@ test.describe('WatchLockAI Home Page - Versedetect Style Redesign', () => {
     await expect(heroStatCards).toHaveCount(3);
 
     // Wait for metrics to load
-    await page.waitForFunction(() => {
-      const aptMetric = document.getElementById('aptGroupsMetric');
-      return aptMetric && aptMetric.textContent !== '-';
-    }, { timeout: 5000 });
+    await page.waitForFunction(
+      () => {
+        const aptMetric = document.getElementById('aptGroupsMetric');
+        return aptMetric && aptMetric.textContent !== '-';
+      },
+      { timeout: 5000 }
+    );
 
     // Check APT Groups metric
     const aptGroupsMetric = page.locator('#aptGroupsMetric');
@@ -102,8 +105,12 @@ test.describe('WatchLockAI Home Page - Versedetect Style Redesign', () => {
     await expect(featureCards).toHaveCount(3);
 
     // Check feature card content
-    await expect(page.locator('.feature-title:has-text("Dark Web Intelligence Feed")')).toBeVisible();
-    await expect(page.locator('.feature-title:has-text("Modern APT Overview Dashboard")')).toBeVisible();
+    await expect(
+      page.locator('.feature-title:has-text("Dark Web Intelligence Feed")')
+    ).toBeVisible();
+    await expect(
+      page.locator('.feature-title:has-text("Modern APT Overview Dashboard")')
+    ).toBeVisible();
     await expect(page.locator('.feature-title:has-text("Analytics Dashboard")')).toBeVisible();
   });
 
@@ -195,10 +202,10 @@ test.describe('WatchLockAI Home Page - Versedetect Style Redesign', () => {
 
   test('hover effects work on feature cards', async ({ page }) => {
     const firstFeatureCard = page.locator('.feature-card').first();
-    
+
     // Hover over the card
     await firstFeatureCard.hover();
-    
+
     // Card should be visible (basic check)
     await expect(firstFeatureCard).toBeVisible();
   });
@@ -215,11 +222,12 @@ test.describe('WatchLockAI Home Page - Versedetect Style Redesign', () => {
     await page.waitForLoadState('networkidle');
 
     // Filter out expected errors (404s, fetch errors in test environment)
-    const unexpectedErrors = consoleErrors.filter(error =>
-      !error.includes('404') &&
-      !error.includes('Failed to load resource') &&
-      !error.includes('Failed to fetch') &&
-      !error.includes('Error loading metrics')
+    const unexpectedErrors = consoleErrors.filter(
+      error =>
+        !error.includes('404') &&
+        !error.includes('Failed to load resource') &&
+        !error.includes('Failed to fetch') &&
+        !error.includes('Error loading metrics')
     );
 
     expect(unexpectedErrors).toHaveLength(0);
@@ -252,7 +260,7 @@ test.describe('WatchLockAI Home Page - Versedetect Style Redesign', () => {
   test('Versedetect color scheme is applied', async ({ page }) => {
     const body = page.locator('body');
     const bgColor = await body.evaluate(el => getComputedStyle(el).backgroundColor);
-    
+
     // Check that background is dark (Versedetect theme)
     expect(bgColor).toContain('rgb(15, 17, 20)'); // --bg: #0f1114
   });
@@ -262,4 +270,3 @@ test.describe('WatchLockAI Home Page - Versedetect Style Redesign', () => {
     expect(pageContent.toLowerCase()).not.toContain('craig glatt');
   });
 });
-

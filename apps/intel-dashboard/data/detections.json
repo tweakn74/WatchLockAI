@@ -14,8 +14,12 @@
       "description": "Detects creation of mailbox forwarding rules that redirect emails to external domains. This is a common data exfiltration technique used by attackers after compromising an account.",
       "useCase": "Data Exfiltration Detection",
       "techniques": [
-        {"id": "T1114.003", "name": "Email Forwarding Rule", "tactic": "Collection"},
-        {"id": "T1048.003", "name": "Exfiltration Over Unencrypted/Obfuscated Non-C2 Protocol", "tactic": "Exfiltration"}
+        { "id": "T1114.003", "name": "Email Forwarding Rule", "tactic": "Collection" },
+        {
+          "id": "T1048.003",
+          "name": "Exfiltration Over Unencrypted/Obfuscated Non-C2 Protocol",
+          "tactic": "Exfiltration"
+        }
       ],
       "dataSource": ["Office 365 Audit Logs", "Exchange Online Logs"],
       "enrichment": "Correlate with recent password changes, MFA changes, or impossible travel alerts for the same user. Check if the forwarding address belongs to a known threat actor domain.",
@@ -33,7 +37,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["exfiltration", "email", "o365", "persistence"],
       "references": [
-        {"title": "MITRE ATT&CK T1114.003", "url": "https://attack.mitre.org/techniques/T1114/003/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1114.003",
+          "url": "https://attack.mitre.org/techniques/T1114/003/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -47,8 +55,8 @@
       "description": "Detects impossible travel scenarios where a user authenticates from two geographically distant locations in a timeframe that would require physically impossible travel speeds (>500 mph).",
       "useCase": "Account Compromise Detection",
       "techniques": [
-        {"id": "T1078", "name": "Valid Accounts", "tactic": "Initial Access"},
-        {"id": "T1078.004", "name": "Cloud Accounts", "tactic": "Persistence"}
+        { "id": "T1078", "name": "Valid Accounts", "tactic": "Initial Access" },
+        { "id": "T1078.004", "name": "Cloud Accounts", "tactic": "Persistence" }
       ],
       "dataSource": ["Authentication Logs", "Okta Logs", "Azure AD Logs"],
       "enrichment": "Enrich with user's known travel patterns, VPN usage, and device fingerprints. Cross-reference with HR travel requests and calendar events.",
@@ -66,7 +74,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["authentication", "impossible-travel", "account-compromise"],
       "references": [
-        {"title": "MITRE ATT&CK T1078", "url": "https://attack.mitre.org/techniques/T1078/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1078",
+          "url": "https://attack.mitre.org/techniques/T1078/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -80,9 +92,9 @@
       "description": "Detects PowerShell Empire command and control beaconing activity by identifying suspicious PowerShell script block patterns commonly used by Empire agents.",
       "useCase": "Command and Control Detection",
       "techniques": [
-        {"id": "T1059.001", "name": "PowerShell", "tactic": "Execution"},
-        {"id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control"},
-        {"id": "T1027", "name": "Obfuscated Files or Information", "tactic": "Defense Evasion"}
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution" },
+        { "id": "T1071.001", "name": "Web Protocols", "tactic": "Command and Control" },
+        { "id": "T1027", "name": "Obfuscated Files or Information", "tactic": "Defense Evasion" }
       ],
       "dataSource": ["PowerShell Operational Logs", "Windows Event Logs"],
       "enrichment": "Correlate with network traffic to identify C2 server IPs. Check process tree for parent processes. Analyze script content for IOCs.",
@@ -100,7 +112,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["powershell", "c2", "empire", "malware"],
       "references": [
-        {"title": "PowerShell Empire Documentation", "url": "https://github.com/EmpireProject/Empire", "date": "2024-01-01"}
+        {
+          "title": "PowerShell Empire Documentation",
+          "url": "https://github.com/EmpireProject/Empire",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -114,8 +130,8 @@
       "description": "Detects attempts to access LSASS process memory, a strong indicator of credential dumping tools like Mimikatz being used to extract passwords and hashes.",
       "useCase": "Credential Access Detection",
       "techniques": [
-        {"id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access"},
-        {"id": "T1003", "name": "OS Credential Dumping", "tactic": "Credential Access"}
+        { "id": "T1003.001", "name": "LSASS Memory", "tactic": "Credential Access" },
+        { "id": "T1003", "name": "OS Credential Dumping", "tactic": "Credential Access" }
       ],
       "dataSource": ["Windows Security Logs", "Sysmon Logs"],
       "enrichment": "Check if the accessing process is signed and from a trusted vendor. Correlate with recent privilege escalation events. Look for suspicious parent processes.",
@@ -133,7 +149,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["mimikatz", "credential-dumping", "lsass"],
       "references": [
-        {"title": "MITRE ATT&CK T1003.001", "url": "https://attack.mitre.org/techniques/T1003/001/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1003.001",
+          "url": "https://attack.mitre.org/techniques/T1003/001/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -147,8 +167,8 @@
       "description": "Detects creation of scheduled tasks that execute suspicious binaries commonly abused for persistence and execution, such as PowerShell, cmd.exe, or script interpreters.",
       "useCase": "Persistence Detection",
       "techniques": [
-        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence"},
-        {"id": "T1053.005", "name": "Scheduled Task", "tactic": "Execution"}
+        { "id": "T1053.005", "name": "Scheduled Task", "tactic": "Persistence" },
+        { "id": "T1053.005", "name": "Scheduled Task", "tactic": "Execution" }
       ],
       "dataSource": ["Windows Security Logs"],
       "enrichment": "Check task trigger conditions and run frequency. Verify if the creating user has legitimate admin rights. Analyze command line for obfuscation or encoded content.",
@@ -166,7 +186,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["persistence", "scheduled-task", "execution"],
       "references": [
-        {"title": "MITRE ATT&CK T1053.005", "url": "https://attack.mitre.org/techniques/T1053/005/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1053.005",
+          "url": "https://attack.mitre.org/techniques/T1053/005/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -180,8 +204,8 @@
       "description": "Detects mass file encryption activity characteristic of ransomware by monitoring for rapid creation of files with suspicious extensions or ransom note filenames.",
       "useCase": "Ransomware Detection",
       "techniques": [
-        {"id": "T1486", "name": "Data Encrypted for Impact", "tactic": "Impact"},
-        {"id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact"}
+        { "id": "T1486", "name": "Data Encrypted for Impact", "tactic": "Impact" },
+        { "id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact" }
       ],
       "dataSource": ["Sysmon Logs", "File System Monitoring"],
       "enrichment": "Correlate with shadow copy deletion events. Check for network share access. Look for process injection or unusual parent-child relationships.",
@@ -199,7 +223,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["ransomware", "encryption", "impact"],
       "references": [
-        {"title": "MITRE ATT&CK T1486", "url": "https://attack.mitre.org/techniques/T1486/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1486",
+          "url": "https://attack.mitre.org/techniques/T1486/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -213,8 +241,12 @@
       "description": "Detects DNS tunneling used for command and control or data exfiltration by identifying abnormally long DNS queries with high frequency from the same source.",
       "useCase": "Command and Control Detection",
       "techniques": [
-        {"id": "T1071.004", "name": "DNS", "tactic": "Command and Control"},
-        {"id": "T1048.003", "name": "Exfiltration Over Unencrypted/Obfuscated Non-C2 Protocol", "tactic": "Exfiltration"}
+        { "id": "T1071.004", "name": "DNS", "tactic": "Command and Control" },
+        {
+          "id": "T1048.003",
+          "name": "Exfiltration Over Unencrypted/Obfuscated Non-C2 Protocol",
+          "tactic": "Exfiltration"
+        }
       ],
       "dataSource": ["DNS Logs", "Network Traffic"],
       "enrichment": "Check domain reputation and WHOIS data. Analyze query patterns for encoding (base64, hex). Correlate with endpoint process creating DNS requests.",
@@ -232,7 +264,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["dns-tunneling", "c2", "exfiltration"],
       "references": [
-        {"title": "MITRE ATT&CK T1071.004", "url": "https://attack.mitre.org/techniques/T1071/004/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1071.004",
+          "url": "https://attack.mitre.org/techniques/T1071/004/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -245,9 +281,7 @@
       "query": "index=windows sourcetype=\"WinEventLog:Security\" EventCode=4769 TicketEncryptionType=0x17 ServiceName!=\"*$\" | stats count by TargetUserName, ServiceName, IpAddress | where count > 5",
       "description": "Detects Kerberoasting attacks where adversaries request service tickets for accounts with SPNs to crack offline and obtain plaintext passwords.",
       "useCase": "Credential Access Detection",
-      "techniques": [
-        {"id": "T1558.003", "name": "Kerberoasting", "tactic": "Credential Access"}
-      ],
+      "techniques": [{ "id": "T1558.003", "name": "Kerberoasting", "tactic": "Credential Access" }],
       "dataSource": ["Windows Security Logs", "Domain Controller Logs"],
       "enrichment": "Check if requesting account has history of SPN ticket requests. Verify if service accounts have strong passwords. Look for bulk requests in short time window.",
       "tuning": "Whitelist service accounts that legitimately request many tickets. Filter out computer accounts (ending with $). Adjust count threshold.",
@@ -264,7 +298,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["kerberoasting", "credential-access", "active-directory"],
       "references": [
-        {"title": "MITRE ATT&CK T1558.003", "url": "https://attack.mitre.org/techniques/T1558/003/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1558.003",
+          "url": "https://attack.mitre.org/techniques/T1558/003/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -278,8 +316,12 @@
       "description": "Detects process injection techniques using CreateRemoteThread API, commonly used by malware to inject code into legitimate processes for evasion.",
       "useCase": "Defense Evasion Detection",
       "techniques": [
-        {"id": "T1055.001", "name": "Dynamic-link Library Injection", "tactic": "Defense Evasion"},
-        {"id": "T1055", "name": "Process Injection", "tactic": "Privilege Escalation"}
+        {
+          "id": "T1055.001",
+          "name": "Dynamic-link Library Injection",
+          "tactic": "Defense Evasion"
+        },
+        { "id": "T1055", "name": "Process Injection", "tactic": "Privilege Escalation" }
       ],
       "dataSource": ["Sysmon Logs"],
       "enrichment": "Check digital signature of source process. Analyze target process for suspicious modules. Review process tree for anomalies.",
@@ -297,7 +339,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["process-injection", "defense-evasion", "malware"],
       "references": [
-        {"title": "MITRE ATT&CK T1055", "url": "https://attack.mitre.org/techniques/T1055/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1055",
+          "url": "https://attack.mitre.org/techniques/T1055/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -311,8 +357,12 @@
       "description": "Detects creation of WMI event subscriptions used for persistence, a technique that allows malware to execute code when specific system events occur.",
       "useCase": "Persistence Detection",
       "techniques": [
-        {"id": "T1546.003", "name": "Windows Management Instrumentation Event Subscription", "tactic": "Persistence"},
-        {"id": "T1047", "name": "Windows Management Instrumentation", "tactic": "Execution"}
+        {
+          "id": "T1546.003",
+          "name": "Windows Management Instrumentation Event Subscription",
+          "tactic": "Persistence"
+        },
+        { "id": "T1047", "name": "Windows Management Instrumentation", "tactic": "Execution" }
       ],
       "dataSource": ["WMI Activity Logs"],
       "enrichment": "Review the consumer's script or command line for malicious content. Check filter and binding details. Correlate with other persistence mechanisms.",
@@ -330,7 +380,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["wmi", "persistence", "event-subscription"],
       "references": [
-        {"title": "MITRE ATT&CK T1546.003", "url": "https://attack.mitre.org/techniques/T1546/003/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1546.003",
+          "url": "https://attack.mitre.org/techniques/T1546/003/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -344,7 +398,7 @@
       "description": "Detects lateral movement via RDP by identifying accounts authenticating to multiple systems in a short time period, indicative of adversary reconnaissance or spread.",
       "useCase": "Lateral Movement Detection",
       "techniques": [
-        {"id": "T1021.001", "name": "Remote Desktop Protocol", "tactic": "Lateral Movement"}
+        { "id": "T1021.001", "name": "Remote Desktop Protocol", "tactic": "Lateral Movement" }
       ],
       "dataSource": ["Windows Security Logs"],
       "enrichment": "Check if source IP is a known jump box or admin workstation. Review user's typical RDP patterns. Correlate with privilege escalation events.",
@@ -362,7 +416,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["rdp", "lateral-movement", "authentication"],
       "references": [
-        {"title": "MITRE ATT&CK T1021.001", "url": "https://attack.mitre.org/techniques/T1021/001/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1021.001",
+          "url": "https://attack.mitre.org/techniques/T1021/001/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -375,9 +433,7 @@
       "query": "index=windows (sourcetype=\"WinEventLog:System\" EventCode=7036 Message=\"*Volume Shadow Copy*stopped*\") OR (sourcetype=\"WinEventLog:Sysmon\" EventCode=1 CommandLine=\"*vssadmin*delete*shadows*\" OR CommandLine=\"*wmic*shadowcopy*delete*\" OR CommandLine=\"*wbadmin*delete*catalog*\") | stats count by ComputerName, CommandLine, User",
       "description": "Detects deletion of Volume Shadow Copies, a common ransomware technique to prevent file recovery and maximize impact.",
       "useCase": "Ransomware Detection",
-      "techniques": [
-        {"id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact"}
-      ],
+      "techniques": [{ "id": "T1490", "name": "Inhibit System Recovery", "tactic": "Impact" }],
       "dataSource": ["Windows System Logs", "Sysmon Logs"],
       "enrichment": "Correlate with file encryption activity. Check for other anti-recovery actions (backup deletion, safe mode changes). Review process tree.",
       "tuning": "Whitelist legitimate backup and maintenance scripts. Alert on manual executions or unusual parent processes.",
@@ -394,7 +450,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["ransomware", "shadow-copy", "impact"],
       "references": [
-        {"title": "MITRE ATT&CK T1490", "url": "https://attack.mitre.org/techniques/T1490/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1490",
+          "url": "https://attack.mitre.org/techniques/T1490/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -408,8 +468,8 @@
       "description": "Detects users granting OAuth consent to applications with high-risk permissions, which could be used for data exfiltration or persistence.",
       "useCase": "Initial Access Detection",
       "techniques": [
-        {"id": "T1528", "name": "Steal Application Access Token", "tactic": "Credential Access"},
-        {"id": "T1078.004", "name": "Cloud Accounts", "tactic": "Persistence"}
+        { "id": "T1528", "name": "Steal Application Access Token", "tactic": "Credential Access" },
+        { "id": "T1078.004", "name": "Cloud Accounts", "tactic": "Persistence" }
       ],
       "dataSource": ["Office 365 Audit Logs", "Azure AD Logs"],
       "enrichment": "Check application publisher and reputation. Review application's requested permissions scope. Correlate with phishing campaigns.",
@@ -427,7 +487,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["oauth", "consent", "cloud", "phishing"],
       "references": [
-        {"title": "MITRE ATT&CK T1528", "url": "https://attack.mitre.org/techniques/T1528/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1528",
+          "url": "https://attack.mitre.org/techniques/T1528/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -441,8 +505,8 @@
       "description": "Detects installation of Windows services from suspicious locations or with generic names, often used by malware for persistence.",
       "useCase": "Persistence Detection",
       "techniques": [
-        {"id": "T1543.003", "name": "Windows Service", "tactic": "Persistence"},
-        {"id": "T1543.003", "name": "Windows Service", "tactic": "Privilege Escalation"}
+        { "id": "T1543.003", "name": "Windows Service", "tactic": "Persistence" },
+        { "id": "T1543.003", "name": "Windows Service", "tactic": "Privilege Escalation" }
       ],
       "dataSource": ["Windows System Logs"],
       "enrichment": "Check service binary signature and reputation. Review service configuration (start type, dependencies). Analyze binary for malicious behavior.",
@@ -460,7 +524,11 @@
       "lastUpdated": "2025-11-01",
       "tags": ["service", "persistence", "malware"],
       "references": [
-        {"title": "MITRE ATT&CK T1543.003", "url": "https://attack.mitre.org/techniques/T1543/003/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1543.003",
+          "url": "https://attack.mitre.org/techniques/T1543/003/",
+          "date": "2024-01-01"
+        }
       ]
     },
     {
@@ -474,7 +542,7 @@
       "description": "Detects modifications to Windows Run/RunOnce registry keys that execute suspicious binaries, a common persistence technique.",
       "useCase": "Persistence Detection",
       "techniques": [
-        {"id": "T1547.001", "name": "Registry Run Keys / Startup Folder", "tactic": "Persistence"}
+        { "id": "T1547.001", "name": "Registry Run Keys / Startup Folder", "tactic": "Persistence" }
       ],
       "dataSource": ["Sysmon Logs"],
       "enrichment": "Check if executable is signed and from trusted vendor. Review process that made the registry change. Analyze command line for obfuscation.",
@@ -492,9 +560,12 @@
       "lastUpdated": "2025-11-01",
       "tags": ["registry", "persistence", "autostart"],
       "references": [
-        {"title": "MITRE ATT&CK T1547.001", "url": "https://attack.mitre.org/techniques/T1547/001/", "date": "2024-01-01"}
+        {
+          "title": "MITRE ATT&CK T1547.001",
+          "url": "https://attack.mitre.org/techniques/T1547/001/",
+          "date": "2024-01-01"
+        }
       ]
     }
   ]
 }
-

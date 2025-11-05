@@ -35,7 +35,7 @@ test.describe('WatchLockAI Dashboard - Navigation', () => {
   test('should navigate to Threat Actors page', async ({ page }) => {
     await page.goto('/');
     const threatActorsLink = page.locator('a[href="threat-actors.html"]');
-    if (await threatActorsLink.count() > 0) {
+    if ((await threatActorsLink.count()) > 0) {
       await threatActorsLink.click();
       await expect(page).toHaveURL(/threat-actors\.html/);
     }
@@ -44,7 +44,7 @@ test.describe('WatchLockAI Dashboard - Navigation', () => {
   test('should navigate to Dark Web Intelligence page', async ({ page }) => {
     await page.goto('/');
     const darkWebLink = page.locator('a[href="dark-web.html"]');
-    if (await darkWebLink.count() > 0) {
+    if ((await darkWebLink.count()) > 0) {
       await darkWebLink.click();
       await expect(page).toHaveURL(/dark-web\.html/);
     }
@@ -53,7 +53,7 @@ test.describe('WatchLockAI Dashboard - Navigation', () => {
   test('should navigate to Geopolitical Risk page', async ({ page }) => {
     await page.goto('/');
     const geoRiskLink = page.locator('a[href="geopolitical-risk.html"]');
-    if (await geoRiskLink.count() > 0) {
+    if ((await geoRiskLink.count()) > 0) {
       await geoRiskLink.click();
       await expect(page).toHaveURL(/geopolitical-risk\.html/);
     }
@@ -65,9 +65,7 @@ test.describe('APT Profiles - Accessibility Fixes', () => {
     await page.goto('/apt-profiles.html');
   });
 
-  test('should have accessible Country filter with proper label association', async ({
-    page,
-  }) => {
+  test('should have accessible Country filter with proper label association', async ({ page }) => {
     const countryLabel = page.locator('label[for="countryFilter"]');
     const countrySelect = page.locator('select#countryFilter');
 
@@ -115,9 +113,9 @@ test.describe('APT Profiles - Accessibility Fixes', () => {
 
   test('should pass accessibility audit for form controls', async ({ page }) => {
     const snapshot = await page.accessibility.snapshot();
-    
+
     // Find all select elements in the accessibility tree
-    const findSelects = (node) => {
+    const findSelects = node => {
       const selects = [];
       if (node.role === 'combobox' || node.role === 'listbox') {
         selects.push(node);
@@ -131,7 +129,7 @@ test.describe('APT Profiles - Accessibility Fixes', () => {
     };
 
     const selectElements = findSelects(snapshot);
-    
+
     // Verify all select elements have names (accessible labels)
     for (const select of selectElements) {
       expect(select.name).toBeTruthy();
@@ -144,9 +142,7 @@ test.describe('Detection Engineering - Accessibility Fixes', () => {
     await page.goto('/detections.html');
   });
 
-  test('should have accessible Severity filter with proper label association', async ({
-    page,
-  }) => {
+  test('should have accessible Severity filter with proper label association', async ({ page }) => {
     const severityLabel = page.locator('label[for="severityFilter"]');
     const severitySelect = page.locator('select#severityFilter');
 
@@ -159,9 +155,7 @@ test.describe('Detection Engineering - Accessibility Fixes', () => {
     expect(labelFor).toBe(selectId);
   });
 
-  test('should have accessible Status filter with proper label association', async ({
-    page,
-  }) => {
+  test('should have accessible Status filter with proper label association', async ({ page }) => {
     const statusLabel = page.locator('label[for="statusFilter"]');
     const statusSelect = page.locator('select#statusFilter');
 
@@ -174,9 +168,7 @@ test.describe('Detection Engineering - Accessibility Fixes', () => {
     expect(labelFor).toBe(selectId);
   });
 
-  test('should have accessible Platform filter with proper label association', async ({
-    page,
-  }) => {
+  test('should have accessible Platform filter with proper label association', async ({ page }) => {
     const platformLabel = page.locator('label[for="platformFilter"]');
     const platformSelect = page.locator('select#platformFilter');
 
@@ -192,7 +184,7 @@ test.describe('Detection Engineering - Accessibility Fixes', () => {
   test('should not have inline styles on nav element', async ({ page }) => {
     const navMenu = page.locator('nav.nav-menu');
     const inlineStyle = await navMenu.getAttribute('style');
-    
+
     // Should not have inline style attribute or it should be empty
     expect(inlineStyle).toBeFalsy();
   });
@@ -208,7 +200,7 @@ test.describe('Detection Engineering - Accessibility Fixes', () => {
     await page.waitForTimeout(500);
 
     const coverageDesc = page.locator('.coverage-description');
-    if (await coverageDesc.count() > 0) {
+    if ((await coverageDesc.count()) > 0) {
       const inlineStyle = await coverageDesc.getAttribute('style');
       expect(inlineStyle).toBeFalsy();
     }
@@ -220,7 +212,7 @@ test.describe('Detection Engineering - Accessibility Fixes', () => {
     await page.waitForTimeout(500);
 
     const coverageDesc = page.locator('.coverage-description');
-    if (await coverageDesc.count() > 0) {
+    if ((await coverageDesc.count()) > 0) {
       await expect(coverageDesc).toHaveClass(/coverage-description/);
     }
   });
@@ -231,9 +223,7 @@ test.describe('Detection Engineering - Tab Switching', () => {
     await page.goto('/detections.html');
   });
 
-  test('should switch between Detection Catalog and MITRE Coverage tabs', async ({
-    page,
-  }) => {
+  test('should switch between Detection Catalog and MITRE Coverage tabs', async ({ page }) => {
     // Verify Detection Catalog tab is active by default
     const catalogTab = page.locator('button[data-tab="catalog"]');
     await expect(catalogTab).toHaveClass(/active/);
@@ -262,4 +252,3 @@ test.describe('Detection Engineering - Tab Switching', () => {
     await expect(coverageTab).not.toHaveClass(/active/);
   });
 });
-

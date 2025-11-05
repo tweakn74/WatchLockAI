@@ -1,5 +1,22 @@
 export default [
   {
+    ignores: [
+      'node_modules/**',
+      '**/node_modules/**',
+      'dist/**',
+      '**/dist/**',
+      'build/**',
+      '**/build/**',
+      'backups/**',
+      '**/backups/**',
+      'coverage/**',
+      '.nyc_output/**',
+      '.cache/**',
+      '.parcel-cache/**',
+      '.vite/**',
+    ],
+  },
+  {
     files: ['**/*.js', '**/*.mjs'],
     languageOptions: {
       ecmaVersion: 2022,
@@ -20,7 +37,7 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       'no-console': 'off',
       semi: ['error', 'always'],
       quotes: ['error', 'single', { avoidEscape: true }],

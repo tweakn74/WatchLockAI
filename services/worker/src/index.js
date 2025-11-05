@@ -65,9 +65,11 @@ export default {
   /**
    * Scheduled cron handler - runs every 15 minutes
    */
-  async scheduled(event, env, ctx) {
+  async scheduled(event, env, _ctx) {
     try {
-      logStructured('info', 'Cron triggered', { time: new Date(event.scheduledTime).toISOString() });
+      logStructured('info', 'Cron triggered', {
+        time: new Date(event.scheduledTime).toISOString(),
+      });
 
       // Fetch and process threats
       const threats = await fetchAndProcessThreats(env);

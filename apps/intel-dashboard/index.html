@@ -809,7 +809,9 @@
     </div>
   </footer>
 
-  <script>
+  <script type="module">
+    import dataService from './src/services/data-service.js';
+
     // Mobile menu toggle
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navMenu = document.getElementById('navMenu');
@@ -818,28 +820,34 @@
       navMenu.classList.toggle('active');
     });
 
-    // Load metrics
+    // Load metrics using centralized data service
     async function loadMetrics() {
       try {
-        const aptResponse = await fetch('/data/apt-profiles.json');
-        const aptJson = await aptResponse.json();
-        const aptData = aptJson.groups || aptJson;
+        console.log('[Dashboard] Loading metrics using centralized data service...');
 
-        const detectionsResponse = await fetch('/data/detections.json');
-        const detectionsJson = await detectionsResponse.json();
-        const detectionsData = detectionsJson.detections || detectionsJson;
+        // Load data using centralized data service with caching
+        const aptData = await dataService.loadAPTProfiles();
+        const detectionsData = await dataService.loadDetections();
 
         const totalAPTGroups = aptData.length;
         const totalDetections = detectionsData.length;
         const techniquesCovered = calculateTechniquesCovered(detectionsData);
 
+        // Update metrics display
         document.getElementById('aptGroupsMetric').textContent = totalAPTGroups;
         document.getElementById('detectionsMetric').textContent = totalDetections;
         document.getElementById('techniquesMetric').textContent = techniquesCovered;
         document.getElementById('techniquesCoveredFooter').textContent = techniquesCovered;
         document.getElementById('detectionsFooter').textContent = totalDetections;
+
+        console.log(`[Dashboard] Metrics loaded: ${totalAPTGroups} APT groups, ${totalDetections} detections, ${techniquesCovered} techniques`);
       } catch (error) {
-        console.error('Error loading metrics:', error);
+        console.error('[Dashboard] Error loading metrics:', error);
+
+        // Show error state to user
+        document.getElementById('aptGroupsMetric').textContent = 'Error';
+        document.getElementById('detectionsMetric').textContent = 'Error';
+        document.getElementById('techniquesMetric').textContent = 'Error';
       }
     }
 
@@ -855,6 +863,7 @@
       return techniques.size;
     }
 
+    // Load metrics on page load
     loadMetrics();
   </script>
 </body>

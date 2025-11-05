@@ -3,7 +3,7 @@ let allDetections = [];
 let filteredDetections = [];
 let coverageFilters = {
   severity: '',
-  platform: ''
+  platform: '',
 };
 
 // Load detections from JSON
@@ -33,13 +33,13 @@ function updateStats() {
   const total = allDetections.length;
   const critical = allDetections.filter(d => d.severity === 'CRITICAL').length;
   const high = allDetections.filter(d => d.severity === 'HIGH').length;
-  
+
   // Count unique techniques
   const techniques = new Set();
   allDetections.forEach(d => {
     d.techniques.forEach(t => techniques.add(t.id));
   });
-  
+
   document.getElementById('totalDetections').textContent = total;
   document.getElementById('criticalCount').textContent = critical;
   document.getElementById('highCount').textContent = high;
@@ -50,7 +50,7 @@ function updateStats() {
 function populateFilters() {
   const platforms = new Set();
   allDetections.forEach(d => platforms.add(d.platform));
-  
+
   const platformFilter = document.getElementById('platformFilter');
   platforms.forEach(platform => {
     const option = document.createElement('option');
@@ -63,14 +63,15 @@ function populateFilters() {
 // Render detection cards
 function renderDetections() {
   const grid = document.getElementById('detectionGrid');
-  
+
   if (filteredDetections.length === 0) {
-    grid.innerHTML = '<p style="color: var(--text-secondary);">No detections match your filters.</p>';
+    grid.innerHTML =
+      '<p style="color: var(--text-secondary);">No detections match your filters.</p>';
     return;
   }
-  
+
   grid.innerHTML = filteredDetections.map(detection => createDetectionCard(detection)).join('');
-  
+
   // Add click handlers
   document.querySelectorAll('.detection-card').forEach(card => {
     card.addEventListener('click', () => {
@@ -102,11 +103,15 @@ function createDetectionCard(detection) {
         <div class="meta-item">
           <span class="platform-badge">${detection.platform}</span>
         </div>
-        ${detection.falsePositiveRate ? `
+        ${
+          detection.falsePositiveRate
+            ? `
           <div class="meta-item">
             <span class="fp-rate fp-${detection.falsePositiveRate}">FP: ${detection.falsePositiveRate}</span>
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
       
       <div class="detection-description">
@@ -116,9 +121,13 @@ function createDetectionCard(detection) {
       <div class="techniques-section">
         <div class="section-label">🎯 MITRE ATT&CK Techniques</div>
         <div class="technique-tags">
-          ${detection.techniques.map(t => `
+          ${detection.techniques
+            .map(
+              t => `
             <span class="technique-tag" title="${t.name} - ${t.tactic}">${t.id}</span>
-          `).join('')}
+          `
+            )
+            .join('')}
         </div>
       </div>
     </div>
@@ -129,7 +138,7 @@ function createDetectionCard(detection) {
 function showDetectionModal(detection) {
   const modal = document.getElementById('detectionModal');
   const content = document.getElementById('modalContent');
-  
+
   content.innerHTML = `
     <h2>${detection.name}</h2>
     <div style="margin-bottom: 20px;">
@@ -143,12 +152,16 @@ function showDetectionModal(detection) {
       <p style="color: var(--text-primary); line-height: 1.6;">${detection.description}</p>
     </div>
     
-    ${detection.useCase ? `
+    ${
+      detection.useCase
+        ? `
       <div style="margin-bottom: 20px;">
         <h3>Use Case</h3>
         <p style="color: var(--text-primary);">${detection.useCase}</p>
       </div>
-    ` : ''}
+    `
+        : ''
+    }
     
     <div style="margin-bottom: 20px;">
       <h3>Detection Query</h3>
@@ -158,52 +171,76 @@ function showDetectionModal(detection) {
     <div style="margin-bottom: 20px;">
       <h3>MITRE ATT&CK Techniques</h3>
       <div class="technique-tags">
-        ${detection.techniques.map(t => `
+        ${detection.techniques
+          .map(
+            t => `
           <span class="technique-tag" title="${t.name} - ${t.tactic}">
             ${t.id}: ${t.name} (${t.tactic})
           </span>
-        `).join('')}
+        `
+          )
+          .join('')}
       </div>
     </div>
     
-    ${detection.dataSource ? `
+    ${
+      detection.dataSource
+        ? `
       <div style="margin-bottom: 20px;">
         <h3>Required Data Sources</h3>
         <ul style="color: var(--text-primary);">
           ${detection.dataSource.map(ds => `<li>${ds}</li>`).join('')}
         </ul>
       </div>
-    ` : ''}
+    `
+        : ''
+    }
     
-    ${detection.enrichment ? `
+    ${
+      detection.enrichment
+        ? `
       <div style="margin-bottom: 20px;">
         <h3>Enrichment Strategy</h3>
         <p style="color: var(--text-primary); line-height: 1.6;">${detection.enrichment}</p>
       </div>
-    ` : ''}
+    `
+        : ''
+    }
     
-    ${detection.tuning ? `
+    ${
+      detection.tuning
+        ? `
       <div style="margin-bottom: 20px;">
         <h3>Tuning Notes</h3>
         <p style="color: var(--text-primary); line-height: 1.6;">${detection.tuning}</p>
       </div>
-    ` : ''}
+    `
+        : ''
+    }
     
-    ${detection.responseActions ? `
+    ${
+      detection.responseActions
+        ? `
       <div style="margin-bottom: 20px;">
         <h3>Response Actions</h3>
         <ul class="response-actions">
           ${detection.responseActions.map(action => `<li>${action}</li>`).join('')}
         </ul>
       </div>
-    ` : ''}
+    `
+        : ''
+    }
     
-    ${detection.falsePositiveRate ? `
+    ${
+      detection.falsePositiveRate
+        ? `
       <div style="margin-bottom: 20px;">
         <h3>False Positive Rate</h3>
         <span class="fp-rate fp-${detection.falsePositiveRate}">${detection.falsePositiveRate.toUpperCase()}</span>
       </div>
-    ` : ''}
+    `
+        : ''
+    }
     
     <div style="margin-bottom: 20px;">
       <h3>Metadata</h3>
@@ -214,7 +251,7 @@ function showDetectionModal(detection) {
       </p>
     </div>
   `;
-  
+
   modal.style.display = 'block';
 }
 
@@ -224,20 +261,23 @@ function applyFilters() {
   const severity = document.getElementById('severityFilter').value;
   const status = document.getElementById('statusFilter').value;
   const platform = document.getElementById('platformFilter').value;
-  
+
   filteredDetections = allDetections.filter(detection => {
-    const matchesSearch = !searchTerm || 
+    const matchesSearch =
+      !searchTerm ||
       detection.name.toLowerCase().includes(searchTerm) ||
       detection.description.toLowerCase().includes(searchTerm) ||
-      detection.techniques.some(t => t.id.toLowerCase().includes(searchTerm) || t.name.toLowerCase().includes(searchTerm));
-    
+      detection.techniques.some(
+        t => t.id.toLowerCase().includes(searchTerm) || t.name.toLowerCase().includes(searchTerm)
+      );
+
     const matchesSeverity = !severity || detection.severity === severity;
     const matchesStatus = !status || detection.status === status;
     const matchesPlatform = !platform || detection.platform === platform;
-    
+
     return matchesSearch && matchesSeverity && matchesStatus && matchesPlatform;
   });
-  
+
   renderDetections();
 }
 
@@ -260,15 +300,17 @@ function renderCoverageMatrix() {
     'Collection',
     'Command and Control',
     'Exfiltration',
-    'Impact'
+    'Impact',
   ];
 
   // Filter detections based on coverage filters
   let detectionsToShow = allDetections;
   if (coverageFilters.severity || coverageFilters.platform) {
     detectionsToShow = allDetections.filter(detection => {
-      const matchesSeverity = !coverageFilters.severity || detection.severity === coverageFilters.severity;
-      const matchesPlatform = !coverageFilters.platform || detection.platform === coverageFilters.platform;
+      const matchesSeverity =
+        !coverageFilters.severity || detection.severity === coverageFilters.severity;
+      const matchesPlatform =
+        !coverageFilters.platform || detection.platform === coverageFilters.platform;
       return matchesSeverity && matchesPlatform;
     });
   }
@@ -286,7 +328,7 @@ function renderCoverageMatrix() {
         techniqueDetails[techId] = {
           name: technique.name,
           tactic: technique.tactic,
-          detections: []
+          detections: [],
         };
       }
 
@@ -311,8 +353,10 @@ function renderCoverageMatrix() {
   // Calculate coverage statistics
   const totalTechniques = Object.keys(coverageMap).length;
   const fullCoverage = Object.values(coverageMap).filter(count => count >= 3).length;
-  const partialCoverage = Object.values(coverageMap).filter(count => count >= 1 && count < 3).length;
-  const noCoverage = 0; // We only show covered techniques for now
+  const partialCoverage = Object.values(coverageMap).filter(
+    count => count >= 1 && count < 3
+  ).length;
+  const _noCoverage = 0; // We only show covered techniques for now
 
   // Render coverage statistics
   let html = `
@@ -357,7 +401,8 @@ function renderCoverageMatrix() {
   `;
 
   // Render heatmap by tactic
-  html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">';
+  html +=
+    '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">';
 
   tactics.forEach(tactic => {
     const techniques = tacticTechniques[tactic] || [];
@@ -368,21 +413,23 @@ function renderCoverageMatrix() {
       <div style="background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 15px;">
         <h3 style="color: var(--brand); margin-bottom: 15px; font-size: 1.1em; font-weight: 600;">${tactic}</h3>
         <div style="display: flex; flex-direction: column; gap: 8px;">
-          ${techniques.sort().map(techId => {
-            const count = coverageMap[techId];
-            const details = techniqueDetails[techId];
+          ${techniques
+            .sort()
+            .map(techId => {
+              const count = coverageMap[techId];
+              const details = techniqueDetails[techId];
 
-            // Determine color based on coverage
-            let bgColor;
-            if (count >= 3) {
-              bgColor = 'var(--brand-alt)'; // Green
-            } else if (count >= 1) {
-              bgColor = '#fbbf24'; // Yellow
-            } else {
-              bgColor = '#ef4444'; // Red
-            }
+              // Determine color based on coverage
+              let bgColor;
+              if (count >= 3) {
+                bgColor = 'var(--brand-alt)'; // Green
+              } else if (count >= 1) {
+                bgColor = '#fbbf24'; // Yellow
+              } else {
+                bgColor = '#ef4444'; // Red
+              }
 
-            return `
+              return `
               <div class="coverage-technique" data-tech-id="${techId}" style="background: ${bgColor}; padding: 10px; border-radius: 6px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.3)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                   <div>
@@ -393,7 +440,8 @@ function renderCoverageMatrix() {
                 </div>
               </div>
             `;
-          }).join('')}
+            })
+            .join('')}
         </div>
       </div>
     `;
@@ -423,7 +471,9 @@ function showTechniqueDetections(techId, details) {
 
     <h3 style="color: var(--text-primary); margin-bottom: 15px;">Detections (${details.detections.length})</h3>
     <div style="display: flex; flex-direction: column; gap: 15px;">
-      ${details.detections.map(detection => `
+      ${details.detections
+        .map(
+          detection => `
         <div style="background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 15px;">
           <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
             <div>
@@ -438,7 +488,9 @@ function showTechniqueDetections(techId, details) {
             <span class="status-badge status-${detection.status}">${detection.status}</span>
           </div>
         </div>
-      `).join('')}
+      `
+        )
+        .join('')}
     </div>
   `;
 
@@ -449,14 +501,16 @@ function showTechniqueDetections(techId, details) {
 // Export coverage data to CSV
 function exportCoverageCSV() {
   // Build coverage data
-  const coverageData = [];
+  const _coverageData = [];
 
   // Filter detections based on current filters
   let detectionsToExport = allDetections;
   if (coverageFilters.severity || coverageFilters.platform) {
     detectionsToExport = allDetections.filter(detection => {
-      const matchesSeverity = !coverageFilters.severity || detection.severity === coverageFilters.severity;
-      const matchesPlatform = !coverageFilters.platform || detection.platform === coverageFilters.platform;
+      const matchesSeverity =
+        !coverageFilters.severity || detection.severity === coverageFilters.severity;
+      const matchesPlatform =
+        !coverageFilters.platform || detection.platform === coverageFilters.platform;
       return matchesSeverity && matchesPlatform;
     });
   }
@@ -472,7 +526,7 @@ function exportCoverageCSV() {
           name: technique.name,
           tactic: technique.tactic,
           detectionCount: 0,
-          detections: []
+          detections: [],
         };
       }
       techniqueMap[techId].detectionCount++;
@@ -481,16 +535,24 @@ function exportCoverageCSV() {
   });
 
   // Convert to CSV format
-  const headers = ['Technique ID', 'Technique Name', 'Tactic', 'Detection Count', 'Coverage Level', 'Detections'];
+  const headers = [
+    'Technique ID',
+    'Technique Name',
+    'Tactic',
+    'Detection Count',
+    'Coverage Level',
+    'Detections',
+  ];
   const rows = Object.values(techniqueMap).map(tech => {
-    const coverageLevel = tech.detectionCount >= 3 ? 'Full' : tech.detectionCount >= 1 ? 'Partial' : 'None';
+    const coverageLevel =
+      tech.detectionCount >= 3 ? 'Full' : tech.detectionCount >= 1 ? 'Partial' : 'None';
     return [
       tech.id,
       tech.name,
       tech.tactic,
       tech.detectionCount,
       coverageLevel,
-      tech.detections.join('; ')
+      tech.detections.join('; '),
     ];
   });
 
@@ -518,8 +580,10 @@ function exportCoverageJSON() {
   let detectionsToExport = allDetections;
   if (coverageFilters.severity || coverageFilters.platform) {
     detectionsToExport = allDetections.filter(detection => {
-      const matchesSeverity = !coverageFilters.severity || detection.severity === coverageFilters.severity;
-      const matchesPlatform = !coverageFilters.platform || detection.platform === coverageFilters.platform;
+      const matchesSeverity =
+        !coverageFilters.severity || detection.severity === coverageFilters.severity;
+      const matchesPlatform =
+        !coverageFilters.platform || detection.platform === coverageFilters.platform;
       return matchesSeverity && matchesPlatform;
     });
   }
@@ -536,7 +600,7 @@ function exportCoverageJSON() {
           tactic: technique.tactic,
           detectionCount: 0,
           coverageLevel: '',
-          detections: []
+          detections: [],
         };
       }
       techniqueMap[techId].detectionCount++;
@@ -545,14 +609,15 @@ function exportCoverageJSON() {
         name: detection.name,
         severity: detection.severity,
         platform: detection.platform,
-        status: detection.status
+        status: detection.status,
       });
     });
   });
 
   // Add coverage level
   Object.values(techniqueMap).forEach(tech => {
-    tech.coverageLevel = tech.detectionCount >= 3 ? 'Full' : tech.detectionCount >= 1 ? 'Partial' : 'None';
+    tech.coverageLevel =
+      tech.detectionCount >= 3 ? 'Full' : tech.detectionCount >= 1 ? 'Partial' : 'None';
   });
 
   // Build export object
@@ -560,15 +625,17 @@ function exportCoverageJSON() {
     exportDate: new Date().toISOString(),
     filters: {
       severity: coverageFilters.severity || 'All',
-      platform: coverageFilters.platform || 'All'
+      platform: coverageFilters.platform || 'All',
     },
     summary: {
       totalTechniques: Object.keys(techniqueMap).length,
       fullCoverage: Object.values(techniqueMap).filter(t => t.detectionCount >= 3).length,
-      partialCoverage: Object.values(techniqueMap).filter(t => t.detectionCount >= 1 && t.detectionCount < 3).length,
-      totalDetections: detectionsToExport.length
+      partialCoverage: Object.values(techniqueMap).filter(
+        t => t.detectionCount >= 1 && t.detectionCount < 3
+      ).length,
+      totalDetections: detectionsToExport.length,
     },
-    techniques: Object.values(techniqueMap)
+    techniques: Object.values(techniqueMap),
   };
 
   // Download JSON file
@@ -586,25 +653,25 @@ function exportCoverageJSON() {
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
   loadDetections();
-  
+
   // Filter event listeners
   document.getElementById('searchInput').addEventListener('input', applyFilters);
   document.getElementById('severityFilter').addEventListener('change', applyFilters);
   document.getElementById('statusFilter').addEventListener('change', applyFilters);
   document.getElementById('platformFilter').addEventListener('change', applyFilters);
-  
+
   // Modal close
   document.querySelector('.close').addEventListener('click', () => {
     document.getElementById('detectionModal').style.display = 'none';
   });
-  
-  window.addEventListener('click', (event) => {
+
+  window.addEventListener('click', event => {
     const modal = document.getElementById('detectionModal');
     if (event.target === modal) {
       modal.style.display = 'none';
     }
   });
-  
+
   // Tab switching
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -615,7 +682,9 @@ document.addEventListener('DOMContentLoaded', () => {
       tab.classList.add('active');
 
       // Update active content
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document
+        .querySelectorAll('.tab-content')
+        .forEach(content => content.classList.remove('active'));
       document.getElementById(`${tabName}Tab`).classList.add('active');
     });
   });
@@ -625,14 +694,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const coveragePlatformFilter = document.getElementById('coveragePlatformFilter');
 
   if (coverageSeverityFilter) {
-    coverageSeverityFilter.addEventListener('change', (e) => {
+    coverageSeverityFilter.addEventListener('change', e => {
       coverageFilters.severity = e.target.value;
       renderCoverageMatrix();
     });
   }
 
   if (coveragePlatformFilter) {
-    coveragePlatformFilter.addEventListener('change', (e) => {
+    coveragePlatformFilter.addEventListener('change', e => {
       coverageFilters.platform = e.target.value;
       renderCoverageMatrix();
     });
@@ -695,7 +764,7 @@ function generateDetectionTrends(days) {
     dates: [],
     critical: [],
     high: [],
-    medium: []
+    medium: [],
   };
 
   const today = new Date();
@@ -705,7 +774,9 @@ function generateDetectionTrends(days) {
 
     // Format date based on range
     if (days <= 7) {
-      trends.dates.push(date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }));
+      trends.dates.push(
+        date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
+      );
     } else if (days <= 30) {
       trends.dates.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
     } else {
@@ -713,7 +784,7 @@ function generateDetectionTrends(days) {
     }
 
     // Generate realistic trend data with some variation
-    const baseMultiplier = 1 + (Math.sin(i / 7) * 0.3); // Weekly pattern
+    const baseMultiplier = 1 + Math.sin(i / 7) * 0.3; // Weekly pattern
     trends.critical.push(Math.floor((Math.random() * 6 + 3) * baseMultiplier)); // 3-9 per day
     trends.high.push(Math.floor((Math.random() * 12 + 8) * baseMultiplier)); // 8-20 per day
     trends.medium.push(Math.floor((Math.random() * 4 + 2) * baseMultiplier)); // 2-6 per day
@@ -770,11 +841,13 @@ function renderTrendChart() {
 
   // Draw lines
   const drawLine = (data, className, color) => {
-    const points = data.map((value, index) => {
-      const x = padding.left + (chartWidth / (data.length - 1)) * index;
-      const y = padding.top + chartHeight - (value * yScale);
-      return `${x},${y}`;
-    }).join(' ');
+    const points = data
+      .map((value, index) => {
+        const x = padding.left + (chartWidth / (data.length - 1)) * index;
+        const y = padding.top + chartHeight - value * yScale;
+        return `${x},${y}`;
+      })
+      .join(' ');
 
     const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
     polyline.setAttribute('points', points);
@@ -784,7 +857,7 @@ function renderTrendChart() {
     // Draw dots
     data.forEach((value, index) => {
       const x = padding.left + (chartWidth / (data.length - 1)) * index;
-      const y = padding.top + chartHeight - (value * yScale);
+      const y = padding.top + chartHeight - value * yScale;
 
       const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       circle.setAttribute('cx', x);
@@ -796,7 +869,7 @@ function renderTrendChart() {
       circle.setAttribute('data-type', className.replace('chart-line-', ''));
 
       // Tooltip on hover
-      circle.addEventListener('mouseenter', (e) => {
+      circle.addEventListener('mouseenter', e => {
         const idx = parseInt(e.target.dataset.index);
         tooltip.innerHTML = `
           <div class="tooltip-date">${trendData.dates[idx]}</div>
@@ -863,7 +936,7 @@ function renderDonutChart() {
     critical: allDetections.filter(d => d.severity === 'CRITICAL').length,
     high: allDetections.filter(d => d.severity === 'HIGH').length,
     medium: allDetections.filter(d => d.severity === 'MEDIUM').length,
-    low: allDetections.filter(d => d.severity === 'LOW').length
+    low: allDetections.filter(d => d.severity === 'LOW').length,
   };
 
   const total = Object.values(severityCounts).reduce((a, b) => a + b, 0);
@@ -879,14 +952,14 @@ function renderDonutChart() {
     critical: '#dc2626',
     high: '#ea580c',
     medium: '#f59e0b',
-    low: '#10b981'
+    low: '#10b981',
   };
 
   const labels = {
     critical: 'Critical',
     high: 'High',
     medium: 'Medium',
-    low: 'Low'
+    low: 'Low',
   };
 
   // Calculate angles
@@ -919,7 +992,7 @@ function renderDonutChart() {
       `A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}`,
       `L ${x3} ${y3}`,
       `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x4} ${y4}`,
-      'Z'
+      'Z',
     ].join(' ');
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -955,8 +1028,7 @@ function renderPlatformChart() {
   });
 
   // Sort by count
-  const sortedPlatforms = Object.entries(platformCounts)
-    .sort((a, b) => b[1] - a[1]);
+  const sortedPlatforms = Object.entries(platformCounts).sort((a, b) => b[1] - a[1]);
 
   const maxCount = Math.max(...Object.values(platformCounts));
 
@@ -987,7 +1059,7 @@ function renderTopDetectionsTable() {
   const detectionsWithTriggers = allDetections.map(detection => ({
     ...detection,
     triggers30d: Math.floor(Math.random() * 500) + 50, // 50-550 triggers
-    lastTriggered: generateRandomDate(currentTimeRange)
+    lastTriggered: generateRandomDate(currentTimeRange),
   }));
 
   // Sort by triggers and take top 5
@@ -1036,4 +1108,3 @@ function formatRelativeTime(date) {
 
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
-

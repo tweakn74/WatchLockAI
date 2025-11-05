@@ -5,30 +5,30 @@
 
 // Country coordinates (capital cities)
 const countryCoordinates = {
-  'Russia': [55.7558, 37.6173],
-  'China': [39.9042, 116.4074],
+  Russia: [55.7558, 37.6173],
+  China: [39.9042, 116.4074],
   'North Korea': [39.0392, 125.7625],
-  'Iran': [35.6892, 51.3890],
+  Iran: [35.6892, 51.389],
   'United States': [38.9072, -77.0369],
-  'Israel': [31.7683, 35.2137],
-  'Vietnam': [21.0285, 105.8542],
-  'Pakistan': [33.6844, 73.0479],
-  'India': [28.6139, 77.2090],
-  'Unknown': [0, 0]
+  Israel: [31.7683, 35.2137],
+  Vietnam: [21.0285, 105.8542],
+  Pakistan: [33.6844, 73.0479],
+  India: [28.6139, 77.209],
+  Unknown: [0, 0],
 };
 
 // Region mapping
 const countryRegions = {
-  'Russia': 'europe',
-  'China': 'asia',
+  Russia: 'europe',
+  China: 'asia',
   'North Korea': 'asia',
-  'Iran': 'middle-east',
+  Iran: 'middle-east',
   'United States': 'americas',
-  'Israel': 'middle-east',
-  'Vietnam': 'asia',
-  'Pakistan': 'asia',
-  'India': 'asia',
-  'Unknown': 'unknown'
+  Israel: 'middle-east',
+  Vietnam: 'asia',
+  Pakistan: 'asia',
+  India: 'asia',
+  Unknown: 'unknown',
 };
 
 let map;
@@ -46,14 +46,15 @@ function initMap() {
     zoom: 2,
     minZoom: 2,
     maxZoom: 6,
-    worldCopyJump: true
+    worldCopyJump: true,
   });
 
   // Add dark theme tile layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
-    maxZoom: 20
+    maxZoom: 20,
   }).addTo(map);
 }
 
@@ -78,20 +79,20 @@ async function loadAPTData() {
  */
 function calculateThreatDensity(aptData) {
   const density = {};
-  
+
   aptData.forEach(apt => {
     const country = apt.country || 'Unknown';
     if (!density[country]) {
       density[country] = {
         count: 0,
         groups: [],
-        coords: countryCoordinates[country] || [0, 0]
+        coords: countryCoordinates[country] || [0, 0],
       };
     }
     density[country].count++;
     density[country].groups.push(apt);
   });
-  
+
   return density;
 }
 
@@ -120,23 +121,24 @@ function getRiskLevel(riskScore) {
  */
 function calculateRiskScore(apt) {
   let score = 50; // Base score
-  
+
   // Sophistication bonus
   if (apt.sophistication === 'advanced') score += 30;
   else if (apt.sophistication === 'high') score += 20;
   else if (apt.sophistication === 'medium') score += 10;
-  
+
   // Activity bonus
   const lastActivity = new Date(apt.lastActivity);
   const now = new Date();
   const daysSinceActivity = (now - lastActivity) / (1000 * 60 * 60 * 24);
-  
-  if (daysSinceActivity < 90) score += 20; // Active in last 3 months
+
+  if (daysSinceActivity < 90)
+    score += 20; // Active in last 3 months
   else if (daysSinceActivity < 180) score += 10; // Active in last 6 months
-  
+
   // Motivation bonus
   if (apt.motivation && apt.motivation.includes('destructive')) score += 10;
-  
+
   return Math.min(100, Math.max(0, score));
 }
 
@@ -147,15 +149,15 @@ function renderMarkers(aptData) {
   // Clear existing markers
   markers.forEach(marker => map.removeLayer(marker));
   markers = [];
-  
+
   const density = calculateThreatDensity(aptData);
-  
+
   Object.entries(density).forEach(([country, data]) => {
     if (country === 'Unknown' || !data.coords) return;
-    
+
     const color = getMarkerColor(data.count);
     const [lat, lng] = data.coords;
-    
+
     // Create custom icon
     const icon = L.divIcon({
       className: 'custom-marker',
@@ -174,12 +176,12 @@ function renderMarkers(aptData) {
         font-size: 12px;
       ">${data.count}</div>`,
       iconSize: [20 + data.count * 5, 20 + data.count * 5],
-      iconAnchor: [(20 + data.count * 5) / 2, (20 + data.count * 5) / 2]
+      iconAnchor: [(20 + data.count * 5) / 2, (20 + data.count * 5) / 2],
     });
-    
+
     // Create marker
     const marker = L.marker([lat, lng], { icon }).addTo(map);
-    
+
     // Create popup content
     const popupContent = `
       <div style="color: #1f2937; min-width: 200px;">
@@ -190,7 +192,7 @@ function renderMarkers(aptData) {
         </ul>
       </div>
     `;
-    
+
     marker.bindPopup(popupContent);
     markers.push(marker);
   });
@@ -201,12 +203,13 @@ function renderMarkers(aptData) {
  */
 function renderThreatCards(aptData) {
   const container = document.getElementById('threatCards');
-  
+
   if (aptData.length === 0) {
-    container.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 40px;">No APT groups match the selected filters.</p>';
+    container.innerHTML =
+      '<p style="color: var(--text-secondary); text-align: center; padding: 40px;">No APT groups match the selected filters.</p>';
     return;
   }
-  
+
   // Group by country
   const byCountry = {};
   aptData.forEach(apt => {
@@ -214,14 +217,14 @@ function renderThreatCards(aptData) {
     if (!byCountry[country]) byCountry[country] = [];
     byCountry[country].push(apt);
   });
-  
+
   let html = '';
   Object.entries(byCountry).forEach(([country, groups]) => {
     groups.forEach(apt => {
       const riskScore = calculateRiskScore(apt);
       const riskLevel = getRiskLevel(riskScore);
       const motivation = apt.motivation ? apt.motivation.join(', ') : 'Unknown';
-      
+
       html += `
         <div class="threat-card">
           <div class="threat-header">
@@ -239,7 +242,7 @@ function renderThreatCards(aptData) {
       `;
     });
   });
-  
+
   container.innerHTML = html;
 }
 
@@ -250,7 +253,7 @@ function updateStats(aptData) {
   const totalThreats = aptData.length;
   const countries = new Set(aptData.map(apt => apt.country).filter(c => c && c !== 'Unknown'));
   const totalCountries = countries.size;
-  
+
   // Calculate active threats (active in last 6 months)
   const sixMonthsAgo = new Date();
   sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
@@ -258,13 +261,13 @@ function updateStats(aptData) {
     if (!apt.lastActivity) return false;
     return new Date(apt.lastActivity) > sixMonthsAgo;
   }).length;
-  
+
   // Calculate critical threats
   const criticalThreats = aptData.filter(apt => {
     const riskScore = calculateRiskScore(apt);
     return riskScore >= 80;
   }).length;
-  
+
   document.getElementById('totalThreats').textContent = totalThreats;
   document.getElementById('totalCountries').textContent = totalCountries;
   document.getElementById('activeThreats').textContent = activeThreats;
@@ -278,28 +281,28 @@ function applyFilters() {
   const region = document.getElementById('regionFilter').value;
   const threatType = document.getElementById('threatTypeFilter').value;
   const riskLevel = document.getElementById('riskFilter').value;
-  
+
   filteredAPTData = allAPTData.filter(apt => {
     // Region filter
     if (region !== 'all') {
       const aptRegion = countryRegions[apt.country] || 'unknown';
       if (aptRegion !== region) return false;
     }
-    
+
     // Threat type filter
     if (threatType !== 'all') {
       if (!apt.motivation || !apt.motivation.includes(threatType)) return false;
     }
-    
+
     // Risk level filter
     if (riskLevel !== 'all') {
       const aptRiskLevel = getRiskLevel(calculateRiskScore(apt));
       if (aptRiskLevel !== riskLevel) return false;
     }
-    
+
     return true;
   });
-  
+
   renderMarkers(filteredAPTData);
   renderThreatCards(filteredAPTData);
   updateStats(filteredAPTData);
@@ -314,7 +317,7 @@ async function init() {
   renderMarkers(filteredAPTData);
   renderThreatCards(filteredAPTData);
   updateStats(filteredAPTData);
-  
+
   // Set up event listeners
   document.getElementById('regionFilter').addEventListener('change', applyFilters);
   document.getElementById('threatTypeFilter').addEventListener('change', applyFilters);
@@ -323,4 +326,3 @@ async function init() {
 
 // Start the application
 init();
-

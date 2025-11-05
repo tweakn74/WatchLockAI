@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
 /**
  * User Experience Demonstration Test
- * 
+ *
  * This test demonstrates what a user should see when using the WatchLockAI dashboard.
  * Run with: npx playwright test e2e-tests/user-experience-demo.spec.js --headed --slow-mo=1000
  */
@@ -19,12 +19,14 @@ test.describe('WatchLockAI User Experience Demo', () => {
     console.log('📍 Step 1: Navigating to APT Profiles page...');
     await page.goto('/apt-profiles.html');
     await page.waitForLoadState('networkidle');
-    
+
     console.log('✅ APT Profiles page loaded');
-    console.log('   - You should see: APT actor cards with country flags, sophistication levels, and motivations');
+    console.log(
+      '   - You should see: APT actor cards with country flags, sophistication levels, and motivations'
+    );
     console.log('   - You should see: Filter controls (Country, Sophistication, Motivation)');
     console.log('   - You should see: Search input');
-    
+
     await page.waitForTimeout(2000);
 
     // Demonstrate Sophistication Filter (has static options)
@@ -63,12 +65,12 @@ test.describe('WatchLockAI User Experience Demo', () => {
     await searchInput.fill('APT');
     console.log('   - Searching for: "APT"');
     console.log('   - You should see: Only APT actors matching "APT" in name or description');
-    
+
     await page.waitForTimeout(2000);
 
     // Clear search
     await searchInput.clear();
-    
+
     await page.waitForTimeout(1000);
 
     // ========================================
@@ -77,13 +79,13 @@ test.describe('WatchLockAI User Experience Demo', () => {
     console.log('\n📍 Step 6: Navigating to Detection Engineering page...');
     await page.goto('/detections.html');
     await page.waitForLoadState('networkidle');
-    
+
     console.log('✅ Detection Engineering page loaded');
     console.log('   - You should see: Detection Catalog tab (active)');
     console.log('   - You should see: Detection rule cards with severity, status, and platform');
     console.log('   - You should see: Filter controls (Severity, Status, Platform)');
     console.log('   - You should see: MITRE Coverage tab button');
-    
+
     await page.waitForTimeout(2000);
 
     // Demonstrate Severity Filter
@@ -121,7 +123,7 @@ test.describe('WatchLockAI User Experience Demo', () => {
     console.log('   - Clicked: MITRE Coverage tab');
     console.log('   - You should see: MITRE ATT&CK coverage matrix');
     console.log('   - You should see: Tactics and techniques with coverage percentages');
-    
+
     await page.waitForTimeout(3000);
 
     // Switch back to Detection Catalog
@@ -130,7 +132,7 @@ test.describe('WatchLockAI User Experience Demo', () => {
     await catalogTab.click();
     console.log('   - Clicked: Detection Catalog tab');
     console.log('   - You should see: Detection rule cards again');
-    
+
     await page.waitForTimeout(2000);
 
     // ========================================
@@ -139,7 +141,7 @@ test.describe('WatchLockAI User Experience Demo', () => {
     console.log('\n📍 Step 11: Navigating to Threat Actors page...');
     await page.goto('/threat-actors.html');
     await page.waitForLoadState('networkidle');
-    
+
     console.log('✅ Threat Actors page loaded');
     console.log('   - You should see: Threat actor profiles with attribution scores');
     console.log('   - You should see: Three tabs (Overview, Attribution, Timeline)');
@@ -153,12 +155,12 @@ test.describe('WatchLockAI User Experience Demo', () => {
     console.log('\n📍 Step 12: Navigating to Dark Web Intelligence page...');
     await page.goto('/dark-web.html');
     await page.waitForLoadState('networkidle');
-    
+
     console.log('✅ Dark Web Intelligence page loaded');
     console.log('   - You should see: Ransomware victim tracking');
     console.log('   - You should see: Paste site monitoring');
     console.log('   - You should see: IOC extraction results');
-    
+
     await page.waitForTimeout(3000);
 
     // ========================================
@@ -167,12 +169,12 @@ test.describe('WatchLockAI User Experience Demo', () => {
     console.log('\n📍 Step 13: Navigating to Geopolitical Risk page...');
     await page.goto('/geopolitical-risk.html');
     await page.waitForLoadState('networkidle');
-    
+
     console.log('✅ Geopolitical Risk page loaded');
     console.log('   - You should see: Country risk profiles');
     console.log('   - You should see: Risk scores and assessments');
     console.log('   - You should see: Geopolitical context information');
-    
+
     await page.waitForTimeout(3000);
 
     // ========================================
@@ -181,7 +183,7 @@ test.describe('WatchLockAI User Experience Demo', () => {
     console.log('\n📍 Step 14: Demonstrating accessibility features...');
     await page.goto('/apt-profiles.html');
     await page.waitForLoadState('networkidle');
-    
+
     console.log('   - Testing keyboard navigation...');
     await page.keyboard.press('Tab'); // Focus on first element
     await page.waitForTimeout(500);
@@ -190,7 +192,7 @@ test.describe('WatchLockAI User Experience Demo', () => {
     await page.keyboard.press('Tab'); // Move to next element
     console.log('   - You should see: Focus indicators as you press Tab');
     console.log('   - You should see: Proper focus order through the page');
-    
+
     await page.waitForTimeout(2000);
 
     // Test label associations
@@ -199,7 +201,7 @@ test.describe('WatchLockAI User Experience Demo', () => {
     await countryLabel.click(); // Clicking label should focus the select
     console.log('   - Clicked: Country label');
     console.log('   - You should see: Country select dropdown focused (accessibility working!)');
-    
+
     await page.waitForTimeout(2000);
 
     // ========================================
@@ -223,4 +225,3 @@ test.describe('WatchLockAI User Experience Demo', () => {
     await page.waitForTimeout(3000);
   });
 });
-

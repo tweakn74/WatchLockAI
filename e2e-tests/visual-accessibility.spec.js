@@ -32,9 +32,7 @@ test.describe('Visual Regression - Screenshots', () => {
     });
   });
 
-  test('should capture Detection Engineering - MITRE Coverage tab screenshot', async ({
-    page,
-  }) => {
+  test('should capture Detection Engineering - MITRE Coverage tab screenshot', async ({ page }) => {
     await page.goto('/detections.html');
     await page.waitForTimeout(1000);
     await page.click('button[data-tab="coverage"]');
@@ -91,7 +89,7 @@ test.describe('Accessibility Audit - WCAG Compliance', () => {
     expect(snapshot).toBeTruthy();
 
     // Verify all form controls have accessible names
-    const findFormControls = (node) => {
+    const findFormControls = node => {
       const controls = [];
       if (
         node.role === 'combobox' ||
@@ -120,9 +118,7 @@ test.describe('Accessibility Audit - WCAG Compliance', () => {
     }
   });
 
-  test('should pass accessibility audit on Detection Engineering page', async ({
-    page,
-  }) => {
+  test('should pass accessibility audit on Detection Engineering page', async ({ page }) => {
     await page.goto('/detections.html');
     await page.waitForTimeout(1000);
 
@@ -130,7 +126,7 @@ test.describe('Accessibility Audit - WCAG Compliance', () => {
     expect(snapshot).toBeTruthy();
 
     // Verify all form controls have accessible names
-    const findFormControls = (node) => {
+    const findFormControls = node => {
       const controls = [];
       if (
         node.role === 'combobox' ||
@@ -160,11 +156,7 @@ test.describe('Accessibility Audit - WCAG Compliance', () => {
 
   test('should have proper heading hierarchy on all pages', async ({ page }) => {
     // Only test pages that exist in the intel-dashboard folder
-    const pages = [
-      '/',
-      '/apt-profiles.html',
-      '/detections.html',
-    ];
+    const pages = ['/', '/apt-profiles.html', '/detections.html'];
 
     for (const url of pages) {
       await page.goto(url);
@@ -281,9 +273,7 @@ test.describe('Accessibility Audit - WCAG Compliance', () => {
 });
 
 test.describe('Layout and Styling Verification', () => {
-  test('should have proper CSS classes applied on Detection Engineering page', async ({
-    page,
-  }) => {
+  test('should have proper CSS classes applied on Detection Engineering page', async ({ page }) => {
     await page.goto('/detections.html');
     await page.waitForTimeout(1000);
 
@@ -298,7 +288,7 @@ test.describe('Layout and Styling Verification', () => {
 
     // Verify coverage-description class
     const coverageDesc = page.locator('.coverage-description');
-    if (await coverageDesc.count() > 0) {
+    if ((await coverageDesc.count()) > 0) {
       const descClasses = await coverageDesc.getAttribute('class');
       expect(descClasses).toContain('coverage-description');
     }
@@ -316,4 +306,3 @@ test.describe('Layout and Styling Verification', () => {
     expect(content).toContain('width=device-width');
   });
 });
-

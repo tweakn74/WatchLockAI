@@ -49,7 +49,7 @@ export function correlateAPTGroups(threat, profiles = aptProfiles) {
     // Check for malware matches
     const threatMalware = extractMalwareNames(threat);
     const aptMalwareNames = apt.malware.map(m => m.name.toLowerCase());
-    
+
     for (const malware of threatMalware) {
       if (aptMalwareNames.includes(malware.toLowerCase())) {
         confidence += 30;
@@ -61,9 +61,7 @@ export function correlateAPTGroups(threat, profiles = aptProfiles) {
     const threatTechniques = extractMITRETechniques(threat);
     const aptTechniqueIds = apt.techniques.map(t => t.id);
 
-    const matchingTechniques = threatTechniques.filter(t =>
-      aptTechniqueIds.includes(t)
-    );
+    const matchingTechniques = threatTechniques.filter(t => aptTechniqueIds.includes(t));
 
     if (matchingTechniques.length > 0) {
       confidence += matchingTechniques.length * 20; // Increased from 10 to meet threshold
@@ -84,9 +82,10 @@ export function correlateAPTGroups(threat, profiles = aptProfiles) {
     // Check for sector targeting
     const threatSectors = extractTargetedSectors(threat);
     const matchingSectors = threatSectors.filter(s =>
-      apt.targetedSectors.some(sector =>
-        sector.toLowerCase().includes(s.toLowerCase()) ||
-        s.toLowerCase().includes(sector.toLowerCase())
+      apt.targetedSectors.some(
+        sector =>
+          sector.toLowerCase().includes(s.toLowerCase()) ||
+          s.toLowerCase().includes(sector.toLowerCase())
       )
     );
 
@@ -97,12 +96,10 @@ export function correlateAPTGroups(threat, profiles = aptProfiles) {
 
     // Check for country targeting
     const threatCountries = extractTargetedCountries(threat);
-    const matchingCountries = threatCountries.filter(c => 
-      apt.targetedCountries.some(country => 
-        country.toLowerCase().includes(c.toLowerCase())
-      )
+    const matchingCountries = threatCountries.filter(c =>
+      apt.targetedCountries.some(country => country.toLowerCase().includes(c.toLowerCase()))
     );
-    
+
     if (matchingCountries.length > 0) {
       confidence += matchingCountries.length * 5;
       indicators.push(`Targeted country: ${matchingCountries.join(', ')}`);
@@ -111,7 +108,7 @@ export function correlateAPTGroups(threat, profiles = aptProfiles) {
     // Check for APT group name mentions in title/description
     const threatText = `${threat.title} ${threat.description || ''}`.toLowerCase();
     const aptNames = [apt.name, ...apt.aliases].map(n => n.toLowerCase());
-    
+
     for (const name of aptNames) {
       if (threatText.includes(name)) {
         confidence += 40;
@@ -175,7 +172,7 @@ function extractMalwareNames(threat) {
 function extractMITRETechniques(threat) {
   const techniques = [];
   const tags = threat.tags || [];
-  
+
   for (const tag of tags) {
     const match = tag.match(/T\d{4}(?:\.\d{3})?/);
     if (match) {
@@ -196,10 +193,24 @@ function extractToolNames(threat) {
   const text = `${threat.title} ${threat.description || ''}`.toLowerCase();
 
   const commonTools = [
-    'mimikatz', 'cobalt strike', 'metasploit', 'powershell empire',
-    'impacket', 'bloodhound', 'sharphound', 'rubeus', 'kerberoast',
-    'psexec', 'wmi', 'powershell', 'cmd', 'certutil', 'bitsadmin',
-    'responder', 'crackmapexec', 'empire'
+    'mimikatz',
+    'cobalt strike',
+    'metasploit',
+    'powershell empire',
+    'impacket',
+    'bloodhound',
+    'sharphound',
+    'rubeus',
+    'kerberoast',
+    'psexec',
+    'wmi',
+    'powershell',
+    'cmd',
+    'certutil',
+    'bitsadmin',
+    'responder',
+    'crackmapexec',
+    'empire',
   ];
 
   for (const tool of commonTools) {
@@ -223,20 +234,21 @@ function extractToolNames(threat) {
  */
 function extractTargetedSectors(threat) {
   const sectors = [];
-  const text = `${threat.title} ${threat.description || ''} ${threat.tags?.join(' ') || ''}`.toLowerCase();
+  const text =
+    `${threat.title} ${threat.description || ''} ${threat.tags?.join(' ') || ''}`.toLowerCase();
 
   const sectorKeywords = {
-    'Government': ['government', 'federal', 'state', 'municipal', 'agencies', 'agency'],
-    'Financial': ['bank', 'financial', 'fintech', 'payment', 'cryptocurrency'],
-    'Healthcare': ['healthcare', 'hospital', 'medical', 'health'],
-    'Energy': ['energy', 'oil', 'gas', 'utility', 'power'],
-    'Technology': ['tech', 'software', 'saas', 'cloud'],
-    'Defense': ['defense', 'military', 'army', 'navy', 'air force'],
-    'Telecommunications': ['telecom', 'telco', '5g', 'network provider'],
-    'Manufacturing': ['manufacturing', 'industrial', 'factory'],
-    'Education': ['education', 'university', 'school', 'academic'],
-    'Retail': ['retail', 'ecommerce', 'shopping'],
-    'Media': ['media', 'news', 'journalism', 'press', 'broadcasting'],
+    Government: ['government', 'federal', 'state', 'municipal', 'agencies', 'agency'],
+    Financial: ['bank', 'financial', 'fintech', 'payment', 'cryptocurrency'],
+    Healthcare: ['healthcare', 'hospital', 'medical', 'health'],
+    Energy: ['energy', 'oil', 'gas', 'utility', 'power'],
+    Technology: ['tech', 'software', 'saas', 'cloud'],
+    Defense: ['defense', 'military', 'army', 'navy', 'air force'],
+    Telecommunications: ['telecom', 'telco', '5g', 'network provider'],
+    Manufacturing: ['manufacturing', 'industrial', 'factory'],
+    Education: ['education', 'university', 'school', 'academic'],
+    Retail: ['retail', 'ecommerce', 'shopping'],
+    Media: ['media', 'news', 'journalism', 'press', 'broadcasting'],
   };
 
   for (const [sector, keywords] of Object.entries(sectorKeywords)) {
@@ -256,14 +268,34 @@ function extractTargetedSectors(threat) {
 function extractTargetedCountries(threat) {
   const countries = [];
   const text = `${threat.title} ${threat.description || ''}`.toLowerCase();
-  
+
   const countryKeywords = [
-    'united states', 'usa', 'u.s.', 'america',
-    'ukraine', 'russia', 'china', 'iran', 'north korea',
-    'israel', 'saudi arabia', 'uae', 'qatar',
-    'germany', 'france', 'uk', 'united kingdom', 'britain',
-    'japan', 'south korea', 'taiwan', 'india',
-    'australia', 'canada', 'mexico', 'brazil'
+    'united states',
+    'usa',
+    'u.s.',
+    'america',
+    'ukraine',
+    'russia',
+    'china',
+    'iran',
+    'north korea',
+    'israel',
+    'saudi arabia',
+    'uae',
+    'qatar',
+    'germany',
+    'france',
+    'uk',
+    'united kingdom',
+    'britain',
+    'japan',
+    'south korea',
+    'taiwan',
+    'india',
+    'australia',
+    'canada',
+    'mexico',
+    'brazil',
   ];
 
   for (const country of countryKeywords) {
@@ -284,7 +316,7 @@ function extractTargetedCountries(threat) {
 export function addAPTCorrelation(threats, profiles = aptProfiles) {
   return threats.map(threat => {
     const aptMatches = correlateAPTGroups(threat, profiles);
-    
+
     return {
       ...threat,
       aptAttribution: aptMatches.length > 0 ? aptMatches : undefined,
@@ -292,4 +324,3 @@ export function addAPTCorrelation(threats, profiles = aptProfiles) {
     };
   });
 }
-

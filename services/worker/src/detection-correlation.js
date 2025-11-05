@@ -224,4 +224,3 @@ export function getTopRecommendedDetections(threats) {
     .sort((a, b) => b.recommendedCount - a.recommendedCount)
     .slice(0, 10);
 }
-

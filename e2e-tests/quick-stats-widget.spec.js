@@ -184,10 +184,9 @@ test.describe('Quick Stats Widget - Dashboard 4', () => {
     const borderColor = await blueCard.evaluate(el => {
       return window.getComputedStyle(el).borderLeftColor;
     });
-    
+
     // Border should have a color (not transparent or none)
     expect(borderColor).not.toBe('rgba(0, 0, 0, 0)');
     expect(borderColor).not.toBe('transparent');
   });
 });
-

@@ -1,0 +1,1650 @@
+{
+  "version": "2.0.0",
+  "schemaVersion": "unified-v2",
+  "updated": "2025-11-05",
+  "description": "Unified APT Intelligence Database - Merged from apt-profiles.json and apt-database.js with enhanced AttackIQ scenario mappings",
+  "totalGroups": 13,
+  "dataSources": ["MITRE ATT&CK", "APT-Tracker-MITRE-AIQ", "Manual Curation"],
+  "groups": [
+    {
+      "id": "apt28",
+      "name": "APT28",
+      "aliases": ["Fancy Bear", "Sofacy", "Sednit", "Pawn Storm", "STRONTIUM"],
+      "description": "Russian state-sponsored APT group active since at least 2007. Known for targeting government, military, and security organizations worldwide. Associated with Russian military intelligence (GRU).",
+      "country": "Russia",
+      "attribution": "Russian military intelligence (GRU)",
+      "motivation": ["espionage", "destructive"],
+      "sophistication": "advanced",
+      "firstSeen": "2007-01-01",
+      "lastActivity": "2024-12-01",
+      "activityStatus": "active",
+      "targetedSectors": ["Government", "Military", "Defense", "Media", "Energy", "Aerospace"],
+      "targetedCountries": [
+        "United States",
+        "Ukraine",
+        "Georgia",
+        "France",
+        "Germany",
+        "NATO members"
+      ],
+      "targetedRegions": ["North America", "Europe", "Eastern Europe"],
+      "techniques": [
+        {
+          "id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1566.002",
+          "name": "Spearphishing Link",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution", "confidence": "high" },
+        {
+          "id": "T1053.005",
+          "name": "Scheduled Task",
+          "tactic": "Persistence",
+          "confidence": "medium"
+        },
+        {
+          "id": "T1003.001",
+          "name": "LSASS Memory",
+          "tactic": "Credential Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high"
+        },
+        {
+          "id": "T1027",
+          "name": "Obfuscated Files or Information",
+          "tactic": "Defense Evasion",
+          "confidence": "medium"
+        }
+      ],
+      "malware": [
+        {
+          "name": "X-Agent",
+          "type": "Backdoor",
+          "description": "Modular backdoor with extensive capabilities",
+          "mitreId": "S0161"
+        },
+        { "name": "Sofacy", "type": "Backdoor", "description": "First-stage backdoor" },
+        { "name": "X-Tunnel", "type": "Network Tool", "description": "Network tunneling tool" },
+        {
+          "name": "CHOPSTICK",
+          "type": "Backdoor",
+          "description": "Modular backdoor",
+          "mitreId": "S0023"
+        }
+      ],
+      "tools": ["Mimikatz", "Responder", "Koadic"],
+      "mitreAttackId": "G0007",
+      "riskScore": 95,
+      "riskLevel": "critical",
+      "references": [
+        {
+          "title": "APT28: A Window into Russia's Cyber Espionage Operations",
+          "url": "https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/rpt-apt28.pdf",
+          "date": "2014-10-27",
+          "source": "FireEye"
+        }
+      ],
+      "dataSource": "apt-profiles.json",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "apt29",
+      "name": "APT29",
+      "aliases": ["Cozy Bear", "The Dukes", "YTTRIUM", "Nobelium"],
+      "description": "Russian state-sponsored APT group active since at least 2008. Associated with Russian Foreign Intelligence Service (SVR). Known for sophisticated and stealthy operations.",
+      "country": "Russia",
+      "attribution": "Russian Foreign Intelligence Service (SVR)",
+      "motivation": ["espionage"],
+      "sophistication": "advanced",
+      "firstSeen": "2008-01-01",
+      "lastActivity": "2024-12-01",
+      "activityStatus": "active",
+      "targetedSectors": ["Government", "Think Tanks", "Technology", "Healthcare", "Energy"],
+      "targetedCountries": ["United States", "Europe", "NATO members"],
+      "targetedRegions": ["North America", "Europe"],
+      "techniques": [
+        {
+          "id": "T1195.002",
+          "name": "Compromise Software Supply Chain",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution", "confidence": "high" },
+        {
+          "id": "T1547.001",
+          "name": "Registry Run Keys",
+          "tactic": "Persistence",
+          "confidence": "medium"
+        },
+        {
+          "id": "T1055",
+          "name": "Process Injection",
+          "tactic": "Defense Evasion",
+          "confidence": "high"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high"
+        }
+      ],
+      "malware": [
+        {
+          "name": "SUNBURST",
+          "type": "Backdoor",
+          "description": "SolarWinds supply chain backdoor",
+          "mitreId": "S0559"
+        },
+        {
+          "name": "TEARDROP",
+          "type": "Dropper",
+          "description": "Memory-only dropper",
+          "mitreId": "S0560"
+        },
+        {
+          "name": "CozyDuke",
+          "type": "Backdoor",
+          "description": "Sophisticated backdoor",
+          "mitreId": "S0046"
+        },
+        {
+          "name": "SeaDuke",
+          "type": "Backdoor",
+          "description": "Python-based backdoor",
+          "mitreId": "S0053"
+        }
+      ],
+      "tools": ["Cobalt Strike", "Mimikatz"],
+      "mitreAttackId": "G0016",
+      "campaigns": [
+        {
+          "name": "SolarWinds Supply Chain Attack",
+          "date": "2020-03-01",
+          "description": "Massive supply chain compromise affecting thousands of organizations",
+          "targets": ["Government", "Technology", "Consulting"]
+        }
+      ],
+      "riskScore": 98,
+      "riskLevel": "critical",
+      "references": [
+        {
+          "title": "Highly Evasive Attacker Leverages SolarWinds Supply Chain",
+          "url": "https://www.fireeye.com/blog/threat-research/2020/12/evasive-attacker-leverages-solarwinds-supply-chain-compromises-with-sunburst-backdoor.html",
+          "date": "2020-12-13",
+          "source": "FireEye"
+        }
+      ],
+      "dataSource": "apt-profiles.json",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "lazarus",
+      "name": "Lazarus Group",
+      "aliases": ["HIDDEN COBRA", "Guardians of Peace", "ZINC", "APT38"],
+      "description": "North Korean state-sponsored APT group active since at least 2009. Known for both espionage and financially motivated attacks. Responsible for major cyber attacks including Sony Pictures and WannaCry.",
+      "country": "North Korea",
+      "attribution": "North Korean state-sponsored (Reconnaissance General Bureau)",
+      "motivation": ["financial", "espionage", "destructive"],
+      "sophistication": "advanced",
+      "firstSeen": "2009-01-01",
+      "lastActivity": "2024-12-01",
+      "activityStatus": "active",
+      "targetedSectors": ["Financial", "Cryptocurrency", "Media", "Defense", "Government"],
+      "targetedCountries": ["South Korea", "United States", "Global"],
+      "targetedRegions": ["Asia", "North America", "Global"],
+      "techniques": [
+        {
+          "id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1204.002",
+          "name": "Malicious File",
+          "tactic": "Execution",
+          "confidence": "high"
+        },
+        {
+          "id": "T1486",
+          "name": "Data Encrypted for Impact",
+          "tactic": "Impact",
+          "confidence": "high"
+        },
+        {
+          "id": "T1490",
+          "name": "Inhibit System Recovery",
+          "tactic": "Impact",
+          "confidence": "high"
+        },
+        {
+          "id": "T1078",
+          "name": "Valid Accounts",
+          "tactic": "Persistence",
+          "confidence": "medium"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high"
+        }
+      ],
+      "malware": [
+        {
+          "name": "WannaCry",
+          "type": "Ransomware",
+          "description": "Global ransomware outbreak",
+          "mitreId": "S0366"
+        },
+        {
+          "name": "BLINDINGCAN",
+          "type": "RAT",
+          "description": "Remote access trojan",
+          "mitreId": "S0520"
+        },
+        {
+          "name": "HOPLIGHT",
+          "type": "Backdoor",
+          "description": "Trojan malware",
+          "mitreId": "S0376"
+        },
+        {
+          "name": "ELECTRICFISH",
+          "type": "Tunneling Tool",
+          "description": "Network tunneling tool",
+          "mitreId": "S0363"
+        }
+      ],
+      "tools": ["Mimikatz", "PowerShell Empire"],
+      "mitreAttackId": "G0032",
+      "campaigns": [
+        {
+          "name": "Sony Pictures Hack",
+          "date": "2014-11-24",
+          "description": "Destructive attack on Sony Pictures Entertainment",
+          "targets": ["Media"]
+        },
+        {
+          "name": "WannaCry Ransomware",
+          "date": "2017-05-12",
+          "description": "Global ransomware outbreak",
+          "targets": ["Healthcare", "Government", "Business"]
+        },
+        {
+          "name": "SWIFT Banking Heists",
+          "date": "2016-02-01",
+          "description": "Theft of millions from banks via SWIFT network",
+          "targets": ["Financial"]
+        }
+      ],
+      "riskScore": 96,
+      "riskLevel": "critical",
+      "references": [
+        {
+          "title": "HIDDEN COBRA - North Korean Malicious Cyber Activity",
+          "url": "https://www.us-cert.gov/ncas/alerts/TA17-164A",
+          "date": "2017-06-13",
+          "source": "US-CERT"
+        }
+      ],
+      "dataSource": "apt-profiles.json",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "apt41",
+      "name": "APT41",
+      "aliases": ["Winnti", "Barium", "Wicked Panda", "Double Dragon"],
+      "description": "Chinese state-sponsored APT group active since at least 2012. Unique for conducting both state-sponsored espionage and financially motivated operations. Targets healthcare, telecom, and technology sectors.",
+      "country": "China",
+      "attribution": "Chinese state-sponsored",
+      "motivation": ["espionage", "financial"],
+      "sophistication": "advanced",
+      "firstSeen": "2012-01-01",
+      "lastActivity": "2024-12-01",
+      "activityStatus": "active",
+      "targetedSectors": [
+        "Healthcare",
+        "Telecommunications",
+        "Technology",
+        "Gaming",
+        "Media",
+        "Education"
+      ],
+      "targetedCountries": ["United States", "Europe", "Asia"],
+      "targetedRegions": ["North America", "Europe", "Asia"],
+      "techniques": [
+        {
+          "id": "T1190",
+          "name": "Exploit Public-Facing Application",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1059.003",
+          "name": "Windows Command Shell",
+          "tactic": "Execution",
+          "confidence": "high"
+        },
+        {
+          "id": "T1543.003",
+          "name": "Windows Service",
+          "tactic": "Persistence",
+          "confidence": "medium"
+        },
+        {
+          "id": "T1055",
+          "name": "Process Injection",
+          "tactic": "Defense Evasion",
+          "confidence": "high"
+        },
+        {
+          "id": "T1027.002",
+          "name": "Software Packing",
+          "tactic": "Defense Evasion",
+          "confidence": "medium"
+        }
+      ],
+      "malware": [
+        {
+          "name": "HIGHNOON",
+          "type": "Backdoor",
+          "description": "Backdoor with extensive capabilities"
+        },
+        { "name": "LOWKEY", "type": "Backdoor", "description": "Credential theft backdoor" },
+        { "name": "DUSTPAN", "type": "Dropper", "description": "Malware dropper" },
+        { "name": "MESSAGETAP", "type": "Implant", "description": "SMS interception tool" }
+      ],
+      "tools": ["Cobalt Strike", "Mimikatz", "China Chopper"],
+      "mitreAttackId": "G0096",
+      "riskScore": 92,
+      "riskLevel": "critical",
+      "references": [
+        {
+          "title": "APT41: A Dual Espionage and Cyber Crime Operation",
+          "url": "https://www.fireeye.com/blog/threat-research/2019/08/apt41-dual-espionage-and-cyber-crime-operation.html",
+          "date": "2019-08-07",
+          "source": "FireEye"
+        }
+      ],
+      "dataSource": "apt-profiles.json",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "apt1",
+      "name": "APT1",
+      "aliases": ["Comment Crew", "Comment Group", "Comment Panda"],
+      "description": "Chinese state-sponsored APT group active since at least 2006. One of the first publicly exposed APT groups. Associated with PLA Unit 61398. Known for large-scale intellectual property theft.",
+      "country": "China",
+      "attribution": "Chinese PLA Unit 61398",
+      "motivation": ["espionage"],
+      "sophistication": "medium",
+      "firstSeen": "2006-01-01",
+      "lastActivity": "2013-12-01",
+      "activityStatus": "dormant",
+      "targetedSectors": ["Aerospace", "Defense", "Technology", "Manufacturing", "Energy"],
+      "targetedCountries": ["United States", "Canada", "Europe"],
+      "targetedRegions": ["North America", "Europe"],
+      "techniques": [
+        {
+          "id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1059.003",
+          "name": "Windows Command Shell",
+          "tactic": "Execution",
+          "confidence": "high"
+        },
+        {
+          "id": "T1053.005",
+          "name": "Scheduled Task",
+          "tactic": "Persistence",
+          "confidence": "medium"
+        },
+        {
+          "id": "T1003",
+          "name": "OS Credential Dumping",
+          "tactic": "Credential Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high"
+        }
+      ],
+      "malware": [
+        { "name": "WEBC2", "type": "Backdoor", "description": "Web-based backdoor" },
+        { "name": "TROJAN.ECLTYS", "type": "Backdoor", "description": "Custom backdoor" },
+        { "name": "BACKDOOR.BARKIOFORK", "type": "Backdoor", "description": "Persistent backdoor" }
+      ],
+      "tools": ["gsecdump", "Htran"],
+      "mitreAttackId": "G0006",
+      "riskScore": 75,
+      "riskLevel": "high",
+      "references": [
+        {
+          "title": "APT1: Exposing One of China's Cyber Espionage Units",
+          "url": "https://www.mandiant.com/resources/apt1-exposing-one-of-chinas-cyber-espionage-units",
+          "date": "2013-02-18",
+          "source": "Mandiant"
+        }
+      ],
+      "dataSource": "apt-profiles.json",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "apt10",
+      "name": "APT10",
+      "aliases": ["MenuPass", "Stone Panda", "Red Apollo", "CVNX"],
+      "description": "Chinese state-sponsored APT group active since at least 2009. Known for targeting managed service providers (MSPs) to gain access to their clients. Associated with Chinese Ministry of State Security (MSS).",
+      "country": "China",
+      "attribution": "Chinese Ministry of State Security (MSS)",
+      "motivation": ["espionage"],
+      "sophistication": "advanced",
+      "firstSeen": "2009-01-01",
+      "lastActivity": "2024-10-01",
+      "activityStatus": "active",
+      "targetedSectors": [
+        "Managed Service Providers",
+        "Technology",
+        "Telecommunications",
+        "Government",
+        "Healthcare"
+      ],
+      "targetedCountries": ["United States", "Europe", "Japan"],
+      "targetedRegions": ["North America", "Europe", "Asia"],
+      "techniques": [
+        {
+          "id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution", "confidence": "high" },
+        {
+          "id": "T1053.005",
+          "name": "Scheduled Task",
+          "tactic": "Persistence",
+          "confidence": "medium"
+        },
+        {
+          "id": "T1003.001",
+          "name": "LSASS Memory",
+          "tactic": "Credential Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high"
+        }
+      ],
+      "malware": [
+        {
+          "name": "UPPERCUT",
+          "type": "Backdoor",
+          "description": "Backdoor with extensive capabilities"
+        },
+        { "name": "ANEL", "type": "Backdoor", "description": "Downloader and backdoor" },
+        { "name": "HAYMAKER", "type": "Backdoor", "description": "Custom backdoor" }
+      ],
+      "tools": ["Mimikatz", "PwDump", "Impacket"],
+      "mitreAttackId": "G0045",
+      "campaigns": [
+        {
+          "name": "Cloud Hopper",
+          "date": "2016-01-01",
+          "description": "Massive campaign targeting MSPs to access their clients",
+          "targets": ["Managed Service Providers"]
+        }
+      ],
+      "riskScore": 90,
+      "riskLevel": "critical",
+      "references": [
+        {
+          "title": "APT10 (MenuPass Group): New Tools, Global Campaign Latest Manifestation of Longstanding Threat",
+          "url": "https://www.fireeye.com/blog/threat-research/2017/04/apt10_menupass_grou.html",
+          "date": "2017-04-06",
+          "source": "FireEye"
+        }
+      ],
+      "dataSource": "apt-profiles.json",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "apt33",
+      "name": "APT33",
+      "aliases": ["Elfin", "Holmium", "Refined Kitten"],
+      "description": "Iranian state-sponsored APT group active since at least 2013. Known for targeting aviation and energy sectors. Associated with Iranian government.",
+      "country": "Iran",
+      "attribution": "Iranian state-sponsored",
+      "motivation": ["espionage", "destructive"],
+      "sophistication": "medium",
+      "firstSeen": "2013-01-01",
+      "lastActivity": "2024-09-01",
+      "activityStatus": "active",
+      "targetedSectors": ["Aviation", "Energy", "Petrochemical", "Government"],
+      "targetedCountries": ["United States", "Saudi Arabia", "South Korea"],
+      "targetedRegions": ["North America", "Middle East", "Asia"],
+      "techniques": [
+        {
+          "id": "T1566.001",
+          "name": "Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high"
+        },
+        { "id": "T1059.001", "name": "PowerShell", "tactic": "Execution", "confidence": "high" },
+        {
+          "id": "T1053.005",
+          "name": "Scheduled Task",
+          "tactic": "Persistence",
+          "confidence": "medium"
+        },
+        {
+          "id": "T1003",
+          "name": "OS Credential Dumping",
+          "tactic": "Credential Access",
+          "confidence": "high"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high"
+        }
+      ],
+      "malware": [
+        { "name": "SHAPESHIFT", "type": "Backdoor", "description": "Modular backdoor" },
+        { "name": "DROPSHOT", "type": "Wiper", "description": "Destructive wiper malware" },
+        { "name": "TURNEDUP", "type": "Backdoor", "description": "DNS tunneling backdoor" }
+      ],
+      "tools": ["Nanocore", "Remcos"],
+      "mitreAttackId": "G0064",
+      "riskScore": 82,
+      "riskLevel": "high",
+      "references": [
+        {
+          "title": "Insights into Iranian Cyber Espionage: APT33 Targets Aerospace and Energy Sectors",
+          "url": "https://www.fireeye.com/blog/threat-research/2017/09/apt33-insights-into-iranian-cyber-espionage.html",
+          "date": "2017-09-20",
+          "source": "FireEye"
+        }
+      ],
+      "dataSource": "apt-profiles.json",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "fin7",
+      "name": "FIN7",
+      "aliases": ["Carbanak Group", "Carbon Spider", "ELBRUS", "Sangria Tempest", "Anunak"],
+      "description": "Financially motivated cybercrime group active since at least 2013. Known for targeting banks, retail, hospitality, and financial institutions. Responsible for stealing over $1 billion from banks worldwide. Linked to DarkSide and BlackMatter ransomware operations.",
+      "country": "Unknown",
+      "attribution": "Financially motivated cybercrime group",
+      "motivation": ["financial"],
+      "sophistication": "advanced",
+      "firstSeen": "2013-01-01",
+      "lastActivity": "2024-11-01",
+      "activityStatus": "active",
+      "targetedSectors": ["Financial", "Hospitality", "Retail", "Restaurant", "Gaming"],
+      "targetedCountries": ["United States", "Europe", "Australia", "Global"],
+      "targetedRegions": ["North America", "Europe", "Asia-Pacific", "Global"],
+      "techniques": [
+        {
+          "id": "T1592.002",
+          "name": "Gather Victim Host Information: Software",
+          "tactic": "Reconnaissance",
+          "confidence": "high",
+          "attackiqScenario": "Reconnaissance: Software enumeration scenarios"
+        },
+        {
+          "id": "T1588.001",
+          "name": "Obtain Capabilities: Malware",
+          "tactic": "Resource Development",
+          "confidence": "high",
+          "attackiqScenario": "Resource Development: Malware acquisition scenarios"
+        },
+        {
+          "id": "T1566.001",
+          "name": "Phishing: Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high",
+          "attackiqScenario": "Initial Access: Spearphishing attachment scenarios"
+        },
+        {
+          "id": "T1059.005",
+          "name": "Command and Scripting Interpreter: Visual Basic",
+          "tactic": "Execution",
+          "confidence": "high",
+          "attackiqScenario": "Execution: VBScript scenarios"
+        },
+        {
+          "id": "T1547.001",
+          "name": "Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder",
+          "tactic": "Persistence",
+          "confidence": "medium",
+          "attackiqScenario": "Persistence: Registry run keys scenarios"
+        },
+        {
+          "id": "T1055.001",
+          "name": "Process Injection: Dynamic-link Library Injection",
+          "tactic": "Privilege Escalation",
+          "confidence": "high",
+          "attackiqScenario": "Privilege Escalation: DLL injection scenarios"
+        },
+        {
+          "id": "T1027.002",
+          "name": "Obfuscated Files or Information: Software Packing",
+          "tactic": "Defense Evasion",
+          "confidence": "medium",
+          "attackiqScenario": "Defense Evasion: Software packing scenarios"
+        },
+        {
+          "id": "T1056.001",
+          "name": "Input Capture: Keylogging",
+          "tactic": "Credential Access",
+          "confidence": "high",
+          "attackiqScenario": "Credential Access: Keylogging scenarios"
+        },
+        {
+          "id": "T1057",
+          "name": "Process Discovery",
+          "tactic": "Discovery",
+          "confidence": "medium",
+          "attackiqScenario": "Discovery: Process discovery scenarios"
+        },
+        {
+          "id": "T1021.001",
+          "name": "Remote Services: Remote Desktop Protocol",
+          "tactic": "Lateral Movement",
+          "confidence": "high",
+          "attackiqScenario": "Lateral Movement: RDP scenarios"
+        },
+        {
+          "id": "T1113",
+          "name": "Screen Capture",
+          "tactic": "Collection",
+          "confidence": "medium",
+          "attackiqScenario": "Collection: Screen capture scenarios"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Application Layer Protocol: Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high",
+          "attackiqScenario": "Command and Control: Web protocols scenarios"
+        },
+        {
+          "id": "T1041",
+          "name": "Exfiltration Over C2 Channel",
+          "tactic": "Exfiltration",
+          "confidence": "high",
+          "attackiqScenario": "Exfiltration: C2 channel scenarios"
+        },
+        {
+          "id": "T1529",
+          "name": "System Shutdown/Reboot",
+          "tactic": "Impact",
+          "confidence": "low",
+          "attackiqScenario": "Impact: System shutdown scenarios"
+        }
+      ],
+      "malware": [
+        { "name": "Carbanak", "type": "Backdoor", "description": "Banking trojan and backdoor" },
+        { "name": "GRIFFON", "type": "Backdoor", "description": "JavaScript backdoor" },
+        { "name": "POWERSOURCE", "type": "Backdoor", "description": "PowerShell backdoor" },
+        { "name": "BOOSTWRITE", "type": "Loader", "description": "Malware loader" },
+        { "name": "Pillowmint", "type": "Point-of-Sale Malware", "description": "POS malware" }
+      ],
+      "tools": ["Cobalt Strike", "Mimikatz", "PsExec"],
+      "mitreAttackId": "G0046",
+      "campaigns": [
+        {
+          "name": "Carbanak Banking Heists",
+          "date": "2013-01-01",
+          "description": "Theft of over $1 billion from banks worldwide",
+          "targets": ["Financial"]
+        }
+      ],
+      "riskScore": 94,
+      "riskLevel": "critical",
+      "references": [
+        {
+          "title": "Carbanak APT: The Great Bank Robbery",
+          "url": "https://securelist.com/carbanak-apt-the-great-bank-robbery/68732/",
+          "date": "2015-02-16",
+          "source": "Kaspersky"
+        },
+        {
+          "title": "FIN7 Evolution and the Phishing LNK",
+          "url": "https://www.fireeye.com/blog/threat-research/2017/04/fin7-phishing-lnk.html",
+          "date": "2017-04-05",
+          "source": "FireEye"
+        }
+      ],
+      "dataSource": "unified (apt-profiles.json + apt-database.js)",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "ke3chang",
+      "name": "Ke3chang",
+      "aliases": [
+        "APT15",
+        "Mirage",
+        "Vixen Panda",
+        "GREF",
+        "Playful Dragon",
+        "RoyalAPT",
+        "NICKEL",
+        "Nylon Typhoon"
+      ],
+      "description": "Chinese threat actor active since at least 2010. Known for targeting oil, government, diplomatic, and military entities in Central/South America, Caribbean, Europe, and North America.",
+      "country": "China",
+      "attribution": "Chinese threat actor",
+      "motivation": ["espionage"],
+      "sophistication": "advanced",
+      "firstSeen": "2010-01-01",
+      "lastActivity": "2024-10-01",
+      "activityStatus": "active",
+      "targetedSectors": ["Oil & Gas", "Government", "Diplomatic", "Military", "NGO"],
+      "targetedCountries": [
+        "Central America",
+        "South America",
+        "Caribbean",
+        "Europe",
+        "North America"
+      ],
+      "targetedRegions": ["Americas", "Europe", "North America"],
+      "techniques": [
+        {
+          "id": "T1589.001",
+          "name": "Gather Victim Identity Information: Credentials",
+          "tactic": "Reconnaissance",
+          "confidence": "high",
+          "attackiqScenario": "Reconnaissance: Credential harvesting scenarios"
+        },
+        {
+          "id": "T1583.006",
+          "name": "Acquire Infrastructure: Web Services",
+          "tactic": "Resource Development",
+          "confidence": "medium",
+          "attackiqScenario": "Resource Development: Web service scenarios"
+        },
+        {
+          "id": "T1078",
+          "name": "Valid Accounts",
+          "tactic": "Initial Access",
+          "confidence": "high",
+          "attackiqScenario": "Initial Access: Valid accounts scenarios"
+        },
+        {
+          "id": "T1059.003",
+          "name": "Command and Scripting Interpreter: Windows Command Shell",
+          "tactic": "Execution",
+          "confidence": "high",
+          "attackiqScenario": "Execution: Command shell scenarios"
+        },
+        {
+          "id": "T1053.005",
+          "name": "Scheduled Task/Job: Scheduled Task",
+          "tactic": "Persistence",
+          "confidence": "medium",
+          "attackiqScenario": "Persistence: Scheduled task scenarios"
+        },
+        {
+          "id": "T1078.002",
+          "name": "Valid Accounts: Domain Accounts",
+          "tactic": "Privilege Escalation",
+          "confidence": "high",
+          "attackiqScenario": "Privilege Escalation: Domain account scenarios"
+        },
+        {
+          "id": "T1140",
+          "name": "Deobfuscate/Decode Files or Information",
+          "tactic": "Defense Evasion",
+          "confidence": "medium",
+          "attackiqScenario": "Defense Evasion: Deobfuscation scenarios"
+        },
+        {
+          "id": "T1003.001",
+          "name": "OS Credential Dumping: LSASS Memory",
+          "tactic": "Credential Access",
+          "confidence": "high",
+          "attackiqScenario": "Credential Access: LSASS dumping scenarios"
+        },
+        {
+          "id": "T1087.002",
+          "name": "Account Discovery: Domain Account",
+          "tactic": "Discovery",
+          "confidence": "medium",
+          "attackiqScenario": "Discovery: Domain account scenarios"
+        },
+        {
+          "id": "T1021.002",
+          "name": "Remote Services: SMB/Windows Admin Shares",
+          "tactic": "Lateral Movement",
+          "confidence": "high",
+          "attackiqScenario": "Lateral Movement: SMB scenarios"
+        },
+        {
+          "id": "T1114.002",
+          "name": "Email Collection: Remote Email Collection",
+          "tactic": "Collection",
+          "confidence": "high",
+          "attackiqScenario": "Collection: Email collection scenarios"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Application Layer Protocol: Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high",
+          "attackiqScenario": "Command and Control: Web protocols scenarios"
+        },
+        {
+          "id": "T1567.002",
+          "name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage",
+          "tactic": "Exfiltration",
+          "confidence": "medium",
+          "attackiqScenario": "Exfiltration: Cloud storage scenarios"
+        },
+        {
+          "id": "T1490",
+          "name": "Inhibit System Recovery",
+          "tactic": "Impact",
+          "confidence": "low",
+          "attackiqScenario": "Impact: Inhibit recovery scenarios"
+        }
+      ],
+      "malware": [
+        { "name": "BS2005", "type": "Backdoor", "description": "Custom backdoor" },
+        { "name": "Ketrican", "type": "Backdoor", "description": "Backdoor malware" },
+        { "name": "RoyalCli", "type": "Backdoor", "description": "Command-line backdoor" },
+        { "name": "RoyalDNS", "type": "Backdoor", "description": "DNS tunneling backdoor" }
+      ],
+      "tools": ["Custom tools"],
+      "mitreAttackId": "G0004",
+      "riskScore": 85,
+      "riskLevel": "high",
+      "references": [
+        {
+          "title": "Ke3chang: Targeted Attacks Against Ministries of Foreign Affairs",
+          "url": "https://www.fireeye.com/blog/threat-research/2013/08/operation-ke3chang-targeted-attacks-against-ministries-of-foreign-affairs.html",
+          "date": "2013-08-01",
+          "source": "FireEye"
+        }
+      ],
+      "dataSource": "apt-database.js",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "kimsuky",
+      "name": "Kimsuky",
+      "aliases": [
+        "Black Banshee",
+        "Velvet Chollima",
+        "Emerald Sleet",
+        "THALLIUM",
+        "APT43",
+        "TA427",
+        "Springtail"
+      ],
+      "description": "North Korean cyber espionage group active since at least 2012. Known for targeting government, think tanks, academia, and media in South Korea, US, Japan, Russia, and Europe.",
+      "country": "North Korea",
+      "attribution": "North Korean cyber espionage group",
+      "motivation": ["espionage"],
+      "sophistication": "advanced",
+      "firstSeen": "2012-01-01",
+      "lastActivity": "2024-11-01",
+      "activityStatus": "active",
+      "targetedSectors": ["Government", "Think Tanks", "Academia", "Media", "Defense"],
+      "targetedCountries": ["South Korea", "United States", "Japan", "Russia", "Europe"],
+      "targetedRegions": ["Asia", "North America", "Europe"],
+      "techniques": [
+        {
+          "id": "T1598.003",
+          "name": "Phishing for Information: Spearphishing Link",
+          "tactic": "Reconnaissance",
+          "confidence": "high",
+          "attackiqScenario": "Reconnaissance: Phishing scenarios"
+        },
+        {
+          "id": "T1584.001",
+          "name": "Compromise Infrastructure: Domains",
+          "tactic": "Resource Development",
+          "confidence": "medium",
+          "attackiqScenario": "Resource Development: Domain compromise scenarios"
+        },
+        {
+          "id": "T1566.002",
+          "name": "Phishing: Spearphishing Link",
+          "tactic": "Initial Access",
+          "confidence": "high",
+          "attackiqScenario": "Initial Access: Spearphishing link scenarios"
+        },
+        {
+          "id": "T1203",
+          "name": "Exploitation for Client Execution",
+          "tactic": "Execution",
+          "confidence": "high",
+          "attackiqScenario": "Execution: Client exploitation scenarios"
+        },
+        {
+          "id": "T1547.001",
+          "name": "Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder",
+          "tactic": "Persistence",
+          "confidence": "medium",
+          "attackiqScenario": "Persistence: Registry run keys scenarios"
+        },
+        {
+          "id": "T1055",
+          "name": "Process Injection",
+          "tactic": "Privilege Escalation",
+          "confidence": "high",
+          "attackiqScenario": "Privilege Escalation: Process injection scenarios"
+        },
+        {
+          "id": "T1036.005",
+          "name": "Masquerading: Match Legitimate Name or Location",
+          "tactic": "Defense Evasion",
+          "confidence": "high",
+          "attackiqScenario": "Defense Evasion: Masquerading scenarios"
+        },
+        {
+          "id": "T1056.001",
+          "name": "Input Capture: Keylogging",
+          "tactic": "Credential Access",
+          "confidence": "high",
+          "attackiqScenario": "Credential Access: Keylogging scenarios"
+        },
+        {
+          "id": "T1082",
+          "name": "System Information Discovery",
+          "tactic": "Discovery",
+          "confidence": "medium",
+          "attackiqScenario": "Discovery: System information scenarios"
+        },
+        {
+          "id": "T1570",
+          "name": "Lateral Tool Transfer",
+          "tactic": "Lateral Movement",
+          "confidence": "medium",
+          "attackiqScenario": "Lateral Movement: Tool transfer scenarios"
+        },
+        {
+          "id": "T1005",
+          "name": "Data from Local System",
+          "tactic": "Collection",
+          "confidence": "high",
+          "attackiqScenario": "Collection: Local data scenarios"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Application Layer Protocol: Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high",
+          "attackiqScenario": "Command and Control: Web protocols scenarios"
+        },
+        {
+          "id": "T1041",
+          "name": "Exfiltration Over C2 Channel",
+          "tactic": "Exfiltration",
+          "confidence": "high",
+          "attackiqScenario": "Exfiltration: C2 channel scenarios"
+        },
+        {
+          "id": "T1485",
+          "name": "Data Destruction",
+          "tactic": "Impact",
+          "confidence": "medium",
+          "attackiqScenario": "Impact: Data destruction scenarios"
+        }
+      ],
+      "malware": [
+        { "name": "BabyShark", "type": "Backdoor", "description": "Visual Basic backdoor" },
+        { "name": "AppleSeed", "type": "Backdoor", "description": "Backdoor malware" },
+        { "name": "PebbleDash", "type": "Backdoor", "description": "Credential theft backdoor" },
+        {
+          "name": "ReconShark",
+          "type": "Reconnaissance Tool",
+          "description": "Information gathering tool"
+        }
+      ],
+      "tools": ["Custom tools"],
+      "mitreAttackId": "G0094",
+      "riskScore": 88,
+      "riskLevel": "high",
+      "references": [
+        {
+          "title": "Kimsuky APT continues to target South Korean government using AppleSeed backdoor",
+          "url": "https://blog.malwarebytes.com/threat-intelligence/2021/06/kimsuky-apt-continues-to-target-south-korean-government-using-appleseed-backdoor/",
+          "date": "2021-06-24",
+          "source": "Malwarebytes"
+        }
+      ],
+      "dataSource": "apt-database.js",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "lapsus",
+      "name": "Lapsus$",
+      "aliases": ["DEV-0537", "GOLD REBELLION"],
+      "description": "Cybercriminal group active since at least 2021. Known for social engineering, SIM swapping, and extortion. Targeted major technology companies including Microsoft, Nvidia, Samsung, Okta, and Uber.",
+      "country": "Unknown",
+      "attribution": "Cybercriminal group (members arrested in UK and Brazil)",
+      "motivation": ["financial", "notoriety"],
+      "sophistication": "medium",
+      "firstSeen": "2021-01-01",
+      "lastActivity": "2022-09-01",
+      "activityStatus": "dormant",
+      "targetedSectors": ["Technology", "Telecommunications", "Gaming", "Healthcare"],
+      "targetedCountries": ["Global"],
+      "targetedRegions": ["Global"],
+      "techniques": [
+        {
+          "id": "T1589.002",
+          "name": "Gather Victim Identity Information: Email Addresses",
+          "tactic": "Reconnaissance",
+          "confidence": "high",
+          "attackiqScenario": "Reconnaissance: Email harvesting scenarios"
+        },
+        {
+          "id": "T1586.002",
+          "name": "Compromise Accounts: Email Accounts",
+          "tactic": "Resource Development",
+          "confidence": "high",
+          "attackiqScenario": "Resource Development: Email compromise scenarios"
+        },
+        {
+          "id": "T1078",
+          "name": "Valid Accounts",
+          "tactic": "Initial Access",
+          "confidence": "high",
+          "attackiqScenario": "Initial Access: Valid accounts scenarios"
+        },
+        {
+          "id": "T1204.003",
+          "name": "User Execution: Malicious Image",
+          "tactic": "Execution",
+          "confidence": "medium",
+          "attackiqScenario": "Execution: Malicious image scenarios"
+        },
+        {
+          "id": "T1098",
+          "name": "Account Manipulation",
+          "tactic": "Persistence",
+          "confidence": "high",
+          "attackiqScenario": "Persistence: Account manipulation scenarios"
+        },
+        {
+          "id": "T1078.004",
+          "name": "Valid Accounts: Cloud Accounts",
+          "tactic": "Privilege Escalation",
+          "confidence": "high",
+          "attackiqScenario": "Privilege Escalation: Cloud account scenarios"
+        },
+        {
+          "id": "T1562.007",
+          "name": "Impair Defenses: Disable or Modify Cloud Firewall",
+          "tactic": "Defense Evasion",
+          "confidence": "medium",
+          "attackiqScenario": "Defense Evasion: Cloud firewall scenarios"
+        },
+        {
+          "id": "T1528",
+          "name": "Steal Application Access Token",
+          "tactic": "Credential Access",
+          "confidence": "high",
+          "attackiqScenario": "Credential Access: Token theft scenarios"
+        },
+        {
+          "id": "T1538",
+          "name": "Cloud Service Dashboard",
+          "tactic": "Discovery",
+          "confidence": "medium",
+          "attackiqScenario": "Discovery: Cloud dashboard scenarios"
+        },
+        {
+          "id": "T1563.002",
+          "name": "Remote Service Session Hijacking: RDP Hijacking",
+          "tactic": "Lateral Movement",
+          "confidence": "medium",
+          "attackiqScenario": "Lateral Movement: RDP hijacking scenarios"
+        },
+        {
+          "id": "T1530",
+          "name": "Data from Cloud Storage",
+          "tactic": "Collection",
+          "confidence": "high",
+          "attackiqScenario": "Collection: Cloud storage scenarios"
+        },
+        {
+          "id": "T1102",
+          "name": "Web Service",
+          "tactic": "Command and Control",
+          "confidence": "medium",
+          "attackiqScenario": "Command and Control: Web service scenarios"
+        },
+        {
+          "id": "T1567.002",
+          "name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage",
+          "tactic": "Exfiltration",
+          "confidence": "high",
+          "attackiqScenario": "Exfiltration: Cloud storage scenarios"
+        },
+        {
+          "id": "T1491.001",
+          "name": "Defacement: Internal Defacement",
+          "tactic": "Impact",
+          "confidence": "medium",
+          "attackiqScenario": "Impact: Defacement scenarios"
+        }
+      ],
+      "malware": [
+        {
+          "name": "RedLine Stealer",
+          "type": "Stealer",
+          "description": "Credential and data stealer"
+        }
+      ],
+      "tools": ["Telegram", "Social Engineering"],
+      "mitreAttackId": "G1004",
+      "campaigns": [
+        {
+          "name": "Microsoft Breach",
+          "date": "2022-03-01",
+          "description": "Breach of Microsoft source code repositories",
+          "targets": ["Technology"]
+        },
+        {
+          "name": "Nvidia Breach",
+          "date": "2022-02-01",
+          "description": "Theft of proprietary data from Nvidia",
+          "targets": ["Technology"]
+        },
+        {
+          "name": "Okta Breach",
+          "date": "2022-01-01",
+          "description": "Compromise of Okta customer support engineer",
+          "targets": ["Technology"]
+        }
+      ],
+      "riskScore": 78,
+      "riskLevel": "high",
+      "references": [
+        {
+          "title": "DEV-0537 Criminal Actor Targeting Organizations for Data Exfiltration and Destruction",
+          "url": "https://www.microsoft.com/security/blog/2022/03/22/dev-0537-criminal-actor-targeting-organizations-for-data-exfiltration-and-destruction/",
+          "date": "2022-03-22",
+          "source": "Microsoft"
+        }
+      ],
+      "dataSource": "apt-database.js",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "lazyscripter",
+      "name": "LazyScripter",
+      "aliases": [],
+      "description": "Threat actor active since at least 2018. Known for targeting airlines, government, and telecommunications in Middle East, North Africa, and South Asia using commodity RATs and open-source tools.",
+      "country": "Unknown",
+      "attribution": "Unknown threat actor",
+      "motivation": ["espionage"],
+      "sophistication": "basic",
+      "firstSeen": "2018-01-01",
+      "lastActivity": "2021-06-01",
+      "activityStatus": "dormant",
+      "targetedSectors": ["Airlines", "Government", "Telecommunications", "IT Services"],
+      "targetedCountries": ["Middle East", "North Africa", "South Asia"],
+      "targetedRegions": ["Middle East", "Africa", "Asia"],
+      "techniques": [
+        {
+          "id": "T1598.002",
+          "name": "Phishing for Information: Spearphishing Attachment",
+          "tactic": "Reconnaissance",
+          "confidence": "medium",
+          "attackiqScenario": "Reconnaissance: Phishing scenarios"
+        },
+        {
+          "id": "T1588.001",
+          "name": "Obtain Capabilities: Malware",
+          "tactic": "Resource Development",
+          "confidence": "high",
+          "attackiqScenario": "Resource Development: Malware acquisition scenarios"
+        },
+        {
+          "id": "T1566.001",
+          "name": "Phishing: Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high",
+          "attackiqScenario": "Initial Access: Spearphishing attachment scenarios"
+        },
+        {
+          "id": "T1059.005",
+          "name": "Command and Scripting Interpreter: Visual Basic",
+          "tactic": "Execution",
+          "confidence": "high",
+          "attackiqScenario": "Execution: VBScript scenarios"
+        },
+        {
+          "id": "T1547.001",
+          "name": "Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder",
+          "tactic": "Persistence",
+          "confidence": "medium",
+          "attackiqScenario": "Persistence: Registry run keys scenarios"
+        },
+        {
+          "id": "T1134",
+          "name": "Access Token Manipulation",
+          "tactic": "Privilege Escalation",
+          "confidence": "low",
+          "attackiqScenario": "Privilege Escalation: Token manipulation scenarios"
+        },
+        {
+          "id": "T1027",
+          "name": "Obfuscated Files or Information",
+          "tactic": "Defense Evasion",
+          "confidence": "high",
+          "attackiqScenario": "Defense Evasion: Obfuscation scenarios"
+        },
+        {
+          "id": "T1056.001",
+          "name": "Input Capture: Keylogging",
+          "tactic": "Credential Access",
+          "confidence": "high",
+          "attackiqScenario": "Credential Access: Keylogging scenarios"
+        },
+        {
+          "id": "T1082",
+          "name": "System Information Discovery",
+          "tactic": "Discovery",
+          "confidence": "medium",
+          "attackiqScenario": "Discovery: System information scenarios"
+        },
+        {
+          "id": "T1570",
+          "name": "Lateral Tool Transfer",
+          "tactic": "Lateral Movement",
+          "confidence": "low",
+          "attackiqScenario": "Lateral Movement: Tool transfer scenarios"
+        },
+        {
+          "id": "T1113",
+          "name": "Screen Capture",
+          "tactic": "Collection",
+          "confidence": "medium",
+          "attackiqScenario": "Collection: Screen capture scenarios"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Application Layer Protocol: Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high",
+          "attackiqScenario": "Command and Control: Web protocols scenarios"
+        },
+        {
+          "id": "T1041",
+          "name": "Exfiltration Over C2 Channel",
+          "tactic": "Exfiltration",
+          "confidence": "high",
+          "attackiqScenario": "Exfiltration: C2 channel scenarios"
+        },
+        {
+          "id": "T1529",
+          "name": "System Shutdown/Reboot",
+          "tactic": "Impact",
+          "confidence": "low",
+          "attackiqScenario": "Impact: System shutdown scenarios"
+        }
+      ],
+      "malware": [
+        { "name": "njRAT", "type": "RAT", "description": "Remote access trojan" },
+        { "name": "AsyncRAT", "type": "RAT", "description": "Open-source RAT" },
+        { "name": "Nanocore", "type": "RAT", "description": "Commercial RAT" }
+      ],
+      "tools": ["Open-source tools"],
+      "mitreAttackId": "G0140",
+      "riskScore": 65,
+      "riskLevel": "medium",
+      "references": [
+        {
+          "title": "LazyScripter: From Empire to double RAT",
+          "url": "https://securelist.com/lazyscripter-from-empire-to-double-rat/99673/",
+          "date": "2021-02-03",
+          "source": "Kaspersky"
+        }
+      ],
+      "dataSource": "apt-database.js",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "leviathan",
+      "name": "Leviathan",
+      "aliases": [
+        "APT40",
+        "TEMP.Periscope",
+        "TEMP.Jumper",
+        "Kryptonite Panda",
+        "Gadolinium",
+        "Bronze Mohawk",
+        "GINGHAM TYPHOON"
+      ],
+      "description": "Chinese state-sponsored APT group active since at least 2013. Known for targeting maritime, defense, and government sectors. Associated with Chinese Ministry of State Security (MSS) Hainan State Security Department.",
+      "country": "China",
+      "attribution": "Chinese Ministry of State Security (MSS) - Hainan State Security Department",
+      "motivation": ["espionage"],
+      "sophistication": "advanced",
+      "firstSeen": "2013-01-01",
+      "lastActivity": "2024-10-01",
+      "activityStatus": "active",
+      "targetedSectors": ["Maritime", "Defense", "Government", "Research", "Universities"],
+      "targetedCountries": ["United States", "Europe", "Southeast Asia"],
+      "targetedRegions": ["North America", "Europe", "Asia-Pacific"],
+      "techniques": [
+        {
+          "id": "T1589.002",
+          "name": "Gather Victim Identity Information: Email Addresses",
+          "tactic": "Reconnaissance",
+          "confidence": "high",
+          "attackiqScenario": "Reconnaissance: Email harvesting scenarios"
+        },
+        {
+          "id": "T1583.001",
+          "name": "Acquire Infrastructure: Domains",
+          "tactic": "Resource Development",
+          "confidence": "medium",
+          "attackiqScenario": "Resource Development: Domain acquisition scenarios"
+        },
+        {
+          "id": "T1566.001",
+          "name": "Phishing: Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high",
+          "attackiqScenario": "Initial Access: Spearphishing attachment scenarios"
+        },
+        {
+          "id": "T1059.001",
+          "name": "Command and Scripting Interpreter: PowerShell",
+          "tactic": "Execution",
+          "confidence": "high",
+          "attackiqScenario": "Execution: PowerShell scenarios"
+        },
+        {
+          "id": "T1053.005",
+          "name": "Scheduled Task/Job: Scheduled Task",
+          "tactic": "Persistence",
+          "confidence": "medium",
+          "attackiqScenario": "Persistence: Scheduled task scenarios"
+        },
+        {
+          "id": "T1068",
+          "name": "Exploitation for Privilege Escalation",
+          "tactic": "Privilege Escalation",
+          "confidence": "high",
+          "attackiqScenario": "Privilege Escalation: Exploit scenarios"
+        },
+        {
+          "id": "T1027.002",
+          "name": "Obfuscated Files or Information: Software Packing",
+          "tactic": "Defense Evasion",
+          "confidence": "medium",
+          "attackiqScenario": "Defense Evasion: Software packing scenarios"
+        },
+        {
+          "id": "T1003.001",
+          "name": "OS Credential Dumping: LSASS Memory",
+          "tactic": "Credential Access",
+          "confidence": "high",
+          "attackiqScenario": "Credential Access: LSASS dumping scenarios"
+        },
+        {
+          "id": "T1018",
+          "name": "Remote System Discovery",
+          "tactic": "Discovery",
+          "confidence": "medium",
+          "attackiqScenario": "Discovery: Remote system scenarios"
+        },
+        {
+          "id": "T1021.001",
+          "name": "Remote Services: Remote Desktop Protocol",
+          "tactic": "Lateral Movement",
+          "confidence": "high",
+          "attackiqScenario": "Lateral Movement: RDP scenarios"
+        },
+        {
+          "id": "T1114.001",
+          "name": "Email Collection: Local Email Collection",
+          "tactic": "Collection",
+          "confidence": "high",
+          "attackiqScenario": "Collection: Email collection scenarios"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Application Layer Protocol: Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high",
+          "attackiqScenario": "Command and Control: Web protocols scenarios"
+        },
+        {
+          "id": "T1041",
+          "name": "Exfiltration Over C2 Channel",
+          "tactic": "Exfiltration",
+          "confidence": "high",
+          "attackiqScenario": "Exfiltration: C2 channel scenarios"
+        },
+        {
+          "id": "T1485",
+          "name": "Data Destruction",
+          "tactic": "Impact",
+          "confidence": "low",
+          "attackiqScenario": "Impact: Data destruction scenarios"
+        }
+      ],
+      "malware": [
+        { "name": "AIRBREAK", "type": "Backdoor", "description": "JavaScript backdoor" },
+        { "name": "BADFLICK", "type": "Backdoor", "description": "Backdoor malware" },
+        { "name": "PHOTO", "type": "Backdoor", "description": "DLL backdoor" },
+        {
+          "name": "HOMEFRY",
+          "type": "Password Dumper",
+          "description": "64-bit Windows password dumper"
+        }
+      ],
+      "tools": ["Mimikatz", "China Chopper"],
+      "mitreAttackId": "G0065",
+      "campaigns": [
+        {
+          "name": "South China Sea Campaign",
+          "date": "2018-01-01",
+          "description": "Targeting maritime and defense sectors related to South China Sea disputes",
+          "targets": ["Maritime", "Defense"]
+        }
+      ],
+      "riskScore": 89,
+      "riskLevel": "high",
+      "references": [
+        {
+          "title": "APT40: Examining a China-Nexus Espionage Actor",
+          "url": "https://www.fireeye.com/blog/threat-research/2019/03/apt40-examining-a-china-nexus-espionage-actor.html",
+          "date": "2019-03-04",
+          "source": "FireEye"
+        }
+      ],
+      "dataSource": "apt-database.js",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    },
+    {
+      "id": "lotusblossom",
+      "name": "Lotus Blossom",
+      "aliases": ["Spring Dragon", "Thrip", "Billbug"],
+      "description": "Threat actor active since at least 2012. Known for targeting government, military, and defense organizations in Southeast Asia. Uses custom malware and spearphishing campaigns.",
+      "country": "Unknown",
+      "attribution": "Unknown threat actor (suspected Chinese-speaking)",
+      "motivation": ["espionage"],
+      "sophistication": "medium",
+      "firstSeen": "2012-01-01",
+      "lastActivity": "2019-12-01",
+      "activityStatus": "dormant",
+      "targetedSectors": [
+        "Government",
+        "Military",
+        "Defense",
+        "Telecommunications",
+        "Satellite Communications"
+      ],
+      "targetedCountries": ["Southeast Asia", "Hong Kong", "Taiwan", "Vietnam", "Philippines"],
+      "targetedRegions": ["Asia", "Southeast Asia"],
+      "techniques": [
+        {
+          "id": "T1592.002",
+          "name": "Gather Victim Host Information: Software",
+          "tactic": "Reconnaissance",
+          "confidence": "medium",
+          "attackiqScenario": "Reconnaissance: Software enumeration scenarios"
+        },
+        {
+          "id": "T1583.001",
+          "name": "Acquire Infrastructure: Domains",
+          "tactic": "Resource Development",
+          "confidence": "medium",
+          "attackiqScenario": "Resource Development: Domain acquisition scenarios"
+        },
+        {
+          "id": "T1566.001",
+          "name": "Phishing: Spearphishing Attachment",
+          "tactic": "Initial Access",
+          "confidence": "high",
+          "attackiqScenario": "Initial Access: Spearphishing attachment scenarios"
+        },
+        {
+          "id": "T1203",
+          "name": "Exploitation for Client Execution",
+          "tactic": "Execution",
+          "confidence": "high",
+          "attackiqScenario": "Execution: Client exploitation scenarios"
+        },
+        {
+          "id": "T1547.001",
+          "name": "Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder",
+          "tactic": "Persistence",
+          "confidence": "medium",
+          "attackiqScenario": "Persistence: Registry run keys scenarios"
+        },
+        {
+          "id": "T1055",
+          "name": "Process Injection",
+          "tactic": "Privilege Escalation",
+          "confidence": "high",
+          "attackiqScenario": "Privilege Escalation: Process injection scenarios"
+        },
+        {
+          "id": "T1140",
+          "name": "Deobfuscate/Decode Files or Information",
+          "tactic": "Defense Evasion",
+          "confidence": "medium",
+          "attackiqScenario": "Defense Evasion: Deobfuscation scenarios"
+        },
+        {
+          "id": "T1056.001",
+          "name": "Input Capture: Keylogging",
+          "tactic": "Credential Access",
+          "confidence": "high",
+          "attackiqScenario": "Credential Access: Keylogging scenarios"
+        },
+        {
+          "id": "T1082",
+          "name": "System Information Discovery",
+          "tactic": "Discovery",
+          "confidence": "medium",
+          "attackiqScenario": "Discovery: System information scenarios"
+        },
+        {
+          "id": "T1570",
+          "name": "Lateral Tool Transfer",
+          "tactic": "Lateral Movement",
+          "confidence": "medium",
+          "attackiqScenario": "Lateral Movement: Tool transfer scenarios"
+        },
+        {
+          "id": "T1005",
+          "name": "Data from Local System",
+          "tactic": "Collection",
+          "confidence": "high",
+          "attackiqScenario": "Collection: Local data scenarios"
+        },
+        {
+          "id": "T1071.001",
+          "name": "Application Layer Protocol: Web Protocols",
+          "tactic": "Command and Control",
+          "confidence": "high",
+          "attackiqScenario": "Command and Control: Web protocols scenarios"
+        },
+        {
+          "id": "T1041",
+          "name": "Exfiltration Over C2 Channel",
+          "tactic": "Exfiltration",
+          "confidence": "high",
+          "attackiqScenario": "Exfiltration: C2 channel scenarios"
+        },
+        {
+          "id": "T1529",
+          "name": "System Shutdown/Reboot",
+          "tactic": "Impact",
+          "confidence": "low",
+          "attackiqScenario": "Impact: System shutdown scenarios"
+        }
+      ],
+      "malware": [
+        { "name": "Elise", "type": "Backdoor", "description": "Custom backdoor malware" },
+        {
+          "name": "Evora",
+          "type": "Backdoor",
+          "description": "Backdoor with keylogging capabilities"
+        },
+        { "name": "Sagerunex", "type": "Trojan", "description": "Trojan malware" }
+      ],
+      "tools": ["Custom tools"],
+      "mitreAttackId": "G0030",
+      "riskScore": 72,
+      "riskLevel": "high",
+      "references": [
+        {
+          "title": "Lotus Blossom Continues Southeast Asian Targeting",
+          "url": "https://www.paloaltonetworks.com/resources/research/unit42-lotus-blossom-continues-southeast-asian-targeting",
+          "date": "2015-06-15",
+          "source": "Palo Alto Networks"
+        }
+      ],
+      "dataSource": "apt-database.js",
+      "lastUpdated": "2025-11-05T00:00:00Z"
+    }
+  ]
+}

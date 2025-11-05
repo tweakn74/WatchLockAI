@@ -13,7 +13,7 @@ test.describe('WatchLockAI Data Loading Verification', () => {
     // Navigate to APT Profiles page
     await page.goto('http://localhost:8080/apt-profiles.html');
     await page.waitForLoadState('networkidle');
-    
+
     // Wait for data to load
     await page.waitForTimeout(2000);
 
@@ -39,10 +39,10 @@ test.describe('WatchLockAI Data Loading Verification', () => {
     // Check for console errors (ignore 404s for non-critical resources like favicon)
     const criticalErrors = consoleErrors.filter(err => !err.includes('404'));
     if (consoleErrors.length > 0) {
-      console.log(`⚠️ Console messages on APT Profiles page:`);
+      console.log('⚠️ Console messages on APT Profiles page:');
       consoleErrors.forEach(err => console.log(`   - ${err}`));
     } else {
-      console.log(`✅ No console errors on APT Profiles page`);
+      console.log('✅ No console errors on APT Profiles page');
     }
 
     // Only fail on critical errors (not 404s)
@@ -61,14 +61,14 @@ test.describe('WatchLockAI Data Loading Verification', () => {
     // Navigate to Detection Engineering page
     await page.goto('http://localhost:8080/detections.html');
     await page.waitForLoadState('networkidle');
-    
+
     // Wait for data to load
     await page.waitForTimeout(2000);
 
     // Verify detection cards are visible
     const detectionCards = page.locator('.detection-card');
     const cardCount = await detectionCards.count();
-    
+
     console.log(`✅ Detections: Found ${cardCount} detection cards`);
     expect(cardCount).toBeGreaterThanOrEqual(15);
 
@@ -78,7 +78,7 @@ test.describe('WatchLockAI Data Loading Verification', () => {
     const highCount = await page.locator('#highCount').textContent();
     const techniquesCovered = await page.locator('#techniquesCovered').textContent();
 
-    console.log(`✅ Statistics:`);
+    console.log('✅ Statistics:');
     console.log(`   - Total Detections: ${totalDetections}`);
     console.log(`   - Critical: ${criticalCount}`);
     console.log(`   - High: ${highCount}`);
@@ -105,10 +105,10 @@ test.describe('WatchLockAI Data Loading Verification', () => {
     // Check for console errors (ignore 404s for non-critical resources like favicon)
     const criticalErrors = consoleErrors.filter(err => !err.includes('404'));
     if (consoleErrors.length > 0) {
-      console.log(`⚠️ Console messages on Detection Engineering page:`);
+      console.log('⚠️ Console messages on Detection Engineering page:');
       consoleErrors.forEach(err => console.log(`   - ${err}`));
     } else {
-      console.log(`✅ No console errors on Detection Engineering page`);
+      console.log('✅ No console errors on Detection Engineering page');
     }
 
     // Only fail on critical errors (not 404s)
@@ -125,9 +125,11 @@ test.describe('WatchLockAI Data Loading Verification', () => {
     const sophisticationFilter = page.locator('select#sophisticationFilter');
     await sophisticationFilter.selectOption('advanced');
     await page.waitForTimeout(500);
-    
+
     const filteredCards = await page.locator('.apt-card').count();
-    console.log(`✅ APT Profiles: Sophistication filter working (${filteredCards} cards after filtering)`);
+    console.log(
+      `✅ APT Profiles: Sophistication filter working (${filteredCards} cards after filtering)`
+    );
     expect(filteredCards).toBeGreaterThan(0);
 
     // Reset filter
@@ -143,19 +145,20 @@ test.describe('WatchLockAI Data Loading Verification', () => {
     const severityFilter = page.locator('select#severityFilter');
     await severityFilter.selectOption('CRITICAL');
     await page.waitForTimeout(500);
-    
+
     const filteredDetections = await page.locator('.detection-card').count();
-    console.log(`✅ Detections: Severity filter working (${filteredDetections} critical detections)`);
+    console.log(
+      `✅ Detections: Severity filter working (${filteredDetections} critical detections)`
+    );
     expect(filteredDetections).toBe(5);
 
     // Test tab switching
     const coverageTab = page.locator('button:has-text("MITRE Coverage")');
     await coverageTab.click();
     await page.waitForTimeout(500);
-    
+
     const coverageMatrix = page.locator('#coverageMatrix');
     await expect(coverageMatrix).toBeVisible();
-    console.log(`✅ Detections: Tab switching to MITRE Coverage works`);
+    console.log('✅ Detections: Tab switching to MITRE Coverage works');
   });
 });
-

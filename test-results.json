@@ -21,10 +21,7 @@
           "outputFolder": "playwright-report"
         }
       ],
-      [
-        "list",
-        null
-      ],
+      ["list", null],
       [
         "json",
         {
@@ -49,9 +46,7 @@
         "name": "chromium",
         "testDir": "C:/Users/craig/code_projects/APT-Tracker-MITRE-AIQ-Intel/e2e-tests",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       }
     ],

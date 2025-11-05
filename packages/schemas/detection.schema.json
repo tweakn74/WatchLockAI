@@ -78,7 +78,10 @@
       "items": {
         "type": "string"
       },
-      "examples": [["Windows Event Logs", "Office 365 Audit Logs"], ["Network Traffic", "DNS Logs"]]
+      "examples": [
+        ["Windows Event Logs", "Office 365 Audit Logs"],
+        ["Network Traffic", "DNS Logs"]
+      ]
     },
     "enrichment": {
       "type": "string",
@@ -144,4 +147,3 @@
     }
   }
 }
-
