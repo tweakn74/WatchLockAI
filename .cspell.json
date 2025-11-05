@@ -46,7 +46,14 @@
     "Mimikatz",
     "Kerberoasting",
     "WATCHLOCK",
-    "nosniff"
+    "nosniff",
+    "Kimsuky",
+    "CartoDB",
+    "Malpedia",
+    "STIX",
+    "TAXII",
+    "Carbanak",
+    "Lapsus"
   ],
   "ignorePaths": [
     "node_modules/**",
