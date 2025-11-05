@@ -132,6 +132,32 @@
       outline-offset: 2px;
     }
 
+    /* Back Link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--brand);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(90, 169, 255, 0.3);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      margin-bottom: 1.5rem;
+    }
+
+    .back-link:hover {
+      background: rgba(90, 169, 255, 0.2);
+      border-color: var(--brand);
+    }
+
+    .back-link:focus {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
     .container {
       max-width: 1400px;
       margin: 0 auto;
@@ -419,10 +445,7 @@
         <a href="index.html" class="nav-link">Home</a>
         <a href="apt-profiles.html" class="nav-link">APT Profiles</a>
         <a href="geopolitical-map.html" class="nav-link active">Geo Map</a>
-        <a href="analytics.html" class="nav-link">Analytics</a>
         <a href="dark-web-intel.html" class="nav-link">Dark Web Intel</a>
-        <a href="apt-overview.html" class="nav-link">APT Overview</a>
-        <a href="metrics.html" class="nav-link">Metrics</a>
         <a href="detections.html" class="nav-link">Detections</a>
         <a href="breach-attack-simulation.html" class="nav-link">BAS Matching</a>
       </nav>
@@ -430,6 +453,12 @@
   </header>
 
   <div class="container">
+    <!-- Back Link -->
+    <a href="index.html" class="back-link">
+      <span>←</span>
+      <span>Back to Dashboard</span>
+    </a>
+
     <h1>🗺️ Geopolitical Threat Map</h1>
     <p class="subtitle">Interactive visualization of APT actor locations and threat density</p>
     <!-- Statistics -->
