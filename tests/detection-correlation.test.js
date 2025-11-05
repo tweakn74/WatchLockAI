@@ -2,7 +2,8 @@
  * Tests for Detection Correlation Module
  */
 
-import { describe, test, expect } from '@jest/globals';
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import {
   findRecommendedDetections,
   addDetectionRecommendations,
@@ -63,9 +64,9 @@ describe('Detection Correlation Module', () => {
 
       const recommendations = findRecommendedDetections(threat, mockDetections);
 
-      expect(recommendations.length).toBeGreaterThan(0);
-      expect(recommendations[0].detectionId).toBe('DET-0001');
-      expect(recommendations[0].matchedTechniques).toContain('T1059.001');
+      assert.ok(recommendations.length > 0);
+      assert.strictEqual(recommendations[0].detectionId, 'DET-0001');
+      assert.ok(recommendations[0].matchedTechniques.includes('T1059.001'));
     });
 
     test('should return empty array when no techniques match', () => {
@@ -77,7 +78,7 @@ describe('Detection Correlation Module', () => {
 
       const recommendations = findRecommendedDetections(threat, mockDetections);
 
-      expect(recommendations).toEqual([]);
+      assert.deepStrictEqual(recommendations, []);
     });
 
     test('should extract techniques from title and description', () => {
@@ -89,8 +90,8 @@ describe('Detection Correlation Module', () => {
 
       const recommendations = findRecommendedDetections(threat, mockDetections);
 
-      expect(recommendations.length).toBeGreaterThan(0);
-      expect(recommendations[0].detectionId).toBe('DET-0002');
+      assert.ok(recommendations.length > 0);
+      assert.strictEqual(recommendations[0].detectionId, 'DET-0002');
     });
 
     test('should calculate match scores correctly', () => {
@@ -102,9 +103,9 @@ describe('Detection Correlation Module', () => {
 
       const recommendations = findRecommendedDetections(threat, mockDetections);
 
-      expect(recommendations[0].matchScore).toBeGreaterThan(0);
+      assert.ok(recommendations[0].matchScore > 0);
       // CRITICAL + stable should have high score
-      expect(recommendations[0].matchScore).toBeGreaterThanOrEqual(15);
+      assert.ok(recommendations[0].matchScore >= 15);
     });
 
     test('should calculate coverage percentage', () => {
@@ -116,7 +117,7 @@ describe('Detection Correlation Module', () => {
 
       const recommendations = findRecommendedDetections(threat, mockDetections);
 
-      expect(recommendations[0].coverage).toBe(100); // 1 of 1 techniques matched
+      assert.strictEqual(recommendations[0].coverage, 100); // 1 of 1 techniques matched
     });
 
     test('should sort by match score', () => {
@@ -130,9 +131,7 @@ describe('Detection Correlation Module', () => {
 
       // Should be sorted by score (highest first)
       for (let i = 0; i < recommendations.length - 1; i++) {
-        expect(recommendations[i].matchScore).toBeGreaterThanOrEqual(
-          recommendations[i + 1].matchScore
-        );
+        assert.ok(recommendations[i].matchScore >= recommendations[i + 1].matchScore);
       }
     });
 
@@ -145,7 +144,7 @@ describe('Detection Correlation Module', () => {
 
       const recommendations = findRecommendedDetections(threat, mockDetections);
 
-      expect(recommendations.length).toBeLessThanOrEqual(5);
+      assert.ok(recommendations.length <= 5);
     });
 
     test('should handle threats with mitre field', () => {
@@ -158,8 +157,8 @@ describe('Detection Correlation Module', () => {
 
       const recommendations = findRecommendedDetections(threat, mockDetections);
 
-      expect(recommendations.length).toBeGreaterThan(0);
-      expect(recommendations[0].detectionId).toBe('DET-0004');
+      assert.ok(recommendations.length > 0);
+      assert.strictEqual(recommendations[0].detectionId, 'DET-0004');
     });
   });
 
@@ -180,11 +179,11 @@ describe('Detection Correlation Module', () => {
 
       const result = addDetectionRecommendations(threats, mockDetections);
 
-      expect(result.length).toBe(2);
-      expect(result[0].recommendedDetections).toBeDefined();
-      expect(result[0].detectionCoverage).toBeGreaterThan(0);
-      expect(result[1].recommendedDetections).toBeDefined();
-      expect(result[1].detectionCoverage).toBeGreaterThan(0);
+      assert.strictEqual(result.length, 2);
+      assert.ok(result[0].recommendedDetections !== undefined);
+      assert.ok(result[0].detectionCoverage > 0);
+      assert.ok(result[1].recommendedDetections !== undefined);
+      assert.ok(result[1].detectionCoverage > 0);
     });
 
     test('should handle threats with no matching detections', () => {
@@ -198,9 +197,9 @@ describe('Detection Correlation Module', () => {
 
       const result = addDetectionRecommendations(threats, mockDetections);
 
-      expect(result.length).toBe(1);
-      expect(result[0].recommendedDetections).toEqual([]);
-      expect(result[0].detectionCoverage).toBe(0);
+      assert.strictEqual(result.length, 1);
+      assert.deepStrictEqual(result[0].recommendedDetections, []);
+      assert.strictEqual(result[0].detectionCoverage, 0);
     });
 
     test('should return original threats if detections array is empty', () => {
@@ -214,13 +213,13 @@ describe('Detection Correlation Module', () => {
 
       const result = addDetectionRecommendations(threats, []);
 
-      expect(result).toEqual(threats);
+      assert.deepStrictEqual(result, threats);
     });
 
     test('should handle invalid inputs gracefully', () => {
-      expect(addDetectionRecommendations(null, mockDetections)).toBeNull();
-      expect(addDetectionRecommendations([], mockDetections)).toEqual([]);
-      expect(addDetectionRecommendations([{}], null)).toEqual([{}]);
+      assert.strictEqual(addDetectionRecommendations(null, mockDetections), null);
+      assert.deepStrictEqual(addDetectionRecommendations([], mockDetections), []);
+      assert.deepStrictEqual(addDetectionRecommendations([{}], null), [{}]);
     });
   });
 
@@ -249,21 +248,21 @@ describe('Detection Correlation Module', () => {
 
       const stats = getDetectionCoverageStats(threats);
 
-      expect(stats.totalThreats).toBe(3);
-      expect(stats.threatsWithDetections).toBe(2);
-      expect(stats.coveragePercentage).toBe(67); // 2/3 = 66.67% rounded to 67
-      expect(stats.avgCoverage).toBe(75); // (100 + 50) / 2 = 75
-      expect(stats.criticalWithDetections).toBe(1);
-      expect(stats.highWithDetections).toBe(1);
+      assert.strictEqual(stats.totalThreats, 3);
+      assert.strictEqual(stats.threatsWithDetections, 2);
+      assert.strictEqual(stats.coveragePercentage, 67); // 2/3 = 66.67% rounded to 67
+      assert.strictEqual(stats.avgCoverage, 75); // (100 + 50) / 2 = 75
+      assert.strictEqual(stats.criticalWithDetections, 1);
+      assert.strictEqual(stats.highWithDetections, 1);
     });
 
     test('should handle empty threats array', () => {
       const stats = getDetectionCoverageStats([]);
 
-      expect(stats.totalThreats).toBe(0);
-      expect(stats.threatsWithDetections).toBe(0);
-      expect(stats.coveragePercentage).toBe(0);
-      expect(stats.avgCoverage).toBe(0);
+      assert.strictEqual(stats.totalThreats, 0);
+      assert.strictEqual(stats.threatsWithDetections, 0);
+      assert.strictEqual(stats.coveragePercentage, 0);
+      assert.strictEqual(stats.avgCoverage, 0);
     });
 
     test('should handle threats with no detections', () => {
@@ -278,10 +277,10 @@ describe('Detection Correlation Module', () => {
 
       const stats = getDetectionCoverageStats(threats);
 
-      expect(stats.totalThreats).toBe(1);
-      expect(stats.threatsWithDetections).toBe(0);
-      expect(stats.coveragePercentage).toBe(0);
-      expect(stats.avgCoverage).toBe(0);
+      assert.strictEqual(stats.totalThreats, 1);
+      assert.strictEqual(stats.threatsWithDetections, 0);
+      assert.strictEqual(stats.coveragePercentage, 0);
+      assert.strictEqual(stats.avgCoverage, 0);
     });
   });
 
@@ -308,9 +307,9 @@ describe('Detection Correlation Module', () => {
 
       const topDetections = getTopRecommendedDetections(threats);
 
-      expect(topDetections.length).toBeGreaterThan(0);
-      expect(topDetections[0].detectionId).toBe('DET-0001');
-      expect(topDetections[0].recommendedCount).toBe(2);
+      assert.ok(topDetections.length > 0);
+      assert.strictEqual(topDetections[0].detectionId, 'DET-0001');
+      assert.strictEqual(topDetections[0].recommendedCount, 2);
     });
 
     test('should limit to top 10 detections', () => {
@@ -324,7 +323,7 @@ describe('Detection Correlation Module', () => {
 
       const topDetections = getTopRecommendedDetections(threats);
 
-      expect(topDetections.length).toBeLessThanOrEqual(10);
+      assert.ok(topDetections.length <= 10);
     });
 
     test('should handle threats with no recommendations', () => {
@@ -336,7 +335,7 @@ describe('Detection Correlation Module', () => {
 
       const topDetections = getTopRecommendedDetections(threats);
 
-      expect(topDetections).toEqual([]);
+      assert.deepStrictEqual(topDetections, []);
     });
   });
 });

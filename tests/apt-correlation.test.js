@@ -2,6 +2,8 @@
  * Tests for APT Correlation Module
  */
 
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import { correlateAPTGroups, addAPTCorrelation } from '../services/worker/src/apt-correlation.js';
 
 describe('APT Correlation', () => {
@@ -54,10 +56,10 @@ describe('APT Correlation', () => {
 
       const matches = correlateAPTGroups(threat, mockAPTProfiles);
 
-      expect(matches.length).toBeGreaterThan(0);
-      expect(matches[0].aptName).toBe('APT28');
-      expect(matches[0].confidence).toBeGreaterThan(20);
-      expect(matches[0].indicators).toContain('Malware: X-Agent');
+      assert.ok(matches.length > 0);
+      assert.strictEqual(matches[0].aptName, 'APT28');
+      assert.ok(matches[0].confidence > 20);
+      assert.ok(matches[0].indicators.some(i => i.includes('Malware: X-Agent')));
     });
 
     test('should match APT by MITRE ATT&CK technique', () => {
@@ -69,10 +71,10 @@ describe('APT Correlation', () => {
 
       const matches = correlateAPTGroups(threat, mockAPTProfiles);
 
-      expect(matches.length).toBeGreaterThan(0);
+      assert.ok(matches.length > 0);
       const lazarusMatch = matches.find(m => m.aptName === 'Lazarus Group');
-      expect(lazarusMatch).toBeDefined();
-      expect(lazarusMatch.confidence).toBeGreaterThan(0);
+      assert.ok(lazarusMatch !== undefined);
+      assert.ok(lazarusMatch.confidence > 0);
     });
 
     test('should match APT by name mention', () => {
@@ -84,9 +86,9 @@ describe('APT Correlation', () => {
 
       const matches = correlateAPTGroups(threat, mockAPTProfiles);
 
-      expect(matches.length).toBeGreaterThan(0);
-      expect(matches[0].aptName).toBe('APT28');
-      expect(matches[0].confidence).toBeGreaterThan(40);
+      assert.ok(matches.length > 0);
+      assert.strictEqual(matches[0].aptName, 'APT28');
+      assert.ok(matches[0].confidence > 40);
     });
 
     test('should match APT by targeted sector', () => {
@@ -98,9 +100,9 @@ describe('APT Correlation', () => {
 
       const matches = correlateAPTGroups(threat, mockAPTProfiles);
 
-      expect(matches.length).toBeGreaterThan(0);
+      assert.ok(matches.length > 0);
       const apt28Match = matches.find(m => m.aptName === 'APT28');
-      expect(apt28Match).toBeDefined();
+      assert.ok(apt28Match !== undefined);
     });
 
     test('should match APT by tool usage', () => {
@@ -112,9 +114,9 @@ describe('APT Correlation', () => {
 
       const matches = correlateAPTGroups(threat, mockAPTProfiles);
 
-      expect(matches.length).toBeGreaterThan(0);
+      assert.ok(matches.length > 0);
       // Both APT28 and Lazarus use Mimikatz
-      expect(matches.length).toBeGreaterThanOrEqual(1);
+      assert.ok(matches.length >= 1);
     });
 
     test('should return empty array for no matches', () => {
@@ -128,7 +130,7 @@ describe('APT Correlation', () => {
 
       // May have low-confidence matches, but should not have high-confidence ones
       const highConfidenceMatches = matches.filter(m => m.confidence > 50);
-      expect(highConfidenceMatches.length).toBe(0);
+      assert.strictEqual(highConfidenceMatches.length, 0);
     });
 
     test('should sort matches by confidence', () => {
@@ -140,10 +142,10 @@ describe('APT Correlation', () => {
 
       const matches = correlateAPTGroups(threat, mockAPTProfiles);
 
-      expect(matches.length).toBeGreaterThan(0);
+      assert.ok(matches.length > 0);
       // Verify sorted by confidence descending
       for (let i = 1; i < matches.length; i++) {
-        expect(matches[i - 1].confidence).toBeGreaterThanOrEqual(matches[i].confidence);
+        assert.ok(matches[i - 1].confidence >= matches[i].confidence);
       }
     });
 
@@ -157,9 +159,9 @@ describe('APT Correlation', () => {
       const matches = correlateAPTGroups(threat, mockAPTProfiles);
 
       const lazarusMatch = matches.find(m => m.aptName === 'Lazarus Group');
-      expect(lazarusMatch).toBeDefined();
-      expect(lazarusMatch.indicators).toBeDefined();
-      expect(lazarusMatch.indicators.length).toBeGreaterThan(0);
+      assert.ok(lazarusMatch !== undefined);
+      assert.ok(lazarusMatch.indicators !== undefined);
+      assert.ok(lazarusMatch.indicators.length > 0);
     });
   });
 
@@ -180,10 +182,10 @@ describe('APT Correlation', () => {
 
       const result = addAPTCorrelation(threats, mockAPTProfiles);
 
-      expect(result.length).toBe(2);
-      expect(result[0].hasAPTAttribution).toBe(true);
-      expect(result[0].aptAttribution).toBeDefined();
-      expect(result[0].aptAttribution.length).toBeGreaterThan(0);
+      assert.strictEqual(result.length, 2);
+      assert.strictEqual(result[0].hasAPTAttribution, true);
+      assert.ok(result[0].aptAttribution !== undefined);
+      assert.ok(result[0].aptAttribution.length > 0);
     });
 
     test('should not add attribution when no matches', () => {
@@ -197,10 +199,10 @@ describe('APT Correlation', () => {
 
       const result = addAPTCorrelation(threats, mockAPTProfiles);
 
-      expect(result.length).toBe(1);
+      assert.strictEqual(result.length, 1);
       // May have hasAPTAttribution=false or undefined
       if (result[0].hasAPTAttribution !== undefined) {
-        expect(result[0].hasAPTAttribution).toBe(false);
+        assert.strictEqual(result[0].hasAPTAttribution, false);
       }
     });
 
@@ -217,10 +219,10 @@ describe('APT Correlation', () => {
 
       const result = addAPTCorrelation(threats, mockAPTProfiles);
 
-      expect(result[0].id).toBe('threat-1');
-      expect(result[0].title).toBe('Test threat');
-      expect(result[0].riskScore).toBe(85);
-      expect(result[0].severity).toBe('HIGH');
+      assert.strictEqual(result[0].id, 'threat-1');
+      assert.strictEqual(result[0].title, 'Test threat');
+      assert.strictEqual(result[0].riskScore, 85);
+      assert.strictEqual(result[0].severity, 'HIGH');
     });
   });
 });

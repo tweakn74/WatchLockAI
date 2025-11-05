@@ -20,16 +20,13 @@ test.describe('WatchLockAI Home Page - Versedetect Style Redesign', () => {
 
     // Check navigation links
     const navLinks = page.locator('.nav-link');
-    await expect(navLinks).toHaveCount(9); // Home, APT Profiles, Geo Map, Analytics, Dark Web Intel, APT Overview, Metrics, Detections, BAS Matching
+    await expect(navLinks).toHaveCount(6); // Home, APT Profiles, Geo Map, Dark Web Intel, Detections, BAS Matching
 
     // Verify all navigation links are present
     await expect(page.locator('.nav-link:has-text("Home")')).toBeVisible();
     await expect(page.locator('.nav-link:has-text("APT Profiles")')).toBeVisible();
     await expect(page.locator('.nav-link:has-text("Geo Map")')).toBeVisible();
-    await expect(page.locator('.nav-link:has-text("Analytics")')).toBeVisible();
     await expect(page.locator('.nav-link:has-text("Dark Web Intel")')).toBeVisible();
-    await expect(page.locator('.nav-link:has-text("APT Overview")')).toBeVisible();
-    await expect(page.locator('.nav-link:has-text("Metrics")')).toBeVisible();
     await expect(page.locator('.nav-link:has-text("Detections")')).toBeVisible();
     await expect(page.locator('.nav-link:has-text("BAS Matching")')).toBeVisible();
   });

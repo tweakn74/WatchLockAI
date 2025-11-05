@@ -1,9 +1,9 @@
 # WatchLockAI - Roadmap & TODO
 
 **Version:** v2.19.0
-**Last Updated:** November 4, 2025
-**Current Phase:** Phase 3 - Dashboard Implementation (10/10 dashboards complete, 100%)
-**Test Coverage:** 216/216 tests passing (100%)
+**Last Updated:** November 5, 2025
+**Current Phase:** Phase 3 - Dashboard Implementation (6/6 core dashboards complete, 100%)
+**Test Coverage:** 240/245 tests passing (98.0%)
 
 ---
 
@@ -35,19 +35,22 @@ Democratize enterprise-level threat intelligence by providing a **100% free, ope
 
 **Testing:**
 
-- Playwright E2E tests (216 tests total, 216 passing - 100%)
+- Playwright E2E tests (215/216 passing - 99.5%)
+- Node.js unit tests (25/29 passing - 86.2%)
 - Visual regression testing
 - Accessibility compliance (WCAG 2.1 AA)
 - CI/CD with GitHub Actions
 
-**Test Status (as of November 4, 2025):**
+**Test Status (as of November 5, 2025):**
 
-- ✅ 216 tests passing (100%)
-- ❌ 0 tests failing
-- All test suites passing successfully
-- Dashboard 3: Geopolitical Map tests added (18 tests)
-- Dashboard 6: Detection Coverage Heatmap tests added (24 tests - includes 7 new filter/export tests)
-- All navigation, accessibility, and functionality tests passing
+- ✅ **E2E Tests:** 216/216 passing (100%) ✅
+  - All navigation, accessibility, and functionality tests passing
+  - Dashboard 3: Geopolitical Map tests (18 tests)
+  - Dashboard 6: Detection Coverage Heatmap tests (24 tests)
+- ⚠️ **Unit Tests:** 25/29 passing (86.2%)
+  - ✅ Detection Correlation: 21/21 passing (100%)
+  - ⚠️ APT Correlation: 7/11 passing (63.6%) - 4 tests failing due to logic issues in correlation algorithm
+- **Total:** 240/245 tests passing (98.0%)
 
 ### 🚀 Key Features
 
@@ -209,37 +212,38 @@ Democratize enterprise-level threat intelligence by providing a **100% free, ope
 
 ## 🎯 Current Status
 
-### ✅ Completed Dashboards (9/10)
+### ✅ Completed Core Dashboards (6/6 - 100%)
 
-**Phase 1 (Week 1) - COMPLETE**
+**Functional Dashboard Pages:**
 
-- [x] Dashboard 4: Quick Stats Widget (v2.8.0) - 6 tests
-- [x] Dashboard 2: Executive Metrics Landing Page (v2.8.1) - 11 tests
-- [x] Dashboard 9: Recorded Future Style APT Profiles (v2.9.0) - 21 tests
+- [x] **Main Dashboard** (index.html) - Executive metrics, analytics section, quick stats widget
+- [x] **APT Profiles** (apt-profiles.html) - Recorded Future-style threat actor profiles with modal details
+- [x] **Geopolitical Map** (geopolitical-map.html) - Interactive Leaflet.js world map visualization
+- [x] **Detection Engineering** (detections.html) - Detection rules + MITRE ATT&CK coverage heatmap
+- [x] **Dark Web Intelligence** (dark-web-intel.html) - Ransomware victim tracking and leak site monitoring
+- [x] **Breach & Attack Simulation** (breach-attack-simulation.html) - APT technique mapping to AttackIQ scenarios
 
-**Phase 2 (Week 2-3) - COMPLETE**
-
-- [x] Dashboard 1: Analytics Dashboard (v2.10.0) - 21 tests
-- [x] Dashboard 5: Dark Theme Enhancements (v2.11.0) - 10 tests
-- [x] Dashboard 7: Modern APT Overview (v2.12.0) - 16 tests (APT detail modal)
-
-**Phase 3 (Week 3-4) - IN PROGRESS**
-
-- [x] Dashboard 8: Dark Web Intelligence Feed (v2.15.0) - 27 tests (ransomware victim tracking)
-- [x] Dashboard 10: Breach & Attack Simulation Matching (v2.16.0) - 0 tests (APT technique mapping)
-- [x] Dashboard 6: Detection Coverage Heatmap (v2.17.0) - 17 tests (MITRE ATT&CK coverage matrix)
+**Note:** Previous TODO.md claimed "10/10 dashboards complete" but this was misleading. Some "dashboards" were actually sections/features within the main pages (e.g., Analytics Dashboard is a section in index.html, not a separate page). The 6 functional pages above represent the complete, working dashboard suite.
 
 ---
 
 ## 🚀 Active Tasks
 
-### Dashboard 7: Post-Completion
+### Critical Fixes (November 5, 2025)
 
-- [ ] Take screenshots of APT detail modal functionality
+- [x] Fix failing E2E test - Add back link to geopolitical-map.html
+- [x] Fix broken navigation links - Remove links to non-existent pages (analytics.html, apt-overview.html, metrics.html)
+- [x] Fix unit test import errors - Convert tests to Node.js test runner, change services/worker to ES module
+- [x] Update TODO.md with accurate status - Correct test coverage and dashboard counts
+
+### Remaining Issues
+
+- [ ] Fix 4 failing APT correlation unit tests (logic issues in correlation algorithm)
+- [ ] Deploy fixes to GitHub Pages
 
 ---
 
-## 📋 Phase 3: Dashboard Implementation (10/10 COMPLETE - 100%)
+## 📋 Phase 3: Dashboard Implementation (6/6 COMPLETE - 100%)
 
 ### ✅ Dashboard 3: Threat Actor Geopolitical Map (COMPLETE)
 
